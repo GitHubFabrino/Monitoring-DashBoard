@@ -1,0 +1,172 @@
+Les tables du bd : 
+
+Admin( utilisateur ) 
+Email
+num tel
+poste
+nom
+prenom
+mdp
+image
+
+client
+nom
+prenom
+email
+tel
+company
+poste
+image
+date creation
+heure creation
+
+Entreprise
+nom Entreprise
+proprietaire
+responsable
+nom de domaine
+tel
+secteur activite
+ville
+code postale
+image
+email Entreprise
+date creation 
+heure creation
+
+Note
+titre
+contenu
+Id_client ou Entreprise
+date creation 
+heure creation
+
+Activiter
+titre
+contenu
+Id_client ou Entreprise
+date creation 
+heure creation
+
+Tache
+titre
+contenu
+Id_client ou Entreprise
+date creation 
+heure creation
+
+
+Email
+destination
+envoyeur
+objet
+date 
+heure
+
+Appel
+destination
+envoyeur
+durree
+note
+date 
+heure
+
+CREATE TABLE Utilisateur (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    num_tel VARCHAR(20),
+    poste VARCHAR(100),
+    mdp VARCHAR(255) NOT NULL,
+    image VARCHAR(255)
+);
+
+
+CREATE TABLE Client (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    tel VARCHAR(20),
+    company VARCHAR(100),
+    poste VARCHAR(100),
+    image VARCHAR(255),
+    date_creation DATE NOT NULL,
+    heure_creation TIME NOT NULL
+);
+
+
+CREATE TABLE Entreprise (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom_entreprise VARCHAR(100) NOT NULL,
+    proprietaire VARCHAR(100),
+    responsable VARCHAR(100),
+    nom_de_domaine VARCHAR(100),
+    tel VARCHAR(20),
+    secteur_activite VARCHAR(100),
+    ville VARCHAR(100),
+    code_postal VARCHAR(20),
+    image VARCHAR(255),
+    email_entreprise VARCHAR(100),
+    date_creation DATE NOT NULL,
+    heure_creation TIME NOT NULL
+);
+
+
+CREATE TABLE Note (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titre VARCHAR(100) NOT NULL,
+    contenu TEXT NOT NULL,
+    client_id INT,
+    entreprise_id INT,
+    date_creation DATE NOT NULL,
+    heure_creation TIME NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES Client(id),
+    FOREIGN KEY (entreprise_id) REFERENCES Entreprise(id)
+);
+
+CREATE TABLE Activite (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titre VARCHAR(100) NOT NULL,
+    contenu TEXT NOT NULL,
+    client_id INT,
+    entreprise_id INT,
+    date_creation DATE NOT NULL,
+    heure_creation TIME NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES Client(id),
+    FOREIGN KEY (entreprise_id) REFERENCES Entreprise(id)
+);
+
+CREATE TABLE Tache (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titre VARCHAR(100) NOT NULL,
+    contenu TEXT NOT NULL,
+    client_id INT,
+    entreprise_id INT,
+    date_creation DATE NOT NULL,
+    heure_creation TIME NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES Client(id),
+    FOREIGN KEY (entreprise_id) REFERENCES Entreprise(id)
+);
+
+CREATE TABLE Email (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    destination VARCHAR(100) NOT NULL,
+    envoyeur VARCHAR(100) NOT NULL,
+    objet VARCHAR(100) NOT NULL,
+    date DATE NOT NULL,
+    heure TIME NOT NULL
+);
+
+CREATE TABLE Appel (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    destination VARCHAR(100) NOT NULL,
+    envoyeur VARCHAR(100) NOT NULL,
+    duree TIME NOT NULL,
+    note TEXT,
+    date DATE NOT NULL,
+    heure TIME NOT NULL
+);
+
+

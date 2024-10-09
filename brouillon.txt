@@ -1,0 +1,30 @@
+ <div class="formulaire">
+        <div class="formulaireContainer">
+          <img src="../../public/hackingImage.png" class="logoItem" />
+          <h3 class="bienvenu">BIENVENU</h3>
+          <div class="loginGoogle">
+            <div class="iconGoogle">
+              <img src="../../public/google.png" />
+            </div>
+            <h3 class="textLogin">Se connecté avec compte Google</h3>
+          </div>
+          <h5 class="email">OU SECONNECTE AVEC EMAIL</h5>
+          <div class="itemContainer">
+            <input type="text" placeholder="Votre email" v-model="pseudo" />
+          </div>
+          <div class="itemContainer">
+            <input type="text" placeholder="Votre Mot de passe" v-model="mdp" />
+          </div>
+          <div class="btnlogin" @click="verify">
+            <h3>Se connécter</h3>
+          </div>
+          <div class="ligne"></div>
+          <h5>
+            Avez-vous déjà un compte ?
+            <span @click="show.showSingUpFunc()">S'inscrire</span>
+          </h5>
+        </div>
+      </div>
+      <div class="logo">
+        <img src="../../public/bg1.png" />
+      </div>

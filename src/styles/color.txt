@@ -1,0 +1,9 @@
+Background : #F6F8FA
+text lien : #328CA8
+icon : #FB7A58
+inactive color : #E9F0F6
+nav color : #2d4051
+
+https://primevue.org/icons/
+
+https://redketchup.io/color-picker
