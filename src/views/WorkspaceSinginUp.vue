@@ -5,7 +5,7 @@
         <div class="cont">
           <h3 class="bienvenu">Se connecté</h3>
           <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h5>
-          <div class="btnInscrit" @click="verify">
+          <div class="btnInscrit" @click="show.showLoginFunc">
             <h3>Se connécter</h3>
           </div>
         </div>
@@ -54,39 +54,8 @@
 </template>
 
 <script setup>
-import "primeicons/primeicons.css";
-import { useShow } from "../stores/show";
-import { Service } from "@/plugins/service";
-import { useAuthentificationStore } from "../stores/authentification";
-import { ref } from "vue";
-
-const nom = ref("");
-const prenom = ref("");
-const email = ref("");
-const password = ref("");
-
-// instance my plugins
-
-const service = new Service();
-const authentification = useAuthentificationStore();
+import { useShow } from "@/stores/show";
 const show = useShow();
-
-function verify() {
-  // make form's data on an object
-  let requestData = {
-    nom: nom.value,
-    prenom: prenom.value,
-    email: email.value,
-    password: password.value,
-  };
-
-  console.log(requestData);
-
-  // check if form is OK
-  if (service.verifyFormIfOK(requestData)) {
-    authentification.enregistrer(requestData);
-  } else console.log("invalid form");
-}
 </script>
 
 <style scoped>
@@ -141,6 +110,10 @@ function verify() {
   color: #e1e1e2;
   display: block;
   width: 100%;
+}
+
+.cont h5 {
+  font-weight: 700;
 }
 
 .bienvenu {
