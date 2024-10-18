@@ -44,7 +44,7 @@ const show = useShow();
 
 <style scoped>
 .card {
-  background-color: #f6f8fa;
+  /* background-color: #f6f8fa; */
   width: 96%;
   height: 76vh;
   margin: 0 auto;
