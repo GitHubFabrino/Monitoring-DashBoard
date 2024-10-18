@@ -1,34 +1,27 @@
 <template>
   <div class="container">
-    <div class="sideBar">
-      <div class="logo">Logo</div>
-    </div>
+    <WorkspaceSideBar />
     <div class="cont">
       <WorkspaceNavigation />
-      <div class="containte">containte</div>
+      <div class="containte">
+        <WorkspaceContainte />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import WorkspaceNavigation from "@/components/WorkspaceNavigation.vue";
+import WorkspaceSideBar from "@/components/WorkspaceSideBar.vue";
+import WorkspaceContainte from "@/components/WorkspaceContainte.vue";
 </script>
 
 <style scoped>
+/* aa */
+
 .container {
   height: 100vh;
   display: flex;
-}
-.sideBar {
-  width: 20%;
-  background-color: #2f333e;
-  padding: 0px 20px 20px 20px;
-  border-right: 1px solid rgba(110, 110, 110, 0.235);
-}
-.logo {
-  background-color: brown;
-  height: 10vh;
-  text-align: center;
 }
 
 .cont {
@@ -37,10 +30,13 @@ import WorkspaceNavigation from "@/components/WorkspaceNavigation.vue";
 }
 
 .containte {
-  background-color: #1d222b;
+  background-color: #e9f0f6;
   height: 90vh;
   padding: 20px;
-  box-shadow: 0px 0px 2px rgb(110, 110, 110);
-  border-radius: 4px;
+  /* box-shadow: 0px 0px 2px rgb(110, 110, 110); */
+  /* border-radius: 4px; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 </style>

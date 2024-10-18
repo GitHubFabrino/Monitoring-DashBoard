@@ -3,7 +3,7 @@
     <div class="container">
       <div class="formulaire">
         <div class="text">
-          <h3 class="bienvenu">Se connecté</h3>
+          <h3 class="titre">Se connecté</h3>
           <h4 class="subtext">Entrez votre compte</h4>
         </div>
 
@@ -56,7 +56,7 @@ const show = useShow();
 
 <style scoped>
 .login {
-  background-color: #2a303e;
+  background-color: #f6f8fa;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -67,9 +67,8 @@ const show = useShow();
   height: 60vh;
   display: flex;
   position: absolute;
-  background-color: #2a303e;
   border-radius: 10px;
-  /* box-shadow: 0px 0px 5px #a2b5cb; */
+  box-shadow: 0px 0px 5px #a2b5cb;
 }
 
 .text {
@@ -80,7 +79,7 @@ const show = useShow();
 .formulaire {
   width: 50%;
   height: 100%;
-  background-color: #222631;
+  background-color: #2d4051;
   border-radius: 10px 0px 0px 10px;
   box-shadow: 0px 0px 5px #9d9ea041;
   padding: 5%;
@@ -92,7 +91,7 @@ const show = useShow();
 .formulaire1 {
   width: 50%;
   height: 100%;
-  background-color: #6260cb;
+  background-color: #e9f0f6;
   border-radius: 0px 10px 10px 0px;
   box-shadow: 0px 0px 5px #9d9ea041;
   padding: 5%;
@@ -103,15 +102,20 @@ const show = useShow();
 .cont {
   text-align: center;
   font-weight: 700;
-  color: #e1e1e2;
+  color: #2d4051;
   display: block;
   width: 100%;
 }
-
+.titre {
+  font-weight: 700;
+  color: #e1e1e2;
+  display: block;
+  width: 100%;
+  font-size: 30px;
+}
 .bienvenu {
   font-weight: 700;
-
-  color: #e1e1e2;
+  color: #2d4051;
   display: block;
   width: 100%;
   font-size: 30px;
@@ -132,13 +136,17 @@ const show = useShow();
   width: 100%;
   border-radius: 5px;
   border: 1px solid #a2a2a9;
-  background-color: #222631;
-  color: rgb(232, 227, 227);
+  background-color: #2d4051;
+  color: #e9f0f6;
+}
+
+.input:hover {
+  background-color: #314658;
 }
 .btnlogin {
   padding: 10px;
   margin: 30px auto;
-  background-color: #6260cb;
+  background-color: #fb7a58;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
@@ -149,7 +157,7 @@ const show = useShow();
 .btnInscrit {
   padding: 10px;
   margin: 50px auto;
-  background-color: #4f50a2;
+  background-color: #2d4051;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
