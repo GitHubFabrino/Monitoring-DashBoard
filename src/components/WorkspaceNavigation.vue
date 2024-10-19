@@ -150,6 +150,7 @@ const show = useShow();
   text-align: left;
   /* padding-bottom: 20px; */
   box-shadow: 0px 0px 5px rgb(210, 208, 208);
+  z-index: 10000;
 }
 
 .container {

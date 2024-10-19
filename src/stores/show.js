@@ -118,6 +118,46 @@ export const useShow = defineStore("Show", () => {
       : (showRecommendation.value = false);
   }
 
+  const showBatterieItem = ref("");
+  const showBatt1 = ref(false);
+  const showBatt2 = ref(false);
+  const showBatt3 = ref(false);
+  function setShowBatt(itemName) {
+    showBatterieItem.value = itemName;
+    itemName === "bat1" ? (showBatt1.value = true) : (showBatt1.value = false);
+    itemName === "bat2" ? (showBatt2.value = true) : (showBatt2.value = false);
+    itemName === "bat3" ? (showBatt3.value = true) : (showBatt3.value = false);
+  }
+
+  const showBatt = ref(false);
+  function showBattDetails(itemName) {
+    showBatterieItem.value = itemName;
+    showBatt.value = !showBatt.value;
+  }
+
+  function closeBattDetails() {
+    showBatt.value = !showBatt.value;
+  }
+
+  const showTension = ref(true);
+  const showCourant = ref(false);
+  const showTensionCourant = ref(false);
+  const showGraph = ref("");
+  console.log(showGraph);
+
+  function setShowGraph(option) {
+    // console.log(option);
+    showGraph.value = option;
+    option === "Tension"
+      ? (showTension.value = true)
+      : (showTension.value = false);
+    option === "Courant"
+      ? (showCourant.value = true)
+      : (showCourant.value = false);
+    option === "TensionCourant"
+      ? (showTensionCourant.value = true)
+      : (showTensionCourant.value = false);
+  }
   return {
     showLogin,
     showSingUp,
@@ -142,11 +182,23 @@ export const useShow = defineStore("Show", () => {
     showRapportMensuel,
     showRecommendation,
     showAcceuil,
+    showBatterieItem,
+    showBatt1,
+    showBatt2,
+    showBatt3,
+    showBatt,
+    showTension,
+    showCourant,
+    showTensionCourant,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
     showDescFunc,
     setActiveMenu,
     setActiveItem,
+    setShowBatt,
+    showBattDetails,
+    setShowGraph,
+    closeBattDetails,
   };
 });
