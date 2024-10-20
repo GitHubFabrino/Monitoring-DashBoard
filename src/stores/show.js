@@ -158,6 +158,110 @@ export const useShow = defineStore("Show", () => {
       ? (showTensionCourant.value = true)
       : (showTensionCourant.value = false);
   }
+
+  const showCalendrierOption = ref(true);
+  const showRecents = ref(true);
+  const showHistoriqueCale = ref(false);
+
+  function setShowOptionCal(option) {
+    showCalendrierOption.value = option;
+    option === "recents"
+      ? (showRecents.value = true)
+      : (showRecents.value = false);
+    option === "historique"
+      ? (showHistoriqueCale.value = true)
+      : (showHistoriqueCale.value = false);
+  }
+
+  const showAddMaintenance = ref(false);
+
+  function showAddMaintenanceFunc() {
+    showAddMaintenance.value = !showAddMaintenance.value;
+  }
+
+  const showCreationParamBatt = ref(false);
+  function showCreationParamBattFunc() {
+    showCreationParamBatt.value = !showCreationParamBatt.value;
+  }
+
+  const showVisBat1 = ref(true);
+  const showVisBat2 = ref(false);
+  const showVisBat3 = ref(false);
+
+  const showVisBat1Horo = ref(false);
+  const showVisBat2Horo = ref(false);
+  const showVisBat3Horo = ref(false);
+
+  const showVisSelect = ref("");
+
+  function setShowVisSelect(option) {
+    showVisSelect.value = option;
+
+    if (option === "bat1") {
+      showVisBat1.value = true;
+      showVisBat1Horo.value = true;
+    } else {
+      showVisBat1.value = false;
+      showVisBat1Horo.value = false;
+    }
+
+    if (option === "bat2") {
+      showVisBat2.value = true;
+      showVisBat2Horo.value = true;
+    } else {
+      showVisBat2.value = false;
+      showVisBat2Horo.value = false;
+    }
+
+    if (option === "bat3") {
+      showVisBat3.value = true;
+      showVisBat3Horo.value = true;
+    } else {
+      showVisBat3.value = false;
+      showVisBat3Horo.value = false;
+    }
+  }
+
+  const showJour = ref(false);
+  const showSemaine = ref(false);
+  const showMois = ref(false);
+  const showAnnee = ref(false);
+
+  const showSeletHorodatage = ref("Jour");
+
+  function setshowSeletHorodatage(option) {
+    showSeletHorodatage.value = option;
+    option === "Jour" ? (showJour.value = true) : (showJour.value = false);
+
+    option === "Semaine"
+      ? (showSemaine.value = true)
+      : (showSemaine.value = false);
+
+    option === "Mois" ? (showMois.value = true) : (showMois.value = false);
+    option === "Année" ? (showAnnee.value = true) : (showAnnee.value = false);
+
+    showVisBat1Horo.value = false;
+    showVisBat2Horo.value = false;
+    showVisBat3Horo.value = false;
+  }
+
+  const showNotification = ref(false);
+  const showEmail = ref(false);
+
+  function showNotificationFunc() {
+    showNotification.value = !showNotification.value;
+    if (showEmail.value == true) {
+      showEmail.value = false;
+    }
+  }
+
+  function showEmailFunc() {
+    showEmail.value = !showEmail.value;
+    if (showNotification.value == true) {
+      showNotification.value = false;
+    }
+  }
+
   return {
     showLogin,
     showSingUp,
@@ -190,6 +294,25 @@ export const useShow = defineStore("Show", () => {
     showTension,
     showCourant,
     showTensionCourant,
+    showCalendrierOption,
+    showRecents,
+    showHistoriqueCale,
+    showAddMaintenance,
+    showCreationParamBatt,
+    showVisBat1,
+    showVisBat2,
+    showVisBat3,
+    showVisBat1Horo,
+    showVisBat2Horo,
+    showVisBat3Horo,
+    showVisSelect,
+    showJour,
+    showSemaine,
+    showMois,
+    showAnnee,
+    showSeletHorodatage,
+    showEmail,
+    showNotification,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
@@ -200,5 +323,12 @@ export const useShow = defineStore("Show", () => {
     showBattDetails,
     setShowGraph,
     closeBattDetails,
+    setShowOptionCal,
+    showAddMaintenanceFunc,
+    showCreationParamBattFunc,
+    setShowVisSelect,
+    setshowSeletHorodatage,
+    showNotificationFunc,
+    showEmailFunc,
   };
 });

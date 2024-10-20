@@ -169,10 +169,10 @@
               color: show.activeMenuItem === 'Liste des incidents récents',
             }"
           >
-            Liste des incidents récents
+            Liste des incidents récents et Historique
           </h5>
         </div>
-        <div
+        <!-- <div
           class="menuItem"
           :class="{ bg: show.activeMenuItem === 'Historique des incidents' }"
           @click="show.setActiveItem('Historique des incidents')"
@@ -192,7 +192,7 @@
           >
             Historique des incidents
           </h5>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -230,7 +230,7 @@
             Visualisation des données
           </h5>
         </div>
-        <div
+        <!-- <div
           class="menuItem"
           :class="{ bg: show.activeMenuItem === 'Compression des données' }"
           @click="show.setActiveItem('Compression des données')"
@@ -244,11 +244,11 @@
           >
             Compression des données
           </h5>
-        </div>
+        </div> -->
       </div>
     </div>
 
-    <div class="menu">
+    <!-- <div class="menu">
       <div
         class="menuTitle"
         :class="{ active: show.activeMenu === 'Statistiques et rapports' }"
@@ -310,7 +310,7 @@
           </h5>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

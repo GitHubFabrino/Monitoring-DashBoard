@@ -6,6 +6,8 @@ import WorkspaceSinginUp from "./views/WorkspaceSinginUp.vue";
 import { Cookies } from "./plugins/cookies";
 import "material-icons/iconfont/material-icons.css";
 import BatterieDetail from "@/components/containtes/modals/BatterieDetail.vue";
+import AjoutCalendrierMaintenance from "@/components/containtes/modals/AjoutCalendrierMaintenance.vue";
+import CreationBatterieParam from "@/components/containtes/modals/CreationBatterieParam.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -19,6 +21,12 @@ const cookies = new Cookies();
 
     <Teleport to="body">
       <BatterieDetail />
+    </Teleport>
+    <Teleport to="body">
+      <AjoutCalendrierMaintenance />
+    </Teleport>
+    <Teleport to="body">
+      <CreationBatterieParam />
     </Teleport>
   </div>
 </template>

@@ -8,18 +8,26 @@
     </div>
     <div class="profil">
       <div class="notif">
-        <div class="notification show">
+        <div class="notification show" @click="show.showNotificationFunc()">
           <span>6</span>
           <i class="pi pi-bell" style="font-size: 18px; color: #fff"></i>
           <h5 class="text">Notification</h5>
         </div>
-        <div class="Mail show">
+        <div class="Mail show" @click="show.showEmailFunc()">
           <span>4</span>
           <i class="pi pi-envelope" style="font-size: 18px; color: #fff"></i>
           <h5 class="text">Mail</h5>
         </div>
       </div>
-      <div class="photo" @click="show.showDescFunc()">P</div>
+      <div class="photo" @click="show.showDescFunc()">
+        <img
+          class="photo"
+          src="../../public/admin.png"
+          alt=""
+          width="100%"
+          height="100%"
+        />
+      </div>
 
       <div
         class="showProfil"
@@ -32,7 +40,15 @@
           </div>
 
           <div class="container">
-            <div class="imageProfil"></div>
+            <div class="imageProfil">
+              <img
+                class="photo"
+                src="../../public/admin.png"
+                alt=""
+                width="100%"
+                height="100%"
+              />
+            </div>
             <div class="info">
               <h4>RAJJDKJDKJKD FABRINO</h4>
               <h5>rakotoharimmainafabrino@gmail.com</h5>
@@ -58,6 +74,114 @@
           </div>
         </div>
       </div>
+
+      <div class="notificationContainer" v-if="show.showNotification">
+        <div class="titre">
+          <h4>Notification</h4>
+          <div class="nb"><h5>3</h5></div>
+        </div>
+        <div class="itemNotif">
+          <div class="icon">
+            <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
+          </div>
+          <div class="textNotif">
+            <h4>Batterie 01</h4>
+            <h5>6h</h5>
+          </div>
+          <div class="icon">
+            <i
+              class="pi pi-ellipsis-v"
+              style="font-size: 14px; color: #2d4051"
+            ></i>
+          </div>
+        </div>
+
+        <div class="itemNotif">
+          <div class="icon">
+            <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
+          </div>
+          <div class="textNotif">
+            <h4>Batterie 01</h4>
+            <h5>6h</h5>
+          </div>
+          <div class="icon">
+            <i
+              class="pi pi-ellipsis-v"
+              style="font-size: 14px; color: #2d4051"
+            ></i>
+          </div>
+        </div>
+
+        <div class="itemNotif">
+          <div class="icon">
+            <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
+          </div>
+          <div class="textNotif">
+            <h4>Batterie 01</h4>
+            <h5>6h</h5>
+          </div>
+          <div class="icon">
+            <i
+              class="pi pi-ellipsis-v"
+              style="font-size: 14px; color: #2d4051"
+            ></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="notificationContainer" v-if="show.showEmail">
+        <div class="titre">
+          <h4>Email</h4>
+          <div class="nb"><h5>3</h5></div>
+        </div>
+        <div class="itemNotif">
+          <div class="icon">
+            <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
+          </div>
+          <div class="textNotif">
+            <h4>Batterie 01</h4>
+            <h5>6h</h5>
+          </div>
+          <div class="icon">
+            <i
+              class="pi pi-ellipsis-v"
+              style="font-size: 14px; color: #2d4051"
+            ></i>
+          </div>
+        </div>
+
+        <div class="itemNotif">
+          <div class="icon">
+            <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
+          </div>
+          <div class="textNotif">
+            <h4>Batterie 01</h4>
+            <h5>6h</h5>
+          </div>
+          <div class="icon">
+            <i
+              class="pi pi-ellipsis-v"
+              style="font-size: 14px; color: #2d4051"
+            ></i>
+          </div>
+        </div>
+
+        <div class="itemNotif">
+          <div class="icon">
+            <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
+          </div>
+          <div class="textNotif">
+            <h4>Batterie 01</h4>
+            <h5>6h</h5>
+          </div>
+          <div class="icon">
+            <i
+              class="pi pi-ellipsis-v"
+              style="font-size: 14px; color: #2d4051"
+            ></i>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -65,18 +189,7 @@
 <script setup>
 import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
-import { RouterLink } from "vue-router";
 const show = useShow();
-
-// // Ajoute un écouteur global au montage
-// onMounted(() => {
-//   document.addEventListener("click", show.handleClickOutside);
-// });
-
-// // Retire l'écouteur lorsque le composant est démonté
-// onBeforeUnmount(() => {
-//   document.removeEventListener("click", show.handleClickOutside);
-// });
 </script>
 
 <style scoped>
@@ -226,5 +339,71 @@ span {
   justify-content: center;
   align-items: center;
   color: #f6f8fa;
+}
+
+.notificationContainer {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  top: 65px;
+  right: 60px;
+  width: 20%;
+  text-align: left !important;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 2px 10px rgb(222, 222, 222);
+  z-index: 5000;
+}
+.titre {
+  padding: 5px 10px;
+  background-color: #89bece2d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fb7a58;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+}
+.nb h5 {
+  color: #fff;
+  font-weight: 600;
+}
+.titre h4 {
+  color: #2d4051;
+  font-weight: 700;
+}
+
+.itemNotif {
+  display: flex;
+  background-color: #dad8d890;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 2px;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.textNotif {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: yellow; */
+}
+
+.textNotif h4,
+.textNotif h5 {
+  font-weight: 600;
 }
 </style>
