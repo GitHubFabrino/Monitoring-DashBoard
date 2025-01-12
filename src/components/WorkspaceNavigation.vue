@@ -4,7 +4,7 @@
       <h3 class="liking" @click="show.setActiveItem('Acceuil')">Acceuil</h3>
       <!-- <RouterLink to="" class="liking">Contact </RouterLink> -->
       <h3 class="liking">Utilisateurs</h3>
-      <h3 class="liking">Parametres</h3>
+      <!-- <h3 class="liking">Paramètres</h3> -->
     </div>
     <div class="profil">
       <div class="notif">
@@ -22,7 +22,7 @@
       <div class="photo" @click="show.showDescFunc()">
         <img
           class="photo"
-          src="../../public/admin.png"
+          src="/admin.png"
           alt=""
           width="100%"
           height="100%"
@@ -43,15 +43,15 @@
             <div class="imageProfil">
               <img
                 class="photo"
-                src="../../public/admin.png"
+                src="/admin.png"
                 alt=""
                 width="100%"
                 height="100%"
               />
             </div>
             <div class="info">
-              <h4>RAJJDKJDKJKD FABRINO</h4>
-              <h5>rakotoharimmainafabrino@gmail.com</h5>
+              <h4>{{name}}</h4>
+              <h5>{{ email }}</h5>
             </div>
           </div>
 
@@ -190,6 +190,10 @@
 import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
 const show = useShow();
+
+import { ref } from "vue";
+
+
 </script>
 
 <style scoped>

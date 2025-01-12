@@ -2,7 +2,7 @@
   <div class="container">
     <div class="desc">
       <div class="title">
-        <h2>NOM PARC</h2>
+        <h2>PARC 01</h2>
         <h5>Création : 22/22/22</h5>
       </div>
       <div class="text">
@@ -10,38 +10,40 @@
           <i class="pi pi-bookmark" style="font-size: 18px; color: #fff"></i>
         </div>
 
-        <h4>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus,
-          pariatur!
-        </h4>
+        <h4>Première Parc qui a été créé par le groupe de l'entreprise</h4>
       </div>
       <div class="text">
         <div class="icon">
           <i class="pi pi-map-marker" style="font-size: 18px; color: #fff"></i>
         </div>
-        <h4>Lorem ipsum dolor sit amet.</h4>
+        <h4>Ramena Lot 3201 Pll : 31/12</h4>
       </div>
       <div class="text">
         <div class="icon">
           <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
         </div>
-        <h4>Nombre de batailles : 10</h4>
+        <h4>Nombre de batterie : 3</h4>
       </div>
       <div class="text">
         <div class="icon">
           <i class="pi pi-phone" style="font-size: 18px; color: #fff"></i>
         </div>
-        <h4>Contact : 123456789</h4>
+        <h4>Contact : +261 34 12 568 42</h4>
       </div>
       <div class="text">
         <div class="icon">
           <i class="pi pi-at" style="font-size: 18px; color: #fff"></i>
         </div>
-        <h4>Email : exemple@exemple.com</h4>
+        <h4>Email : pvramena@gmail.com</h4>
       </div>
     </div>
     <div class="list">
-      <h4 class="titre">Liste des Parcs</h4>
+      <div class="titre">
+        <h4>Liste des Parcs</h4>
+        <div class="btnAdd">
+          <h4>Ajouter</h4>
+        </div>
+      </div>
       <div class="containerList">
         <div class="item">
           <div class="icon">
@@ -51,7 +53,7 @@
             ></i>
           </div>
 
-          <h4>Lorem ipsum dolor</h4>
+          <h4>Parc 01</h4>
           <div class="btn">
             <div class="icon blue">
               <i class="pi pi-eye" style="font-size: 18px; color: #fff"></i>
@@ -76,7 +78,7 @@
             ></i>
           </div>
 
-          <h4>Lorem ipsum dolor</h4>
+          <h4>Parc 02</h4>
           <div class="btn">
             <div class="icon blue">
               <i class="pi pi-eye" style="font-size: 18px; color: #fff"></i>
@@ -101,7 +103,7 @@
             ></i>
           </div>
 
-          <h4>Lorem ipsum dolor</h4>
+          <h4>Parc 03</h4>
           <div class="btn">
             <div class="icon blue">
               <i class="pi pi-eye" style="font-size: 12px; color: #fff"></i>
@@ -184,11 +186,29 @@ import "primeicons/primeicons.css";
 
 .titre {
   background-color: #2d4051;
-  color: #ededed;
+
   margin: 20px 10px;
   border-radius: 5px;
   padding: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titre h4 {
+  color: #ededed;
   font-weight: 600;
+}
+.btnAdd {
+  background-color: rgb(105, 249, 105);
+  width: 25%;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.btnAdd h4 {
+  font-weight: 600;
+  color: #fff;
 }
 .containerList {
   width: 96%;

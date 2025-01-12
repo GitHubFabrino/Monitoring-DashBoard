@@ -28,6 +28,7 @@
             <h4>utilisation cyclique</h4>
             <h4>Courant</h4>
             <h4>Température</h4>
+            <h4>DOD Max</h4>
           </div>
           <div class="valeur">
             <h4>BT</h4>
@@ -37,6 +38,7 @@
             <h4>14.4 - 14.7V</h4>
             <h4>30A</h4>
             <h4>25°C</h4>
+            <h4>20%</h4>
           </div>
         </div>
       </div>
@@ -44,7 +46,7 @@
       <div class="item">
         <div class="name">
           <div class="titreName">
-            <h3>Batterie 1</h3>
+            <h3>Batterie 2</h3>
             <h5>Parc 01</h5>
           </div>
           <i
@@ -62,6 +64,7 @@
             <h4>utilisation cyclique</h4>
             <h4>Courant</h4>
             <h4>Température</h4>
+            <h4>DOD Max</h4>
           </div>
           <div class="valeur">
             <h4>BT</h4>
@@ -71,14 +74,14 @@
             <h4>14.4 - 14.7V</h4>
             <h4>30A</h4>
             <h4>25°C</h4>
+            <h4>20%</h4>
           </div>
         </div>
       </div>
-
       <div class="item">
         <div class="name">
           <div class="titreName">
-            <h3>Batterie 1</h3>
+            <h3>Batterie 3</h3>
             <h5>Parc 01</h5>
           </div>
           <i
@@ -96,6 +99,7 @@
             <h4>utilisation cyclique</h4>
             <h4>Courant</h4>
             <h4>Température</h4>
+            <h4>DOD Max</h4>
           </div>
           <div class="valeur">
             <h4>BT</h4>
@@ -105,6 +109,7 @@
             <h4>14.4 - 14.7V</h4>
             <h4>30A</h4>
             <h4>25°C</h4>
+            <h4>20%</h4>
           </div>
         </div>
       </div>
@@ -158,7 +163,7 @@ const show = useShow();
   background-color: #8be2fc33;
   width: 30%;
   padding: 10px;
-  margin-top: 30px;
+  margin-top: 5px;
   border-radius: 5px;
 }
 .item h4 {

@@ -17,14 +17,16 @@
         </div>
         <div class="detail">
           <div class="detailItem">
-            <h4>Utilisation cyclique</h4>
+            <h4>Tension</h4>
             <h4>Courant</h4>
             <h4>Température</h4>
+            <h4>DOD Max</h4>
           </div>
           <div class="valeur">
             <h4>14.4 - 14.7V</h4>
             <h4>30A</h4>
             <h4>25°C</h4>
+            <h4>20%</h4>
           </div>
         </div>
       </div>
@@ -42,18 +44,19 @@
         </div>
         <div class="detail">
           <div class="detailItem">
-            <h4>Utilisation cyclique</h4>
+            <h4>Tension</h4>
             <h4>Courant</h4>
             <h4>Température</h4>
+            <h4>DOD Max</h4>
           </div>
           <div class="valeur">
             <h4>14.4 - 14.7V</h4>
             <h4>30A</h4>
             <h4>25°C</h4>
+            <h4>20%</h4>
           </div>
         </div>
       </div>
-
       <div class="item">
         <div class="name">
           <div class="titreName">
@@ -67,14 +70,16 @@
         </div>
         <div class="detail">
           <div class="detailItem">
-            <h4>Utilisation cyclique</h4>
+            <h4>Tension</h4>
             <h4>Courant</h4>
             <h4>Température</h4>
+            <h4>DOD Max</h4>
           </div>
           <div class="valeur">
             <h4>14.4 - 14.7V</h4>
             <h4>30A</h4>
             <h4>25°C</h4>
+            <h4>20%</h4>
           </div>
         </div>
       </div>

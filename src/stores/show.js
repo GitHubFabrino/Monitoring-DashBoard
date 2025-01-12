@@ -130,8 +130,10 @@ export const useShow = defineStore("Show", () => {
   }
 
   const showBatt = ref(false);
-  function showBattDetails(itemName) {
+  const showBatterieItemId = ref()
+  function showBattDetails(itemName , itemId) {
     showBatterieItem.value = itemName;
+    showBatterieItemId.value = itemId;
     showBatt.value = !showBatt.value;
   }
 
@@ -291,6 +293,7 @@ export const useShow = defineStore("Show", () => {
     showBatt2,
     showBatt3,
     showBatt,
+    showBatterieItemId,
     showTension,
     showCourant,
     showTensionCourant,

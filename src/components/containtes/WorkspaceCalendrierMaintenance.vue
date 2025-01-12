@@ -51,7 +51,7 @@
                 style="font-size: 12px; color: #2d4051"
               ></i>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
+            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
           </div>
           <div class="date"><h5>31 Janvier 2023</h5></div>
           <div class="action">
@@ -81,7 +81,7 @@
                 style="font-size: 12px; color: #2d4051"
               ></i>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
+            <h4>Maintenance de la Batterie 02 du Parc 01</h4>
           </div>
           <div class="date"><h5>31 Janvier 2023</h5></div>
           <div class="action">
@@ -111,7 +111,7 @@
                 style="font-size: 12px; color: #2d4051"
               ></i>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
+            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
           </div>
           <div class="date"><h5>31 Janvier 2023</h5></div>
           <div class="action">
@@ -141,7 +141,7 @@
                 style="font-size: 12px; color: #2d4051"
               ></i>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
+            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
           </div>
           <div class="date"><h5>31 Janvier 2023</h5></div>
           <div class="action"></div>
@@ -159,7 +159,7 @@
                 style="font-size: 12px; color: #2d4051"
               ></i>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
+            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
           </div>
           <div class="date"><h5>31 Janvier 2023</h5></div>
           <div class="action"></div>
@@ -177,7 +177,7 @@
                 style="font-size: 12px; color: #2d4051"
               ></i>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
+            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
           </div>
           <div class="date"><h5>31 Janvier 2023</h5></div>
           <div class="action"></div>

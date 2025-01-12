@@ -1,19 +1,3 @@
-<script setup>
-import { ref } from "vue";
-import { useShow } from "@/stores/show";
-const show = useShow();
-const color1 = "rgb(2, 200, 2)";
-const color2 = "#FB7A58";
-import { useProgressStore } from "@/stores/progress";
-const store = useProgressStore();
-import Progression from "@/components/containtes/Progression.vue";
-import TemperatureBar from "@/components/containtes/TemperatureBar.vue";
-import VoltageCurrentChart from "@/components/containtes/VoltageCurrentChart.vue";
-const timeData = ref(["0s", "1s", "2s", "3s", "4s", "5s", "6s"]);
-const voltageData = ref([12, 13, 14, 13, 15, 14, 20]);
-const currentData = ref([1, 2, 1.5, 2.5, 2, 3, 5]);
-</script>
-
 <template>
   <Transition>
     <div class="showModal" v-if="show.showBatt">
@@ -110,35 +94,19 @@ const currentData = ref([1, 2, 1.5, 2.5, 2, 3, 5]);
                 Tension/Courant
               </h4>
             </div>
-            <div class="graph" v-if="show.showTension">
+            <div class="graph" v-show="show.showTension">
               <div class="containerG">
-                <VoltageCurrentChart
-                  :timeData="[0, 1, 2, 3]"
-                  :voltageData="[12, 14, 15, 13]"
-                  chartType="voltage"
-                  height="300px"
-                />
+                <RealTimeChart ref="tensionChart" :chartWidth="'550px'" :batteryId="show.showBatterieItemId" topic="batteries" color="rgb(75, 192, 192)" :showTime="true" :showTitle="false" type="tension" />
               </div>
             </div>
-            <div class="graph" v-if="show.showCourant">
+            <div class="graph" v-show="show.showCourant">
               <div class="containerG">
-                <VoltageCurrentChart
-                  :timeData="[0, 1, 2, 3]"
-                  :currentData="[5, 6, 7, 6]"
-                  chartType="current"
-                  height="300px"
-                />
+                <RealTimeChart ref="courantChart" :chartWidth="'550px'" :batteryId="show.showBatterieItemId" topic="batteries" color="rgb(255, 99, 132)" :showTime="true" :showTitle="false" type="courant" />
               </div>
             </div>
-            <div class="graph" v-if="show.showTensionCourant">
+            <div class="graph" v-show="show.showTensionCourant">
               <div class="containerG">
-                <VoltageCurrentChart
-                  :timeData="[0, 1, 2, 3]"
-                  :voltageData="[12, 14, 15, 13]"
-                  :currentData="[5, 6, 7, 6]"
-                  chartType="both"
-                  height="300px"
-                />
+                <RealTimeCurrentTensionChart :chartWidth="'550px'" ref="tensionCourantChart" :batteryId="show.showBatterieItemId" topic="batteries" colorTension="rgb(75, 192, 192)" colorCourant="rgb(255, 99, 132)" :showTime="false" :showTitle="false" />
               </div>
             </div>
           </div>
@@ -150,6 +118,33 @@ const currentData = ref([1, 2, 1.5, 2.5, 2, 3, 5]);
     </div>
   </Transition>
 </template>
+
+<script setup>
+import { defineProps, onMounted, watch, nextTick } from "vue";
+import { useShow } from "@/stores/show";
+const show = useShow();
+const color1 = "rgb(2, 200, 2)";
+import { useProgressStore } from "@/stores/progress";
+const store = useProgressStore();
+import Progression from "@/components/containtes/Progression.vue";
+import RealTimeCurrentTensionChart from "@/components/containtes/RealTimeCurrentTensionChart.vue";
+import RealTimeChart from "@/components/containtes/RealTimeChart.vue";
+const props = defineProps({
+  batteryIdBat: Number,
+});
+
+// Watch for changes in the showGraph value and resize the chart accordingly
+watch(() => show.showGraph, async () => {
+  await nextTick();
+  if (show.showTension) {
+    this.$refs.tensionChart.chartInstance.resize();
+  } else if (show.showCourant) {
+    this.$refs.courantChart.chartInstance.resize();
+  } else if (show.showTensionCourant) {
+    this.$refs.tensionCourantChart.chartInstance.resize();
+  }
+});
+</script>
 
 <style scoped>
 .closeForm {
@@ -298,7 +293,7 @@ const currentData = ref([1, 2, 1.5, 2.5, 2, 3, 5]);
   margin-top: 10px;
 }
 .graph {
-  background-color: #e9f0f6;
+  /* background-color: #e7e8e9; */
   width: 95%;
   margin: 0 auto;
   height: 65vh;
@@ -309,8 +304,9 @@ const currentData = ref([1, 2, 1.5, 2.5, 2, 3, 5]);
 }
 .containerG {
   width: 550px;
-  height: 300px;
+  height: '90%';
   margin: 0 auto;
+  /* background-color: red; */
 }
 .bg {
   background-color: #e9f0f6;

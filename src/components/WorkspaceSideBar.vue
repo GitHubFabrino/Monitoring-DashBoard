@@ -3,7 +3,7 @@
     <div class="logo">
       <div class="imageLogo">
         <img
-          src="../../public/icon.png"
+          src="/icon.png"
           alt="logo"
           width="100%"
           height="100%"
@@ -59,7 +59,7 @@
             Calendrier de maintenance
           </h5>
         </div>
-        <div
+        <!-- <div
           class="menuItem"
           :class="{ bg: show.activeMenuItem === 'Rapports de performance' }"
           @click="show.setActiveItem('Rapports de performance')"
@@ -79,7 +79,7 @@
           >
             Rapports de performance
           </h5>
-        </div>
+        </div> -->
       </div>
     </div>
 

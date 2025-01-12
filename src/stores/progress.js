@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 export const useProgressStore = defineStore("progress", () => {
   // Deux valeurs de progression pour deux batteries différentes
-  const progress1 = ref(90); // Valeur initiale de progression de la première batterie
+  const progress1 = ref(30); // Valeur initiale de progression de la première batterie
   const progress2 = ref(75); // Valeur initiale de progression de la deuxième batterie
   const progress3 = ref(10);
   // Fonction pour mettre à jour la progression de la première batterie

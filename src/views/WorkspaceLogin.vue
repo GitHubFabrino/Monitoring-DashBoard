@@ -3,7 +3,7 @@
     <div class="container">
       <div class="formulaire">
         <div class="text">
-          <h3 class="titre">Se connecté</h3>
+          <h3 class="titre">Se connecter</h3>
           <h4 class="subtext">Entrez votre compte</h4>
         </div>
 
@@ -28,7 +28,7 @@
         </div>
 
         <div class="btnlogin" @click="show.showDashBoardFunc">
-          <h3>Se connécter</h3>
+          <h3>Se connecter</h3>
         </div>
         <h5>
           <span @click="show.showSingUpFunc()" class="forgotPass"
@@ -38,8 +38,9 @@
       </div>
       <div class="formulaire1">
         <div class="cont">
-          <h3 class="bienvenu">Inscription</h3>
-          <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h5>
+          <!-- <h3 class="bienvenu">Inscription</h3> -->
+          <h5>Surveuiller en temps réel l'etat de vos batterie avec</h5>
+          <h3 class="bienvenu">BATMONITOR</h3>
           <div class="btnInscrit" @click="show.showSingUpFunc">
             <h3>S'inscrire</h3>
           </div>

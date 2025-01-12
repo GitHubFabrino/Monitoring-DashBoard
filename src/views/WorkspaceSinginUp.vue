@@ -3,10 +3,10 @@
     <div class="container">
       <div class="formulaire1">
         <div class="cont">
-          <h3 class="bienvenu">Se connecté</h3>
-          <h5>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h5>
+          <h5>Surveuiller en temps réel l'etat de vos batterie avec</h5>
+          <h3 class="bienvenu">BATMONITOR</h3>
           <div class="btnInscrit" @click="show.showLoginFunc">
-            <h3>Se connécter</h3>
+            <h3>Se connecter</h3>
           </div>
         </div>
       </div>

@@ -4,7 +4,8 @@
       <div class="icon">
         <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
       </div>
-      <h3>{{ title }}</h3>
+      <h3>Batterie {{ title }}</h3>
+      <h5>{{ parc }}</h5>
     </div>
     <div class="charge">
       <div class="progression">
@@ -18,19 +19,14 @@
           <div class="temperature">
             <TemperatureBar :temperature="temperature" :color="color2" />
           </div>
-          <h4>Temperature</h4>
+          <h4>Température</h4>
         </div>
       </div>
     </div>
     <div class="courbe">
-      <VoltageCurrentChart
-        :timeData="timeData"
-        :voltageData="voltageData"
-        :currentData="currentData"
-        height="160px"
-      />
+      <RealTimeCurrentTensionChart :chartHeight="'250px'" :chartWidth="'100%'" :batteryId="batteryIdBat" topic="batteries" colorTension="rgb(75, 192, 192)" colorCourant="rgb(255, 99, 132)" :showTime="false" :showTitle="false" />
     </div>
-    <div class="btn" @click="show.showBattDetails(title)"><h4>Détails</h4></div>
+    <div class="btn" @click="show.showBattDetails(title , batteryIdBat)"><h4>Détails</h4></div>
 
     <BatterieDetail v-if="false" />
   </div>
@@ -43,6 +39,7 @@ import TemperatureBar from "@/components/containtes/TemperatureBar.vue";
 import VoltageCurrentChart from "@/components/containtes/VoltageCurrentChart.vue";
 import BatterieDetail from "@/components/containtes/modals/BatterieDetail.vue";
 import { useShow } from "@/stores/show";
+import RealTimeCurrentTensionChart from "@/components/containtes/RealTimeCurrentTensionChart.vue";
 const show = useShow();
 const props = defineProps({
   title: String,
@@ -53,7 +50,11 @@ const props = defineProps({
   timeData: Array,
   voltageData: Array,
   currentData: Array,
+  parc: String,
+  batteryIdBat: Number,
 });
+
+console.log("curent ",props );
 </script>
 
 <style scoped>
@@ -90,6 +91,11 @@ const props = defineProps({
 .titre h3 {
   font-weight: 600;
 }
+
+.titre h5 {
+  font-weight: 600;
+  margin-left: 100px;
+}
 .charge {
   width: 100%;
   padding-top: 20px;
@@ -121,9 +127,10 @@ const props = defineProps({
 }
 .courbe {
   width: 96%;
-  background-color: #dfe2e285;
-  padding: 5px;
-  margin: 20px auto;
+  height: 200px;
+  background-color: #e1dfe285;
+  /* padding: 5px; */
+  margin: 5px auto;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgb(189, 189, 189);
 }
@@ -158,7 +165,7 @@ const props = defineProps({
 .btn {
   background-color: #328ca8;
   padding: 5px;
-  margin: 0 auto;
+  margin: 10px auto;
   width: 40%;
   display: flex;
   align-items: center;
