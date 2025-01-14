@@ -40,9 +40,9 @@
     <div class="list">
       <div class="titre">
         <h4>Liste des Parcs</h4>
-        <div class="btnAdd">
-          <h4>Ajouter</h4>
-        </div>
+        <div class="btnAdd" @click="">
+        <i class="pi pi-plus-circle" style="font-size: 20px; color: #fff"></i>
+      </div>
       </div>
       <div class="containerList">
         <div class="item">
@@ -202,9 +202,13 @@ import "primeicons/primeicons.css";
 }
 .btnAdd {
   background-color: rgb(105, 249, 105);
-  width: 25%;
-  padding: 5px 10px;
-  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  /* padding: 5px 10px; */
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .btnAdd h4 {
   font-weight: 600;

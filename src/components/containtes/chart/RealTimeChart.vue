@@ -51,7 +51,7 @@ export default {
     onMounted(() => {
       chartInstance = echarts.init(chart.value);
       const data = [];
-      const MAX_DATA_POINTS = 10;
+      const MAX_DATA_POINTS = 8;
 
       const option = {
         title: {
@@ -82,7 +82,9 @@ export default {
             type: 'line',
             smooth: true,
             showSymbol: false,
-            data: []
+            data: [],
+            itemStyle: {color: props.color },
+           lineStyle: { color: props.color }
           }
         ]
       };

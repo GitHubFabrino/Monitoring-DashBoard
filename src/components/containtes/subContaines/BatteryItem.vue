@@ -1,45 +1,48 @@
-<template>
-  <div class="item">
+<template >
+  <div class="cardItem">
+   <div class="card">
     <div class="titre">
-      <div class="icon">
-        <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
-      </div>
-      <h3>Batterie {{ title }}</h3>
-      <h5>{{ parc }}</h5>
-    </div>
-    <div class="charge">
-      <div class="progression">
-        <div class="prog">
-          <Progression :progress="progress" :color="color1" :unites="'%'" />
+        <div class="icon">
+          <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
         </div>
-        <h4>En Charge</h4>
+        <h3>Batterie {{ title }}</h3>
+        <h5>{{ parc }}</h5>
       </div>
-      <div class="temp">
-        <div>
-          <div class="temperature">
-            <TemperatureBar :temperature="temperature" :color="color2" />
+      <div class="charge">
+        <div class="progression">
+          <div class="prog">
+            <Progression :progress.sync="progress" :color="color1" :unites="'%'" :batteryId="batteryIdBat" />
           </div>
-          <h4>Température</h4>
+          <h4>En Charge</h4>
+        </div>
+        <div class="temp">
+          <div>
+            <div class="temperature">
+              <TemperatureBar :temperature="temperature" :color="color2" />
+            </div>
+            <h4>Température</h4>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="courbe">
-      <RealTimeCurrentTensionChart :chartHeight="'250px'" :chartWidth="'100%'" :batteryId="batteryIdBat" topic="batteries" colorTension="rgb(75, 192, 192)" colorCourant="rgb(255, 99, 132)" :showTime="false" :showTitle="false" />
-    </div>
+      <div class="courbe">
+        <RealTimeCurrentTensionChart :chartHeight="'250px'" :chartWidth="'100%'" :batteryId="batteryIdBat" topic="batteries" :colorTension="colors.tensionColor" :colorCourant="colors.courantColor" :showTime="false" :showTitle="false" />
+      </div>
+      <BatterieDetail v-if="false"/>
+   </div>
     <div class="btn" @click="show.showBattDetails(title , batteryIdBat)"><h4>Détails</h4></div>
-
-    <BatterieDetail v-if="false" />
   </div>
+  
 </template>
 
 <script setup>
 import { defineProps } from "vue";
-import Progression from "@/components/containtes/Progression.vue";
+import Progression from "@/components/containtes/chart/Progression.vue";
 import TemperatureBar from "@/components/containtes/TemperatureBar.vue";
 import VoltageCurrentChart from "@/components/containtes/VoltageCurrentChart.vue";
 import BatterieDetail from "@/components/containtes/modals/BatterieDetail.vue";
 import { useShow } from "@/stores/show";
-import RealTimeCurrentTensionChart from "@/components/containtes/RealTimeCurrentTensionChart.vue";
+import RealTimeCurrentTensionChart from "@/components/containtes/chart/RealTimeCurrentTensionChart.vue";
+import { colors } from "@/service/color";
 const show = useShow();
 const props = defineProps({
   title: String,
@@ -47,9 +50,6 @@ const props = defineProps({
   color1: String,
   temperature: Number,
   color2: String,
-  timeData: Array,
-  voltageData: Array,
-  currentData: Array,
   parc: String,
   batteryIdBat: Number,
 });
@@ -58,6 +58,7 @@ console.log("curent ",props );
 </script>
 
 <style scoped>
+
 .container {
   width: 99%;
   height: 76vh;
@@ -66,8 +67,18 @@ console.log("curent ",props );
   margin: 0 auto;
   align-content: center;
 }
+.cardItem{
+  /* background-color: red; */
+  background-color: rgb(253, 253, 253);
+  width: 32%;
+}
+.card{
+  width: 100%;
+  height: 450px;
+  background-color: rgb(253, 253, 253);
+}
 .item {
-  background-color: #f6f8fa;
+  background-color: #f9f6fa;
   width: 32%;
   height: 76vh;
   box-shadow: 0px 0px 5px rgb(189, 189, 189);

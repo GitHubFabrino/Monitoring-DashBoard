@@ -13,7 +13,7 @@
             <input
               type="text"
               placeholder="Votre email"
-              v-model="pseudo"
+              v-model="email"
               class="input"
             />
           </div>
@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div class="btnlogin" @click="show.showDashBoardFunc">
+        <div class="btnlogin" @click="verify">
           <h3>Se connecter</h3>
         </div>
         <h5>
@@ -51,8 +51,24 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useShow } from "@/stores/show";
+import { useUser } from "@/stores/user";
 const show = useShow();
+const user = useUser();
+
+const email = ref('');
+const mdp = ref('');
+
+const verify = () => {
+  user.email = email.value;
+  user.password = mdp.value;
+  user.login();
+  email.value = ''
+  mdp.value = ''
+};
+
+
 </script>
 
 <style scoped>
@@ -81,10 +97,12 @@ const show = useShow();
   width: 50%;
   height: 100%;
   background-color: #2d4051;
+  /* background-color: #bb1e62; */
   border-radius: 10px 0px 0px 10px;
   box-shadow: 0px 0px 5px #9d9ea041;
   padding: 5%;
-  /* display: flex; */
+  /* display: flex;
+  flex-direction: column; */
   justify-content: center;
   align-items: center;
 }

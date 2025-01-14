@@ -6,6 +6,11 @@ export const useShow = defineStore("Show", () => {
   const showSingUp = ref(false);
   const showDashBoard = ref(false);
   const showDesc = ref(false);
+  const showSpinner = ref(false)
+
+  const showAlert = ref(false)
+  const showAlertMessage = ref('')
+  const showAlertType = ref('')
 
   function showLoginFunc() {
     showLogin.value = true;
@@ -132,6 +137,7 @@ export const useShow = defineStore("Show", () => {
   const showBatt = ref(false);
   const showBatterieItemId = ref()
   function showBattDetails(itemName , itemId) {
+    console.log("detail");
     showBatterieItem.value = itemName;
     showBatterieItemId.value = itemId;
     showBatt.value = !showBatt.value;
@@ -264,6 +270,13 @@ export const useShow = defineStore("Show", () => {
     }
   }
 
+  function hideenAlert() {
+    showAlert.value = false
+    showAlertMessage = ''
+    showAlertType = ''
+    
+  }
+
   return {
     showLogin,
     showSingUp,
@@ -316,6 +329,10 @@ export const useShow = defineStore("Show", () => {
     showSeletHorodatage,
     showEmail,
     showNotification,
+    showSpinner,
+    showAlert,
+    showAlertMessage,
+    showAlertType,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
@@ -333,5 +350,7 @@ export const useShow = defineStore("Show", () => {
     setshowSeletHorodatage,
     showNotificationFunc,
     showEmailFunc,
+    hideenAlert
+
   };
 });

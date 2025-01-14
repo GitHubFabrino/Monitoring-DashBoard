@@ -6,7 +6,7 @@
           <div class="icon">
             <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
           </div>
-          <h3>{{ show.showBatterieItem }}</h3>
+          <h3>Batterie {{ show.showBatterieItem }}</h3>
         </div>
         <div class="container">
           <div class="containerOne">
@@ -17,11 +17,7 @@
               </div>
               <div class="progression">
                 <div class="prog">
-                  <Progression
-                    :progress="store.progress1"
-                    :color="color1"
-                    :unites="'%'"
-                  />
+                  <Progression :progress.sync="progress" :color="color1" :unites="'%'" :batteryId="show.showBatterieItemId" />
                 </div>
               </div>
             </div>
@@ -32,7 +28,7 @@
               </div>
               <div class="progression">
                 <div class="prog">
-                  <Progression :progress="12" :color="color1" :unites="'V'" />
+                  <h1>⚡ {{ parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].tension).toFixed(1) }}</h1>
                 </div>
               </div>
             </div>
@@ -43,26 +39,19 @@
               </div>
               <div class="progression">
                 <div class="prog">
-                  <Progression
-                    :progress="store.progress1"
-                    :color="color1"
-                    :unites="'A'"
-                  />
+                  <h1>🔌 {{ parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].courant).toFixed(1) }}</h1>
                 </div>
               </div>
             </div>
-            <div class="item">
+            <div class="item" >
               <div class="cont">
                 <h4>TEMPERATURE</h4>
-                <h5>Normale</h5>
+                <h5 :style="{ backgroundColor: classifyTemperatureColor(parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].temperature).toFixed(1)) }">{{ classifyTemperatureText(parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].temperature).toFixed(1)) }}</h5>
               </div>
+              
               <div class="progression">
                 <div class="prog">
-                  <Progression
-                    :progress="store.progress1"
-                    :color="color1"
-                    :unites="'°C'"
-                  />
+                  <h1>🌡️{{ parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].temperature).toFixed(1) }}</h1>
                 </div>
               </div>
             </div>
@@ -96,17 +85,17 @@
             </div>
             <div class="graph" v-show="show.showTension">
               <div class="containerG">
-                <RealTimeChart ref="tensionChart" :chartWidth="'550px'" :batteryId="show.showBatterieItemId" topic="batteries" color="rgb(75, 192, 192)" :showTime="true" :showTitle="false" type="tension" />
+                <RealTimeChart ref="tensionChart" :chartWidth="'550px'" :batteryId="show.showBatterieItemId" topic="batteries" :color="colors.tensionColor" :showTime="true" :showTitle="false" type="tension" />
               </div>
             </div>
             <div class="graph" v-show="show.showCourant">
               <div class="containerG">
-                <RealTimeChart ref="courantChart" :chartWidth="'550px'" :batteryId="show.showBatterieItemId" topic="batteries" color="rgb(255, 99, 132)" :showTime="true" :showTitle="false" type="courant" />
+                <RealTimeChart ref="courantChart" :chartWidth="'550px'" :batteryId="show.showBatterieItemId" topic="batteries" :color="colors.courantColor" :showTime="true" :showTitle="false" type="courant" />
               </div>
             </div>
             <div class="graph" v-show="show.showTensionCourant">
               <div class="containerG">
-                <RealTimeCurrentTensionChart :chartWidth="'550px'" ref="tensionCourantChart" :batteryId="show.showBatterieItemId" topic="batteries" colorTension="rgb(75, 192, 192)" colorCourant="rgb(255, 99, 132)" :showTime="false" :showTitle="false" />
+                <RealTimeCurrentTensionChart :chartWidth="'550px'" ref="tensionCourantChart" :batteryId="show.showBatterieItemId" topic="batteries" :colorTension="colors.tensionColor" :colorCourant="colors.courantColor" :showTime="true" :showTitle="false" />
               </div>
             </div>
           </div>
@@ -122,16 +111,37 @@
 <script setup>
 import { defineProps, onMounted, watch, nextTick } from "vue";
 import { useShow } from "@/stores/show";
+import { colors } from "@/service/color";
 const show = useShow();
 const color1 = "rgb(2, 200, 2)";
 import { useProgressStore } from "@/stores/progress";
 const store = useProgressStore();
-import Progression from "@/components/containtes/Progression.vue";
-import RealTimeCurrentTensionChart from "@/components/containtes/RealTimeCurrentTensionChart.vue";
-import RealTimeChart from "@/components/containtes/RealTimeChart.vue";
+import Progression from "@/components/containtes/chart/Progression.vue";
+import RealTimeCurrentTensionChart from "@/components/containtes/chart/RealTimeCurrentTensionChart.vue";
+import RealTimeChart from "@/components/containtes/chart/RealTimeChart.vue";
 const props = defineProps({
   batteryIdBat: Number,
 });
+import { useMqttStore } from "@/stores/mqttStore";
+const mqttStore = useMqttStore()
+// Fonction pour classifier les températures en couleurs 
+const classifyTemperatureColor = (temperature) => { if (temperature < 10) { return colors.tensionColor; // Température Basse 
+} else if (temperature >= 10 && temperature <= 40) { return "#58fb60"; // Température Normale 
+} else if (temperature > 40 && temperature <= 60) { return "orange"; // Température Élevée 
+} else { return "red"; // Température Critique 
+} 
+}; // Fonction pour classifier les températures en texte 
+const classifyTemperatureText = (temperature) => { 
+  if (temperature < 10) {
+     return "Basse"; } 
+     else if (temperature >= 10 && temperature <= 40) { 
+      return "Normale"; } 
+      else if (temperature > 40 && temperature <= 60) { 
+        return "Élevée"; } 
+        else { 
+          return "Critique"; 
+        } 
+      };
 
 // Watch for changes in the showGraph value and resize the chart accordingly
 watch(() => show.showGraph, async () => {
@@ -251,8 +261,21 @@ watch(() => show.showGraph, async () => {
   background-color: #dfe2e285;
   padding: 5px;
   border-radius: 5px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 
   box-shadow: 0px 2px 5px rgb(189, 189, 189);
+}
+
+.prog h1{
+  display: block;
+  align-self: center;
+  margin: auto 0;
+  width: 100%;
+  font-weight: 600;
 }
 
 .temp {

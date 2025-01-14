@@ -96,7 +96,9 @@ export default {
             smooth: true,
             showSymbol: false,
             yAxisIndex: 0,
-            data: []
+            data: [],
+            itemStyle: {color: props.colorTension },
+           lineStyle: { color: props.colorTension }
           },
           {
             name: 'Courant',
@@ -104,7 +106,9 @@ export default {
             smooth: true,
             showSymbol: false,
             yAxisIndex: 1,
-            data: []
+            data: [],
+            itemStyle: {color: props.colorCourant },
+           lineStyle: { color: props.colorCourant }
           }
         ]
       };

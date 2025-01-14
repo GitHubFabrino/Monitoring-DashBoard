@@ -3,7 +3,7 @@
     <div class="container">
       <div class="formulaire1">
         <div class="cont">
-          <h5>Surveuiller en temps réel l'etat de vos batterie avec</h5>
+          <h5>Surveiller en temps réel l'état de vos batteries avec</h5>
           <h3 class="bienvenu">BATMONITOR</h3>
           <div class="btnInscrit" @click="show.showLoginFunc">
             <h3>Se connecter</h3>
@@ -18,26 +18,25 @@
 
         <div class="inputForm">
           <div class="itemContainer">
-            <!-- <InputIcon class="pi pi-search" /> -->
             <input
               type="text"
               placeholder="Nom"
               v-model="pseudo"
               class="input"
+              @input="transformName"
             />
           </div>
           <div class="itemContainer">
-            <!-- <InputIcon class="pi pi-search" /> -->
             <input
               type="text"
               placeholder="Email"
-              v-model="pseudo"
+              v-model="email"
               class="input"
             />
           </div>
           <div class="itemContainer">
             <input
-              type="text"
+              type="password"
               placeholder="Mot de passe"
               v-model="mdp"
               class="input"
@@ -54,8 +53,49 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useShow } from "@/stores/show";
+import { useUser } from "@/stores/user";
+
 const show = useShow();
+const user = useUser();
+const pseudo = ref('');
+const email = ref('');
+const mdp = ref('');
+
+const validateEmail = (email) => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
+  return re.test(String(email).toLowerCase());
+};
+
+const transformName = () => {
+  pseudo.value = pseudo.value.toUpperCase();
+};
+
+const verify = () => {
+  if (!validateEmail(email.value)) {
+    show.showAlert = true;
+    show.showAlertType = 'danger';
+    show.showAlertMessage = 'Email non valide';
+    return;
+  }
+
+  if (mdp.value.length < 8) {
+    show.showAlert = true;
+    show.showAlertType = 'danger';
+    show.showAlertMessage = 'Le mot de passe doit contenir au moins 8 caractères';
+    return;
+  }
+
+  console.log('data', pseudo.value, email.value, mdp.value);
+  user.email = email.value;
+  user.password = mdp.value;
+  user.name = pseudo.value;
+  user.nom_photo_profile = `${pseudo.value}_profil.png`;
+  user.validation_compte = '0';
+
+  user.register();
+};
 </script>
 
 <style scoped>

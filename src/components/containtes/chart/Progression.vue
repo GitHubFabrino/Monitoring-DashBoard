@@ -15,16 +15,13 @@ import {
   Legend,
   Filler,
 } from "chart.js";
+import mqtt from "mqtt";
 
 // Enregistrement des composants nécessaires de Chart.js
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend, Filler);
 
 export default {
   props: {
-    progress: {
-      type: Number,
-      required: true,
-    },
     color: {
       type: String,
       required: true,
@@ -33,10 +30,15 @@ export default {
       type: String,
       required: true,
     },
+    batteryId: {
+      type: Number,
+      required: true,
+    },
   },
   setup(props) {
     const chart = ref(null); // Référence pour stocker l'instance du graphique
     const chartId = `doughnutChart-${Math.random().toString(36).substr(2, 9)}`; // Générer un ID unique pour chaque canvas
+    const progress = ref(0); // Initialiser la progression à 0
 
     // Fonction pour créer le graphique
     const createChart = () => {
@@ -59,7 +61,7 @@ export default {
         data: {
           datasets: [
             {
-              data: [props.progress, 100 - props.progress],
+              data: [progress.value, 100 - progress.value],
               backgroundColor: [props.color, "#e6e6e6"],
               borderWidth: 0,
             },
@@ -84,40 +86,59 @@ export default {
       console.log("Chart created", chart.value);
     };
 
-    // Fonction pour mettre à jour le graphique
-    const updateChart = () => {
-      if (chart.value) {
-        chart.value.data.datasets[0].data = [
-          props.progress,
-          100 - props.progress,
-        ];
-        chart.value.update(); // Mettre à jour le graphique
-        console.log("Chart updated", chart.value);
-      }
-    };
-
     // Créer le graphique lorsque le composant est monté
     onMounted(() => {
+      console.log("Composant monté");
       createChart();
-    });
+      
+      // Connexion au broker MQTT
+      const client = mqtt.connect("ws://192.168.1.116:9001");
 
-    // Mettre à jour le graphique quand la prop `progress` change
-    watch(
-      () => props.progress,
-      () => {
-        updateChart();
-      }
-    );
+      client.on("connect", () => {
+        console.log("Connecté au broker MQTT");
+        client.subscribe("batteries", (err) => {
+          if (err) {
+            console.error("Erreur d'abonnement :", err);
+          } else {
+            console.log('Abonné au topic "batteries"');
+          }
+        });
+      });
 
-    // Détruire le graphique avant que le composant soit démonté
-    onBeforeUnmount(() => {
-      if (chart.value) {
-        chart.value.destroy();
-      }
+      client.on("message", (topic, message) => {
+        try {
+          console.log("Message reçu :", message.toString()); // Vérifier la réception des messages
+          const parsedMessage = JSON.parse(message.toString());
+
+          if (parsedMessage.length > 0) {
+            console.log("Données MQTT reçues :", parsedMessage);
+            progress.value = parseFloat(parsedMessage[props.batteryId - 1].soc).toFixed(0);
+            console.log("Progress value updated to:", progress.value); // Vérifier la mise à jour de `progress`
+
+            // Recréer le graphique avec la nouvelle valeur de progression
+            createChart();
+          } else {
+            console.warn("Le message reçu est vide ou mal formé");
+          }
+
+          console.log("Données reçues et mises à jour :", parsedMessage);
+        } catch (error) {
+          console.error("Erreur lors du traitement du message MQTT :", error);
+        }
+      });
+
+      client.on("error", (err) => {
+        console.error("Erreur MQTT :", err);
+      });
+
+      onBeforeUnmount(() => {
+        client.end();
+      });
     });
 
     return {
       chartId, // On retourne l'ID du canvas pour une gestion dans le template
+      progress, // Ajouter progress pour le rendre accessible dans le template
     };
   },
 };

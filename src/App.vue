@@ -8,6 +8,8 @@ import "material-icons/iconfont/material-icons.css";
 import BatterieDetail from "@/components/containtes/modals/BatterieDetail.vue";
 import AjoutCalendrierMaintenance from "@/components/containtes/modals/AjoutCalendrierMaintenance.vue";
 import CreationBatterieParam from "@/components/containtes/modals/CreationBatterieParam.vue";
+import SpinnerComponent from "@/components/containtes/modals/SpinnerComponent.vue";
+import AlertComponent from "@/components/containtes/modals/AlertComponent.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -27,6 +29,12 @@ const cookies = new Cookies();
     </Teleport>
     <Teleport to="body">
       <CreationBatterieParam />
+    </Teleport>
+    <Teleport to="body">
+      <SpinnerComponent />
+    </Teleport>
+    <Teleport to="body">
+      <AlertComponent />
     </Teleport>
   </div>
 </template>
