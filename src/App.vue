@@ -10,6 +10,7 @@ import AjoutCalendrierMaintenance from "@/components/containtes/modals/AjoutCale
 import CreationBatterieParam from "@/components/containtes/modals/CreationBatterieParam.vue";
 import SpinnerComponent from "@/components/containtes/modals/SpinnerComponent.vue";
 import AlertComponent from "@/components/containtes/modals/AlertComponent.vue";
+import ProfilUser from "./components/containtes/modals/ProfilUser.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -35,6 +36,9 @@ const cookies = new Cookies();
     </Teleport>
     <Teleport to="body">
       <AlertComponent />
+    </Teleport>
+    <Teleport to="body">
+      <ProfilUser />
     </Teleport>
   </div>
 </template>

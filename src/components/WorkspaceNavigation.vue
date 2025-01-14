@@ -20,13 +20,7 @@
         </div>
       </div>
       <div class="photo" @click="show.showDescFunc()">
-        <img
-          class="photo"
-          src="/admin.png"
-          alt=""
-          width="100%"
-          height="100%"
-        />
+        <img class="photo" src="/admin.png" alt="" width="100%" height="100%" />
       </div>
 
       <div
@@ -50,13 +44,13 @@
               />
             </div>
             <div class="info">
-              <h4>{{name}}</h4>
-              <h5>{{ email }}</h5>
+              <h4>{{ user.userInfo.user.name }}</h4>
+              <h5>{{ user.userInfo.user.email }}</h5>
             </div>
           </div>
 
           <div class="items">
-            <div class="option">
+            <div class="option" @click="show.showProfilDetailFunc()">
               <i
                 class="pi pi-user-edit"
                 style="font-size: 18px; color: #2d4051"
@@ -189,10 +183,31 @@
 <script setup>
 import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
+import { useUser } from "@/stores/user";
+
 const show = useShow();
+const user = useUser();
 
-import { ref } from "vue";
-
+// function getInfoUser() {
+//   const user = localStorage.getItem("user");
+//   if (user) {
+//     try {
+//       userInfo.value = JSON.parse(user);
+//     } catch (error) {
+//       console.error(
+//         "Erreur lors du parsing des informations utilisateur:",
+//         error
+//       );
+//     }
+//   } else {
+//     console.warn(
+//       "Aucune information utilisateur trouvée dans le localStorage."
+//     );
+//   }
+// }
+// onMounted(() => {
+//   getInfoUser();
+// });
 
 </script>
 

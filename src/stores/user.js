@@ -13,6 +13,7 @@ export const useUser = defineStore('User', () => {
   const name = ref('')
   const nom_photo_profile = ref('')
   const validation_compte = ref('')
+  const userInfo = ref({});
 
   function register() {
     show.showSpinner = true
@@ -38,6 +39,7 @@ export const useUser = defineStore('User', () => {
           show.showAlert = true
           show.showAlertType = 'success'
           show.showAlertMessage = 'Enregistré'
+          userInfo.value = response.data
           
         } else {
           show.showAlert = true
@@ -93,6 +95,7 @@ export const useUser = defineStore('User', () => {
 
           document.cookie = `access_token=${response.data.access_token};path=/;max-age=${response.data.expires_in}`
           localStorage.setItem('user', JSON.stringify(response.data))
+          userInfo.value = response.data
 
         } else {
           show.showAlert = true
@@ -129,6 +132,7 @@ export const useUser = defineStore('User', () => {
     name,
     nom_photo_profile,
     validation_compte,
+    userInfo,
     register,
     login
   }

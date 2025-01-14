@@ -7,6 +7,14 @@ export const useShow = defineStore("Show", () => {
   const showDashBoard = ref(false);
   const showDesc = ref(false);
   const showSpinner = ref(false)
+  const showProfilDetail = ref(false)
+
+  function showProfilDetailFunc() {
+    // closeProfile()
+    showDesc.value = false
+    showProfilDetail.value = !showProfilDetail.value;
+  }
+
 
   const showAlert = ref(false)
   const showAlertMessage = ref('')
@@ -333,6 +341,7 @@ export const useShow = defineStore("Show", () => {
     showAlert,
     showAlertMessage,
     showAlertType,
+    showProfilDetail,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
@@ -350,7 +359,8 @@ export const useShow = defineStore("Show", () => {
     setshowSeletHorodatage,
     showNotificationFunc,
     showEmailFunc,
-    hideenAlert
+    hideenAlert,
+    showProfilDetailFunc
 
   };
 });
