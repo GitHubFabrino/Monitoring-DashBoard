@@ -40,70 +40,25 @@
     <div class="list">
       <div class="titre">
         <h4>Liste des Parcs</h4>
-        <div class="btnAdd" @click="">
-        <i class="pi pi-plus-circle" style="font-size: 20px; color: #fff"></i>
-      </div>
+        <div class="btnAdd" @click="show.showNewParcFunc()">
+          <i class="pi pi-plus-circle" style="font-size: 20px; color: #fff"></i>
+        </div>
       </div>
       <div class="containerList">
         <div class="item">
-          <div class="icon">
-            <i
-              class="pi pi-building-columns"
-              style="font-size: 18px; color: #2d4051"
-            ></i>
-          </div>
-
-          <h4>Parc 01</h4>
-          <div class="btn">
-            <div class="icon blue">
-              <i class="pi pi-eye" style="font-size: 18px; color: #fff"></i>
-            </div>
-            <div class="icon orange">
+          <div class="cardTitre">
+            <div class="icon">
               <i
-                class="pi pi-pen-to-square"
-                style="font-size: 18px; color: #fff"
+                class="pi pi-building-columns"
+                style="font-size: 18px; color: #2d4051"
               ></i>
             </div>
-            <div class="icon red">
-              <i class="pi pi-trash" style="font-size: 18px; color: #fff"></i>
+
+            <div>
+              <h4>Parc 03</h4>
+              <h4>Parc 03</h4>
             </div>
           </div>
-        </div>
-
-        <div class="item">
-          <div class="icon">
-            <i
-              class="pi pi-building-columns"
-              style="font-size: 18px; color: #2d4051"
-            ></i>
-          </div>
-
-          <h4>Parc 02</h4>
-          <div class="btn">
-            <div class="icon blue">
-              <i class="pi pi-eye" style="font-size: 18px; color: #fff"></i>
-            </div>
-            <div class="icon orange">
-              <i
-                class="pi pi-pen-to-square"
-                style="font-size: 18px; color: #fff"
-              ></i>
-            </div>
-            <div class="icon red">
-              <i class="pi pi-trash" style="font-size: 18px; color: #fff"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="icon">
-            <i
-              class="pi pi-building-columns"
-              style="font-size: 18px; color: #2d4051"
-            ></i>
-          </div>
-
-          <h4>Parc 03</h4>
           <div class="btn">
             <div class="icon blue">
               <i class="pi pi-eye" style="font-size: 12px; color: #fff"></i>
@@ -126,6 +81,11 @@
 
 <script setup>
 import "primeicons/primeicons.css";
+import { useShow } from "@/stores/show";
+import { useUser } from "@/stores/user";
+
+const show = useShow();
+const user = useUser();
 </script>
 
 <style scoped>
@@ -228,20 +188,28 @@ import "primeicons/primeicons.css";
   margin-bottom: 5px;
   border-radius: 5px;
 }
+.cardTitre{
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: 60%;
+  /* background-color: rebeccapurple; */
+}
 .btn {
   /* background-color: #247bc8; */
   display: flex;
-  width: 30%;
+  width: 40%;
   justify-content: space-around;
 }
 .icon {
   background-color: #fb7b5892;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 }
 .blue {
   background-color: #247bc8d2;

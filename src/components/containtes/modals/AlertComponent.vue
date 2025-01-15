@@ -69,6 +69,6 @@ const show = useShow();
   align-items: center;
   top: 11vh;
   right: 5vh;
-  z-index: 10000;
+  z-index: 100000;
 }
 </style>

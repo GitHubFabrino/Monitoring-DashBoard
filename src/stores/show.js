@@ -11,6 +11,12 @@ export const useShow = defineStore("Show", () => {
   const showProfilDetail = ref(false)
   const showNotificationDetail = ref(false)
 
+  const showNewParc = ref(false)
+  function showNewParcFunc() {
+    showNewParc.value = !showNewParc.value;
+  }
+  
+
   
 
   function showProfilDetailFunc() {
@@ -375,6 +381,7 @@ export const useShow = defineStore("Show", () => {
     showNotificationDetail,
     showNotificationDetailOne,
     notifData,
+    showNewParc,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
@@ -396,7 +403,8 @@ export const useShow = defineStore("Show", () => {
     showProfilDetailFunc,
     showLogoutFunc,
     showNotificationDetailFunc,
-    showNotificationDetailOneFunc
+    showNotificationDetailOneFunc,
+    showNewParcFunc,
 
   };
 });

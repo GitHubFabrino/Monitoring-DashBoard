@@ -13,6 +13,7 @@ import AlertComponent from "@/components/containtes/modals/AlertComponent.vue";
 import ProfilUser from "./components/containtes/modals/ProfilUser.vue";
 import Logout from "./components/containtes/modals/Logout.vue";
 import NotificationComponent from "./components/containtes/modals/NotificationComponent.vue";
+import NewParcComponent from "./components/containtes/modals/NewParcComponent.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -58,6 +59,9 @@ if (
     </Teleport>
     <Teleport to="body">
       <NotificationComponent />
+    </Teleport>
+    <Teleport to="body">
+      <NewParcComponent />
     </Teleport>
   </div>
 </template>
