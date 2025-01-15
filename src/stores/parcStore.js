@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { useShow } from "@/stores/show";
 import { useUrl } from "@/stores/url";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
 
 export const parcStore = defineStore("Parc", () => {
@@ -14,9 +14,10 @@ export const parcStore = defineStore("Parc", () => {
   const nombreBat = ref("");
   const phone = ref("");
   const email = ref("pierret@gmail.com");
+  const parcsData = ref({});
 
   function register() {
-    show.showNewParc = false
+    show.showNewParc = false;
     show.showSpinner = true;
     let formData = new FormData();
     formData.append("nom_parc", parc.value);
@@ -25,9 +26,11 @@ export const parcStore = defineStore("Parc", () => {
     formData.append("email", email.value);
     formData.append("phone", phone.value || "");
     formData.append("nombre_batteries", parseInt(nombreBat.value, 10) || 0);
-    formData.append("user_id", JSON.parse(localStorage.getItem("user")).user.id);
+    formData.append(
+      "user_id",
+      JSON.parse(localStorage.getItem("user")).user.id
+    );
 
-    
     axios
       .post(`${URL}/api/parcs`, formData, {
         headers: {
@@ -40,12 +43,12 @@ export const parcStore = defineStore("Parc", () => {
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Enregistré";
-          
+          getParcs(JSON.parse(localStorage.getItem("user")).user.id)
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";
           show.showAlertMessage = "Échoué";
-          show.showNewParc = true
+          show.showNewParc = true;
         }
 
         setTimeout(() => {
@@ -55,7 +58,7 @@ export const parcStore = defineStore("Parc", () => {
         }, 3000);
       })
       .catch((err) => {
-        show.showNewParc = true
+        show.showNewParc = true;
         show.showSpinner = false;
         show.showAlert = true;
         show.showAlertType = "warning";
@@ -72,14 +75,37 @@ export const parcStore = defineStore("Parc", () => {
       });
   }
 
+  function getParcs(userId) {
+    axios
+      .get(`${URL}/api/parcs/user/${userId}`, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log("tena ", response.data);
+        parcsData.value = response.data;
+        show.showParcDetailData.value = response.data[0]
+        console.log('ito ary' , show.showParcDetailData.value);
+        
+        // Assigner les parcs récupérés au ref
+      })
+      .catch((err) => {
+        console.error("Erreur lors de la récupération des parcs :", err);
+      });
+  } // Charger les parcs au montage du composant
+  onMounted(() => {
+    const userId = JSON.parse(localStorage.getItem("user")).user.id;
+    getParcs(userId);
+  });
 
   return {
-  parc,
-  description,
-  adresse,
-  nombreBat,
-  phone,
-  email,
-  register
+    parc,
+    description,
+    adresse,
+    nombreBat,
+    phone,
+    email,
+    parcsData,
+    register,
+    getParcs,
   };
 });

@@ -10,6 +10,21 @@ export const useShow = defineStore("Show", () => {
   const showSpinner = ref(false)
   const showProfilDetail = ref(false)
   const showNotificationDetail = ref(false)
+  const showParcDetailData = ref({})
+
+  const showDeleteParc = ref(false)
+  const showParcNameDelete = ref('')
+  const showParcNameDeleteId = ref('')
+  
+  function showDeleteParcFunc(itemdelete , idParc) {
+    showParcNameDelete.value = itemdelete
+    showParcNameDeleteId.value = idParc
+    showDeleteParc.value = !showDeleteParc.value;
+  }
+
+  function showParcDetailFunc(parcItem) {
+    showParcDetailData.value = parcItem
+  }
 
   const showNewParc = ref(false)
   function showNewParcFunc() {
@@ -382,6 +397,10 @@ export const useShow = defineStore("Show", () => {
     showNotificationDetailOne,
     notifData,
     showNewParc,
+    showParcDetailData,
+    showDeleteParc,
+    showParcNameDelete,
+    showParcNameDeleteId,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
@@ -405,6 +424,8 @@ export const useShow = defineStore("Show", () => {
     showNotificationDetailFunc,
     showNotificationDetailOneFunc,
     showNewParcFunc,
+    showParcDetailFunc,
+    showDeleteParcFunc,
 
   };
 });

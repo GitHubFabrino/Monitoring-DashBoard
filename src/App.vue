@@ -14,6 +14,7 @@ import ProfilUser from "./components/containtes/modals/ProfilUser.vue";
 import Logout from "./components/containtes/modals/Logout.vue";
 import NotificationComponent from "./components/containtes/modals/NotificationComponent.vue";
 import NewParcComponent from "./components/containtes/modals/NewParcComponent.vue";
+import DeleteComponent from "./components/containtes/modals/DeleteComponent.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -62,6 +63,9 @@ if (
     </Teleport>
     <Teleport to="body">
       <NewParcComponent />
+    </Teleport>
+    <Teleport to="body">
+      <DeleteComponent />
     </Teleport>
   </div>
 </template>

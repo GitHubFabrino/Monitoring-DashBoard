@@ -1,42 +1,88 @@
 <template>
   <div class="container">
-    <div class="desc">
+    <div class="desc" v-if="show.showParcDetailData">
       <div class="title">
-        <h2>PARC 01</h2>
-        <h5>Création : 22/22/22</h5>
+        <h2>
+          {{
+            show.showParcDetailData.nom_parc ||
+            show.showParcDetailData.value.nom_parc
+          }}
+        </h2>
+        <h5>
+          Création :
+          {{
+            formatDateAndTime(show.showParcDetailData.created_at) ||
+            formatDateAndTime(show.showParcDetailData.value.created_at)
+          }}
+        </h5>
       </div>
       <div class="text">
         <div class="icon">
           <i class="pi pi-bookmark" style="font-size: 18px; color: #fff"></i>
         </div>
 
-        <h4>Première Parc qui a été créé par le groupe de l'entreprise</h4>
+        <h4>
+          {{
+            show.showParcDetailData.description ||
+            show.showParcDetailData.value.description
+          }}
+        </h4>
       </div>
       <div class="text">
         <div class="icon">
           <i class="pi pi-map-marker" style="font-size: 18px; color: #fff"></i>
         </div>
-        <h4>Ramena Lot 3201 Pll : 31/12</h4>
+        <h4>
+          {{
+            show.showParcDetailData.adresse ||
+            show.showParcDetailData.value.adresse
+          }}
+        </h4>
       </div>
       <div class="text">
         <div class="icon">
           <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
         </div>
-        <h4>Nombre de batterie : 3</h4>
+        <h4>
+          Nombre de batterie :
+          {{
+            show.showParcDetailData.nombre_batteries ||
+            show.showParcDetailData.value.nombre_batteries
+          }}
+        </h4>
       </div>
-      <div class="text">
+      <div
+        class="text"
+        v-for="item in show.showParcDetailData.contacts ||
+        show.showParcDetailData.value.contacts"
+        :key="item.id"
+      >
         <div class="icon">
           <i class="pi pi-phone" style="font-size: 18px; color: #fff"></i>
         </div>
-        <h4>Contact : +261 34 12 568 42</h4>
-      </div>
-      <div class="text">
-        <div class="icon">
-          <i class="pi pi-at" style="font-size: 18px; color: #fff"></i>
-        </div>
-        <h4>Email : pvramena@gmail.com</h4>
+
+        <h4>
+          {{
+            item.type === "email"
+              ? `Email : ${item.valeur}`
+              : `Contact : ${item.valeur}`
+          }}
+        </h4>
+        <i
+          class="pi pi-bell"
+          style="font-size: 18px; color: #fb7b5892"
+          v-if="item.choix === 'oui' ? true : false"
+        ></i>
+        <i
+          class="pi pi-bell-slash"
+          style="font-size: 18px; color: #fb7b5892"
+          v-if="item.choix === 'non' ? true : false"
+        ></i>
       </div>
     </div>
+
+
+
     <div class="list">
       <div class="titre">
         <h4>Liste des Parcs</h4>
@@ -45,7 +91,11 @@
         </div>
       </div>
       <div class="containerList">
-        <div class="item">
+        <div
+          class="item"
+          v-for="parcItem in useParc.parcsData"
+          :key="parcItem.id"
+        >
           <div class="cardTitre">
             <div class="icon">
               <i
@@ -55,11 +105,11 @@
             </div>
 
             <div>
-              <h4>Parc 03</h4>
-              <h4>Parc 03</h4>
+              <h4>{{ parcItem.nom_parc }}</h4>
+              <h6>{{ parcItem.adresse }}</h6>
             </div>
           </div>
-          <div class="btn">
+          <div class="btn" @click="show.showParcDetailFunc(parcItem)">
             <div class="icon blue">
               <i class="pi pi-eye" style="font-size: 12px; color: #fff"></i>
             </div>
@@ -69,7 +119,7 @@
                 style="font-size: 12px; color: #fff"
               ></i>
             </div>
-            <div class="icon red">
+            <div class="icon red" @click="show.showDeleteParcFunc(parcItem.nom_parc, parcItem.id)">
               <i class="pi pi-trash" style="font-size: 12px; color: #fff"></i>
             </div>
           </div>
@@ -83,9 +133,16 @@
 import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
-
+import { parcStore } from "@/stores/parcStore";
+import { ref } from "vue";
+import { formatDateAndTime } from "@/service/functionService";
 const show = useShow();
 const user = useUser();
+const useParc = parcStore();
+
+function deleteParc(idParc) {
+  console.log("kii", idParc);
+}
 </script>
 
 <style scoped>
@@ -176,8 +233,10 @@ const user = useUser();
 }
 .containerList {
   width: 96%;
+  height: 55vh;
   margin: 5px auto;
   padding: 2px;
+  overflow-y: scroll;
 }
 .item {
   display: flex;
@@ -188,12 +247,22 @@ const user = useUser();
   margin-bottom: 5px;
   border-radius: 5px;
 }
-.cardTitre{
+.cardTitre {
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
   width: 60%;
   /* background-color: rebeccapurple; */
+}
+.cardTitre h4 {
+  color: #2d4051;
+  font-weight: 600;
+}
+
+.cardTitre h6 {
+  color: #9a9b9b;
+  font-size: 12px;
+  font-weight: 500;
 }
 .btn {
   /* background-color: #247bc8; */
