@@ -44,8 +44,8 @@
               />
             </div>
             <div class="info">
-              <h4>{{ user.userInfo.name  || user.userInfo.name}}</h4>
-              <h5>{{ user.userInfo.email || user.userInfo.eamil}}</h5>
+              <h4>{{ user.userName  || user.userInfo.name}}</h4>
+              <h5>{{ user.userEmail || user.userInfo.eamil}}</h5>
             </div>
           </div>
 
@@ -74,7 +74,7 @@
           <h4>Notification</h4>
           <div class="nb"><h5>3</h5></div>
         </div>
-        <div class="itemNotif">
+        <div class="itemNotif" @click="show.showNotificationDetailFunc()">
           <div class="icon">
             <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
           </div>

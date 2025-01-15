@@ -85,12 +85,12 @@ import { useUser } from "@/stores/user";
 
 const show = useShow();
 const user = useUser();
-const pseudo = ref('');
-const email = ref('');
-const mdp = ref('');
-const name = ref('');
-const phone = ref('');
-const adresse = ref('');
+const pseudo = ref('pierret1@gmail.com');
+const email = ref('pierret1@gmail.com');
+const mdp = ref('pierret1@gmail.com');
+const name = ref('pierret1@gmail.com');
+const phone = ref('+261 34 05 854 28');
+const adresse = ref('Lazaret');
 
 const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
@@ -120,9 +120,9 @@ const verify = () => {
   user.email = email.value;
   user.password = mdp.value;
   user.name = name.value;
-  user.pseudo = pseudo.value;
-  user.phone = phone.value;
-  user.adresse = adresse.value;
+  user.userpseudo = pseudo.value;
+  user.userphone = phone.value;
+  user.useradresse = adresse.value;
   user.nom_photo_profile = `${pseudo.value}_profil.png`;
   user.validation_compte = '0';
 

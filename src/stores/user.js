@@ -38,9 +38,9 @@ export const useUser = defineStore("User", () => {
     formData.append("password", password.value || "");
     formData.append("name", name.value);
 
-    formData.append("username", pseudo.value);
-    formData.append("phone", phone.value || "");
-    formData.append("adresse", adresse.value);
+    formData.append("username", userpseudo.value);
+    formData.append("phone", userphone.value || "");
+    formData.append("adresse", useradresse.value);
 
     formData.append("nom_photo_profile", nom_photo_profile.value || "");
     formData.append("validation_compte", validation_compte.value || "");
@@ -61,7 +61,10 @@ export const useUser = defineStore("User", () => {
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Enregistré";
-          userInfo.value = response.data;
+          userInfo.value = JSON.stringify(response.data);
+          userName.value = response.data.name
+          userEmail.value = response.data.email
+          console.log("eeeeeeeeeeee",userInfo.value );
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";

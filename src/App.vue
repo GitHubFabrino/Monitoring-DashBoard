@@ -12,6 +12,7 @@ import SpinnerComponent from "@/components/containtes/modals/SpinnerComponent.vu
 import AlertComponent from "@/components/containtes/modals/AlertComponent.vue";
 import ProfilUser from "./components/containtes/modals/ProfilUser.vue";
 import Logout from "./components/containtes/modals/Logout.vue";
+import NotificationComponent from "./components/containtes/modals/NotificationComponent.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -54,6 +55,9 @@ if (
     </Teleport>
     <Teleport to="body">
       <Logout />
+    </Teleport>
+    <Teleport to="body">
+      <NotificationComponent />
     </Teleport>
   </div>
 </template>

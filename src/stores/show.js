@@ -9,6 +9,9 @@ export const useShow = defineStore("Show", () => {
   const showDesc = ref(false);
   const showSpinner = ref(false)
   const showProfilDetail = ref(false)
+  const showNotificationDetail = ref(false)
+
+  
 
   function showProfilDetailFunc() {
     // closeProfile()
@@ -269,6 +272,27 @@ export const useShow = defineStore("Show", () => {
   const showNotification = ref(false);
   const showEmail = ref(false);
 
+  function showNotificationDetailFunc() {
+    showNotification.value = false
+    showNotificationDetail.value = !showNotificationDetail.value;
+  }
+
+  const notifData = ref({})
+  const showNotificationDetailOne = ref(false);
+
+  function showNotificationDetailOneFunc(notif) {
+    console.log("data" , notif);
+    notifData.value = notif
+    console.log("data2" , notif);
+    showNotificationDetailOne.value = true
+  }
+
+
+
+
+
+
+
   function showNotificationFunc() {
     showNotification.value = !showNotification.value;
     if (showEmail.value == true) {
@@ -348,6 +372,9 @@ export const useShow = defineStore("Show", () => {
     showAlertType,
     showProfilDetail,
     showLogout,
+    showNotificationDetail,
+    showNotificationDetailOne,
+    notifData,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
@@ -367,7 +394,9 @@ export const useShow = defineStore("Show", () => {
     showEmailFunc,
     hideenAlert,
     showProfilDetailFunc,
-    showLogoutFunc
+    showLogoutFunc,
+    showNotificationDetailFunc,
+    showNotificationDetailOneFunc
 
   };
 });
