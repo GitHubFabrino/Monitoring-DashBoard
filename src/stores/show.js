@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 export const useShow = defineStore("Show", () => {
   const showLogin = ref(true);
+  const showLogout = ref(false);
   const showSingUp = ref(false);
   const showDashBoard = ref(false);
   const showDesc = ref(false);
@@ -13,6 +14,10 @@ export const useShow = defineStore("Show", () => {
     // closeProfile()
     showDesc.value = false
     showProfilDetail.value = !showProfilDetail.value;
+  }
+  function showLogoutFunc() {
+    showDesc.value = false
+    showLogout.value = !showLogout.value;
   }
 
 
@@ -342,6 +347,7 @@ export const useShow = defineStore("Show", () => {
     showAlertMessage,
     showAlertType,
     showProfilDetail,
+    showLogout,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
@@ -360,7 +366,8 @@ export const useShow = defineStore("Show", () => {
     showNotificationFunc,
     showEmailFunc,
     hideenAlert,
-    showProfilDetailFunc
+    showProfilDetailFunc,
+    showLogoutFunc
 
   };
 });

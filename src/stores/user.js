@@ -13,16 +13,16 @@ export const useUser = defineStore("User", () => {
   const name = ref("");
   const nom_photo_profile = ref("");
   const validation_compte = ref("");
-  const userpseudo = ref('');
-  const userphone = ref('');
-  const useradresse = ref('');
+  const userpseudo = ref("");
+  const userphone = ref("");
+  const useradresse = ref("");
 
   const Oldemail = ref("");
   const Oldpassword = ref("");
   const Oldname = ref("");
-  const Oldpseudo = ref('');
-  const Oldphone = ref('');
-  const Oldadresse = ref('');
+  const Oldpseudo = ref("");
+  const Oldphone = ref("");
+  const Oldadresse = ref("");
 
   const userInfo = ref({});
   const userName = ref("");
@@ -155,7 +155,7 @@ export const useUser = defineStore("User", () => {
       phone: userphone.value,
       adresse: useradresse.value,
     };
-    console.log('UPDATE', formData);
+    console.log("UPDATE", formData);
 
     axios
       .put(`${URL}/api/user/${userId}`, formData, {
@@ -165,13 +165,13 @@ export const useUser = defineStore("User", () => {
         },
       })
       .then((response) => {
-        console.log('response' , response.data);
+        console.log("response", response.data);
         if (response.status === 200) {
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Profil mis à jour";
           userInfo.value = response.data;
-          console.log("userInfo" , userInfo.value.name);
+          console.log("userInfo", userInfo.value.name);
 
           isEditing.value = false;
         } else {
@@ -207,6 +207,59 @@ export const useUser = defineStore("User", () => {
       });
   }
 
+  function logout() {
+    show.showSpinner = true;
+    axios
+      .post(
+        `${URL}/api/logout`,
+        {},
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${document.cookie.split("=")[1]}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("response", response.data);
+        if (response.status === 200) {
+          show.showLogout = false;
+          show.showDashBoard = false;
+          show.showLogin = true;
+          show.showAlert = true;
+          show.showAlertType = "success";
+          show.showAlertMessage = "Déconnexion réussie";
+          document.cookie = `access_token=;path=/;max-age=0`;
+          localStorage.removeItem("user");
+        } else {
+          show.showAlert = true;
+          show.showAlertType = "danger";
+          show.showAlertMessage = "Échec de la déconnexion";
+        }
+
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
+      })
+      .catch((err) => {
+        show.showAlert = true;
+        show.showAlertType = "warning";
+        show.showAlertMessage = "Erreur lors de la déconnexion";
+        console.error(err);
+
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
+      })
+      .finally(() => {
+        show.showSpinner = false;
+      });
+  }
+
   return {
     email,
     password,
@@ -225,11 +278,12 @@ export const useUser = defineStore("User", () => {
     Oldemail,
     Oldpassword,
     Oldname,
-    Oldpseudo ,
+    Oldpseudo,
     Oldphone,
-    Oldadresse ,
+    Oldadresse,
     register,
     login,
     updateProfile,
+    logout,
   };
 });

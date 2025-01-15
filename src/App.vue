@@ -11,9 +11,21 @@ import CreationBatterieParam from "@/components/containtes/modals/CreationBatter
 import SpinnerComponent from "@/components/containtes/modals/SpinnerComponent.vue";
 import AlertComponent from "@/components/containtes/modals/AlertComponent.vue";
 import ProfilUser from "./components/containtes/modals/ProfilUser.vue";
+import Logout from "./components/containtes/modals/Logout.vue";
 
 const show = useShow();
 const cookies = new Cookies();
+if (
+  document.cookie.includes("access_token") &&
+  localStorage.getItem("user") &&
+  localStorage.getItem("user") !== ""
+) {
+  show.showDashBoard = true;
+  show.showLogin = false;
+} else {
+  show.showDashBoard = false;
+  show.showLogin = true;
+}
 </script>
 
 <template>
@@ -39,6 +51,9 @@ const cookies = new Cookies();
     </Teleport>
     <Teleport to="body">
       <ProfilUser />
+    </Teleport>
+    <Teleport to="body">
+      <Logout />
     </Teleport>
   </div>
 </template>

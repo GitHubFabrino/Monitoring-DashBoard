@@ -58,7 +58,7 @@
               <h5 class="item">Mon Profil</h5>
             </div>
 
-            <div class="option">
+            <div class="option" @click="show.showLogoutFunc()">
               <i
                 class="pi pi-sign-out"
                 style="font-size: 14px; color: #2d4051"
@@ -187,27 +187,7 @@ import { useUser } from "@/stores/user";
 
 const show = useShow();
 const user = useUser();
-
-// function getInfoUser() {
-//   const user = localStorage.getItem("user");
-//   if (user) {
-//     try {
-//       userInfo.value = JSON.parse(user);
-//     } catch (error) {
-//       console.error(
-//         "Erreur lors du parsing des informations utilisateur:",
-//         error
-//       );
-//     }
-//   } else {
-//     console.warn(
-//       "Aucune information utilisateur trouvée dans le localStorage."
-//     );
-//   }
-// }
-// onMounted(() => {
-//   getInfoUser();
-// });
+user.userInfo = JSON.parse(localStorage.getItem("user")).user
 
 </script>
 
