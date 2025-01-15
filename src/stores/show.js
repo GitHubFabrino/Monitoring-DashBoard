@@ -280,8 +280,8 @@ export const useShow = defineStore("Show", () => {
 
   function hideenAlert() {
     showAlert.value = false
-    showAlertMessage = ''
-    showAlertType = ''
+    showAlertMessage.value = ''
+    showAlertType.value = ''
     
   }
 

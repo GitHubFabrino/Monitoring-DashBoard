@@ -21,9 +21,18 @@
             <input
               type="text"
               placeholder="Nom"
-              v-model="pseudo"
+              v-model="name"
               class="input"
               @input="transformName"
+            />
+          </div>
+          <div class="itemContainer">
+            <input
+              type="text"
+              placeholder="Pseudo"
+              v-model="pseudo"
+              class="input"
+              
             />
           </div>
           <div class="itemContainer">
@@ -39,6 +48,23 @@
               type="password"
               placeholder="Mot de passe"
               v-model="mdp"
+              class="input"
+            />
+          </div>
+         
+          <div class="itemContainer">
+            <input
+              type="text"
+              placeholder="Phone + 261 "
+              v-model="phone"
+              class="input"
+            />
+          </div>
+          <div class="itemContainer">
+            <input
+              type="text"
+              placeholder="Adresse"
+              v-model="adresse"
               class="input"
             />
           </div>
@@ -62,6 +88,9 @@ const user = useUser();
 const pseudo = ref('');
 const email = ref('');
 const mdp = ref('');
+const name = ref('');
+const phone = ref('');
+const adresse = ref('');
 
 const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
@@ -69,7 +98,7 @@ const validateEmail = (email) => {
 };
 
 const transformName = () => {
-  pseudo.value = pseudo.value.toUpperCase();
+  name.value = name.value.toUpperCase();
 };
 
 const verify = () => {
@@ -90,7 +119,10 @@ const verify = () => {
   console.log('data', pseudo.value, email.value, mdp.value);
   user.email = email.value;
   user.password = mdp.value;
-  user.name = pseudo.value;
+  user.name = name.value;
+  user.pseudo = pseudo.value;
+  user.phone = phone.value;
+  user.adresse = adresse.value;
   user.nom_photo_profile = `${pseudo.value}_profil.png`;
   user.validation_compte = '0';
 

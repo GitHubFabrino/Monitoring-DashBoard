@@ -5,7 +5,6 @@
       <WorkspaceNavigation />
       <div class="containte">
         <WorkspaceContainte />
-        aaaaaaaaaaaaa
       </div>
     </div>
   </div>

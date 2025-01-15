@@ -1,10 +1,35 @@
 <script setup>
 import "primeicons/primeicons.css";
+import { ref, watch, onMounted } from "vue";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
 
 const show = useShow();
 const user = useUser();
+
+function modifier() {
+  user.isEditing = !user.isEditing;
+  user.OlduserName = user.userInfo.name;
+  user.OlduserEmail = user.userInfo.email;
+
+  user.Oldname = user.userInfo.name;
+  user.Oldemail = user.userInfo.email;
+  user.Oldpseudo = user.userInfo.username;
+  user.Oldphone = user.userInfo.phone;
+  user.Oldadresse = user.userInfo.adresse;
+
+  user.userName = user.userInfo.name;
+  user.userEmail = user.userInfo.email;
+
+  user.userpseudo = user.userInfo.username;
+  user.userphone = user.userInfo.phone;
+  user.useradresse = user.userInfo.adresse;
+}
+
+function Enregistrer() {
+  user.isEditing = !user.isEditing;
+  user.updateProfile(user.userInfo.id);
+}
 </script>
 
 <template>
@@ -12,28 +37,83 @@ const user = useUser();
     <div class="showModal" v-if="show.showProfilDetail">
       <div class="formModal">
         <div class="profilContainer">
-          <div class="containerProfil">
+          <div class="containerProfil" v-if="!user.isEditing">
             <div class="imageProfil">
               <img src="/admin.png" alt="" srcset="" class="image" />
             </div>
             <div class="descriptionProfil">
-              <h3>{{  user.userInfo.user.name }}</h3>
-              <h4>{{  user.userInfo.user.name }}</h4>
+              <h3>{{ user.userName || user.userInfo.name }}</h3>
+              <h4>{{ user.userpseudo || user.userInfo.username }}</h4>
             </div>
           </div>
           <div class="containerDesc">
+            <div class="itemContainer" v-if="user.isEditing">
+              <h5>Nom</h5>
+              <input
+                type="text"
+                placeholder="Votre email"
+                v-model="user.userName"
+                class="input"
+              />
+            </div>
+
+            <div class="itemContainer" v-if="user.isEditing">
+              <h5>Pseudo</h5>
+              <input
+                type="text"
+                placeholder="Votre email"
+                v-model="user.userpseudo"
+                class="input"
+              />
+            </div>
+
             <div class="itemContainer">
               <h5>Email</h5>
-              <h4>{{  user.userInfo.user.email }}</h4>
+              <template v-if="!user.isEditing">
+                <h4>{{ user.userEmail || user.userInfo.email }}</h4>
+              </template>
+              <template v-else>
+                <input
+                  type="text"
+                  placeholder="Votre email"
+                  v-model="user.userEmail"
+                  class="input"
+                />
+              </template>
             </div>
-            <!-- <div class="itemContainer">
+            <div class="itemContainer">
               <h5>Numéro Téléphone</h5>
-              <h4>{{ utilisateur.telephoneUtilisateur }}</h4>
+
+              <template v-if="!user.isEditing">
+                <h4>{{ user.userphone || user.userInfo.phone }}</h4>
+              </template>
+              <template v-else>
+                <input
+                  type="text"
+                  placeholder="Votre téléphone"
+                  v-model="user.userphone"
+                  class="input"
+                />
+              </template>
+            </div>
+            <div class="itemContainer">
+              <h5>Adresse</h5>
+              <template v-if="!user.isEditing">
+                <h4>{{ user.useradresse || user.userInfo.adresse }}</h4>
+              </template>
+              <template v-else>
+                <input
+                  type="text"
+                  placeholder="Votre Adresse"
+                  v-model="user.useradresse"
+                  class="input"
+                />
+              </template>
             </div>
             <div class="itemContainer">
               <h5>Poste</h5>
-              <h4>{{ utilisateur.posteUtilisateur }}</h4>
-            </div> -->
+              <h4>Administrateur</h4>
+            </div>
           </div>
 
           <div class="containerBtn">
@@ -42,9 +122,9 @@ const user = useUser();
             </button>
             <button
               class="btn enregistrer"
-              @click=""
+              @click="user.isEditing ? Enregistrer() : modifier()"
             >
-              Modifier
+              {{ user.isEditing ? "Enregistrer" : "Modifier" }}
             </button>
           </div>
         </div>
@@ -100,6 +180,12 @@ const user = useUser();
   height: 100px;
   border-radius: 100%;
   margin-right: 50px;
+}
+.descriptionProfil h3{
+  display: block;
+  font-weight: 600;
+  width: 100%;
+  font-size: 20px;
 }
 .image {
   width: 100%;

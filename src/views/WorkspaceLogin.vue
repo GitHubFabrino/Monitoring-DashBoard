@@ -57,8 +57,8 @@ import { useUser } from "@/stores/user";
 const show = useShow();
 const user = useUser();
 
-const email = ref('pierret@gmail.com');
-const mdp = ref('pierret@gmail.com');
+const email = ref('pierret1@gmail.com');
+const mdp = ref('pierret1@gmail.com');
 
 const verify = () => {
   user.email = email.value;

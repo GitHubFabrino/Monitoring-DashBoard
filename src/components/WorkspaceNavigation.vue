@@ -44,8 +44,8 @@
               />
             </div>
             <div class="info">
-              <h4>{{ user.userInfo.user.name }}</h4>
-              <h5>{{ user.userInfo.user.email }}</h5>
+              <h4>{{ user.userInfo.name  || user.userInfo.name}}</h4>
+              <h5>{{ user.userInfo.email || user.userInfo.eamil}}</h5>
             </div>
           </div>
 
