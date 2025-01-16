@@ -81,11 +81,12 @@
       </div>
     </div>
 
-
-
     <div class="list">
       <div class="titre">
-        <h4>Liste des Parcs</h4>
+        <div>
+          <h4>Liste des Parcs</h4>
+          <h5>Nombre : <span>{{ useParc.parcsData.length }}</span></h5>
+        </div>
         <div class="btnAdd" @click="show.showNewParcFunc()">
           <i class="pi pi-plus-circle" style="font-size: 20px; color: #fff"></i>
         </div>
@@ -119,7 +120,10 @@
                 style="font-size: 12px; color: #fff"
               ></i>
             </div>
-            <div class="icon red" @click="show.showDeleteParcFunc(parcItem.nom_parc, parcItem.id)">
+            <div
+              class="icon red"
+              @click="show.showDeleteParcFunc(parcItem.nom_parc, parcItem.id)"
+            >
               <i class="pi pi-trash" style="font-size: 12px; color: #fff"></i>
             </div>
           </div>
@@ -165,6 +169,10 @@ function deleteParc(idParc) {
   padding: 10px 20px;
   border-radius: 5px;
   margin-bottom: 10px;
+}
+span {
+  font-weight: 800;
+  color: #fb7b58d8;
 }
 
 .title h2 {
@@ -215,6 +223,11 @@ function deleteParc(idParc) {
 
 .titre h4 {
   color: #ededed;
+  font-weight: 600;
+}
+
+.titre h5 {
+  color: #a1a1a1;
   font-weight: 600;
 }
 .btnAdd {

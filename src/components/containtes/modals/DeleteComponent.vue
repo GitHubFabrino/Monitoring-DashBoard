@@ -3,12 +3,14 @@ import "primeicons/primeicons.css";
 import { ref, watch, onMounted } from "vue";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
-
+import { parcStore } from "@/stores/parcStore";
 const show = useShow();
 const user = useUser();
+const parc = parcStore()
 
 function supprimer() {
   console.log("idSup" , show.showParcNameDeleteId);
+  parc.deleteParc(show.showParcNameDeleteId)
 }
 </script>
 

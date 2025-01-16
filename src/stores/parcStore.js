@@ -43,7 +43,7 @@ export const parcStore = defineStore("Parc", () => {
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Enregistré";
-          getParcs(JSON.parse(localStorage.getItem("user")).user.id)
+          getParcs(JSON.parse(localStorage.getItem("user")).user.id);
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";
@@ -83,15 +83,71 @@ export const parcStore = defineStore("Parc", () => {
       .then((response) => {
         console.log("tena ", response.data);
         parcsData.value = response.data;
-        show.showParcDetailData.value = response.data[0]
-        console.log('ito ary' , show.showParcDetailData.value);
-        
+        show.showParcDetailData.value = response.data[0];
+        console.log("ito ary", show.showParcDetailData.value);
+
         // Assigner les parcs récupérés au ref
       })
       .catch((err) => {
-        console.error("Erreur lors de la récupération des parcs :", err);
+        show.showSpinner = false;
+        show.showAlert = true;
+        show.showAlertType = "warning";
+        show.showAlertMessage = "Erreur lors de la récupération des parcs";
+        console.error(err);
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
       });
-  } // Charger les parcs au montage du composant
+  }
+
+  function deleteParc(parcId) {
+    show.showDeleteParc = false
+    show.showSpinner = true;
+    axios
+      .delete(`${URL}/api/parcs/${parcId}`, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log("tena vofafa", response.data);
+        if (response.status === 204) {
+          getParcs(JSON.parse(localStorage.getItem("user")).user.id);
+          show.showAlert = true;
+          show.showAlertType = "success";
+          show.showAlertMessage = "Parc supprimé";
+        } else {
+          show.showAlert = true;
+          show.showAlertType = "danger";
+          show.showAlertMessage = "Échoué";
+        }
+
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
+
+        // Assigner les parcs récupérés au ref
+      })
+      .catch((err) => {
+        show.showSpinner = false;
+        show.showAlert = true;
+        show.showAlertType = "warning";
+        show.showAlertMessage = "Erreur lors de la suppression du donnée";
+        console.error(err);
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
+      })
+      .finally(() => {
+        show.showSpinner = false;
+      });
+  }
+
+  // Charger les parcs au montage du composant
   onMounted(() => {
     const userId = JSON.parse(localStorage.getItem("user")).user.id;
     getParcs(userId);
@@ -107,5 +163,6 @@ export const parcStore = defineStore("Parc", () => {
     parcsData,
     register,
     getParcs,
+    deleteParc
   };
 });
