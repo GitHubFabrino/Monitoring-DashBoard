@@ -11,10 +11,17 @@ export const useShow = defineStore("Show", () => {
   const showProfilDetail = ref(false)
   const showNotificationDetail = ref(false)
   const showParcDetailData = ref({})
+  const showParcDetail = ref(true)
 
   const showDeleteParc = ref(false)
   const showParcNameDelete = ref('')
   const showParcNameDeleteId = ref('')
+
+  const showEditParc = ref(false)
+  function showEditParcFunc() {
+    showParcDetail.value = !showParcDetail.value;
+    showEditParc.value = !showEditParc.value;
+  }
   
   function showDeleteParcFunc(itemdelete , idParc) {
     showParcNameDelete.value = itemdelete
@@ -23,6 +30,8 @@ export const useShow = defineStore("Show", () => {
   }
 
   function showParcDetailFunc(parcItem) {
+    showParcDetail.value = true;
+    showEditParc.value = false
     showParcDetailData.value = parcItem
   }
 
@@ -398,9 +407,11 @@ export const useShow = defineStore("Show", () => {
     notifData,
     showNewParc,
     showParcDetailData,
+    showParcDetail,
     showDeleteParc,
     showParcNameDelete,
     showParcNameDeleteId,
+    showEditParc,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,
@@ -426,6 +437,7 @@ export const useShow = defineStore("Show", () => {
     showNewParcFunc,
     showParcDetailFunc,
     showDeleteParcFunc,
+    showEditParcFunc
 
   };
 });
