@@ -120,6 +120,7 @@ export const useUser = defineStore("User", () => {
           document.cookie = `access_token=${response.data.access_token};path=/;max-age=${response.data.expires_in}`;
           localStorage.setItem("user", JSON.stringify(response.data));
           userInfo.value = response.data.user;
+          userEmail.value = response.data.user.email
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";
@@ -234,6 +235,7 @@ export const useUser = defineStore("User", () => {
           show.showAlertMessage = "Déconnexion réussie";
           document.cookie = `access_token=;path=/;max-age=0`;
           localStorage.removeItem("user");
+          localStorage.removeItem("parcSuperviser");
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";

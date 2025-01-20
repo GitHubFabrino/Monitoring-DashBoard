@@ -10,10 +10,6 @@ const maintenanceStore = useMaintenanceStore();
 const useParc = parcStore();
 const batterie = useBatterie();
 
-const details = ref("");
-const batterie_id = ref("");
-const marque = ref("");
-
 // Charger les parcs au montage du composant
 onMounted(() => {
   try {
@@ -27,28 +23,26 @@ onMounted(() => {
 // Fonction pour ajouter une maintenance
 const addMaintenance = () => {
   const maintenanceData = {
-    details: details.value,
-    batterie_id: batterie_id.value,
+    details: maintenanceStore.detailsM,
+    batterie_id: maintenanceStore.batterie_idM,
     marque: "0",
   };
-  maintenanceStore.createMaintenance(maintenanceData);
+  maintenanceStore.updateMaintenance(maintenanceStore.idMataitenanceM,maintenanceData);
 };
 </script>
 
 <template>
   <Transition>
-    <div class="showModal" v-if="show.showAddMaintenance">
+    <div class="showModal" v-if="maintenanceStore.ismodifierMaintenance">
       <div class="formModal">
-        <h3>
-          Planifier une maintenance"
-        </h3>
+        <h3>Modifier</h3>
         <div class="formulaire">
           <div class="itemContainer">
             <h5>Détails de la maintenance <span>*</span></h5>
             <input
               type="text"
               placeholder="Détails de la maintenance"
-              v-model="  details "
+              v-model="maintenanceStore.detailsM"
               class="input"
             />
           </div>
@@ -56,7 +50,7 @@ const addMaintenance = () => {
           <div class="block w-full">
             <h5>ID de la batterie <span>*</span></h5>
             <select
-              v-model="batterie_id"
+              v-model="maintenanceStore.batterie_idM"
               id="countries"
               class="h-12 border border-gray-300 text-gray-600 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none"
             >
@@ -73,12 +67,18 @@ const addMaintenance = () => {
 
           <div class="itemContainer">
             <button class="btn enregistrer" @click="addMaintenance">
-              Ajouter Maintenance
+              Modifier Maintenance
             </button>
           </div>
         </div>
       </div>
-      <div class="closeForm" @click="show.showAddMaintenanceFunc()">
+      <div
+        class="closeForm"
+        @click="
+          maintenanceStore.ismodifierMaintenance =
+            !maintenanceStore.ismodifierMaintenance
+        "
+      >
         <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
       </div>
     </div>

@@ -36,163 +36,220 @@
         </h4>
       </div>
 
+      
+
       <div class="recent" v-if="show.showRecents">
-        <div class="item">
-          <div class="check">
-            <label>
-              <input type="checkbox" />
-            </label>
-          </div>
+        <div v-for="item in filteredMaintenances" :key="item.id">
+          <div
+            class="item"
+            v-if="item.maintenance.marque === '0' ? true : false"
+          >
+            <!-- {{ item }} -->
 
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
+            <div class="check">
+              <label>
+                <input
+                  @click="checked(item)"
+                  type="checkbox"
+                  :checked="item.maintenance.marque === '0' ? false : true"
+                />
+              </label>
             </div>
-            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023</h5></div>
-          <div class="action">
-            <div class="icon orange">
-              <i
-                class="pi pi-pen-to-square"
-                style="font-size: 12px; color: #fff"
-              ></i>
-            </div>
-            <div class="icon red">
-              <i class="pi pi-trash" style="font-size: 12px; color: #fff"></i>
-            </div>
-          </div>
-        </div>
 
-        <div class="item">
-          <div class="check">
-            <label>
-              <input type="checkbox" />
-            </label>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
+            <div class="text">
+              <div class="icon">
+                <i
+                  class="pi pi-calendar"
+                  style="font-size: 12px; color: #2d4051"
+                ></i>
+              </div>
+              <h4>
+                {{ item.maintenance.details }}
+                {{ item.maintenance.batterie.nom }}
+                {{ useParc.parcSuperviser.nom_parc }}
+              </h4>
             </div>
-            <h4>Maintenance de la Batterie 02 du Parc 01</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023</h5></div>
-          <div class="action">
-            <div class="icon orange">
-              <i
-                class="pi pi-pen-to-square"
-                style="font-size: 12px; color: #fff"
-              ></i>
+            <div class="date">
+              <h5>{{ formatDateTime(item.maintenance.created_at) }}</h5>
             </div>
-            <div class="icon red">
-              <i class="pi pi-trash" style="font-size: 12px; color: #fff"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="check">
-            <label>
-              <input type="checkbox" />
-            </label>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
-            </div>
-            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023</h5></div>
-          <div class="action">
-            <div class="icon orange">
-              <i
-                class="pi pi-pen-to-square"
-                style="font-size: 12px; color: #fff"
-              ></i>
-            </div>
-            <div class="icon red">
-              <i class="pi pi-trash" style="font-size: 12px; color: #fff"></i>
+            <div class="action">
+              <div class="icon orange" @click="modifier(item)">
+                <i
+                  class="pi pi-pen-to-square"
+                  style="font-size: 12px; color: #fff"
+                ></i>
+              </div>
+              <div class="icon red" @click="supprimer(item)">
+                <i class="pi pi-trash" style="font-size: 12px; color: #fff"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
+      
       <div class="historique" v-if="show.showHistoriqueCale">
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-check" style="font-size: 18px; color: #3af130"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
+        <div v-for="item in filteredMaintenances" :key="item.id">
+          <div
+            class="item"
+            v-if="item.maintenance.marque === '0' ? false : true"
+          >
+            <div class="check">
               <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
+                class="pi pi-check"
+                style="font-size: 18px; color: #3af130"
               ></i>
             </div>
-            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023</h5></div>
-          <div class="action"></div>
-        </div>
 
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-check" style="font-size: 18px; color: #3af130"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
+            <div class="text">
+              <div class="icon">
+                <i
+                  class="pi pi-calendar"
+                  style="font-size: 12px; color: #2d4051"
+                ></i>
+              </div>
+              <h4>
+                {{ item.maintenance.details }}
+                {{ item.maintenance.batterie.nom }}
+                {{ useParc.parcSuperviser.nom_parc }}
+              </h4>
             </div>
-            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023</h5></div>
-          <div class="action"></div>
-        </div>
-
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-check" style="font-size: 18px; color: #3af130"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
+            <div class="date">
+              <h5>{{ formatDateTime(item.maintenance.created_at) }}</h5>
             </div>
-            <h4>Maintenance de la Batterie 01 du Parc 01</h4>
+            <div class="action"></div>
           </div>
-          <div class="date"><h5>31 Janvier 2023</h5></div>
-          <div class="action"></div>
         </div>
       </div>
+
+
+
+
+
     </div>
   </div>
 </template>
 
 <script setup>
-import "primeicons/primeicons.css";
+import axios from "axios";
+import { ref, onMounted, watch,computed } from "vue";
 import { useShow } from "@/stores/show";
-import AjoutCalendrierMaintenance from "@/components/containtes/modals/AjoutCalendrierMaintenance.vue";
-
+import { useMaintenanceStore } from "@/stores/maintenanceStore";
+import { parcStore } from "@/stores/parcStore";
+import { useBatterie } from "@/stores/batterieStore";
+import { useUrl } from "@/stores/url";
 const show = useShow();
+const maintenanceStore = useMaintenanceStore();
+const useParc = parcStore();
+const batterie = useBatterie();
+const URL = useUrl().url;
+const search = ref("");
+const details = ref("");
+const batterie_id = ref("");
+const marque = ref("");
+const batteries = ref([]);
+const maintenanceArray = ref([]);
+// Ajouté pour stocker les maintenances temporairement
+
+function formatDateTime(dateString) {
+  const date = new Date(dateString);
+
+  const mois = [
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre",
+  ]; // Récupérer le jour, le mois et l'année
+  const jour = date.getDate();
+  const moisNom = mois[date.getMonth()];
+  const annee = date.getFullYear();
+
+  const heures = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Construire la chaîne de date et heure formatée
+  return `${jour} ${moisNom} ${annee} à ${heures}h${minutes}`;
+}
+
+const fetchMaintenances = async (batterieId) => {
+  try {
+    const response = await axios.get(
+      `${URL}/api/maintenances/batterie/${batterieId}`
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+
+// Propriété calculée pour filtrer les maintenances
+const filteredMaintenances = computed(() => {
+  return maintenanceStore.maintenances.filter((item) => {
+    return item.maintenance.details
+      .toLowerCase()
+      .includes(search.value.toLowerCase());
+  });
+});
+
+function checked(item) {
+  let data = {
+    details: item.maintenance.details,
+    batterie_id: item.maintenance.batterie.id,
+    marque: "oui",
+  };
+  console.log("data", data);
+  maintenanceStore.updateMaintenance(item.maintenance.id, data);
+}
+
+function modifier(item) {
+  console.log('item modif' , item.maintenance.batterie_id);
+  maintenanceStore.ismodifierMaintenance = true;
+
+  maintenanceStore.detailsM = item.maintenance.details;
+  maintenanceStore.batterie_idM = item.maintenance.batterie_id;
+maintenanceStore.idMataitenanceM = item.maintenance.id
+  console.log("maintenanceStore.details", maintenanceStore.details);
+  console.log("maintenanceStore.batterie_id", maintenanceStore.batterie_id);
+}
+
+function supprimer(item) {
+  show.showDeleteMaintenance = true;
+  show.showDeleteMaintenanceData = item;
+}
+
+onMounted(async () => {
+  try {
+    const parcid = useParc.parcSuperviser.id;
+    await batterie.getBatteriesByParcId(parcid);
+    batteries.value = batterie.allBatteryData;
+    const maintenancePromises = batteries.value.map((batterie) =>
+      fetchMaintenances(batterie.id)
+    );
+    const maintenanceResults = await Promise.all(maintenancePromises);
+    maintenanceArray.value = maintenanceResults.flat();
+    maintenanceStore.maintenances = maintenanceArray.value;
+    console.log("Maintenances:", maintenanceStore.maintenances);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    show.showSpinner = false;
+  }
+});
+const addMaintenance = () => {
+  const maintenanceData = {
+    details: details.value,
+    batterie_id: batterie_id.value,
+    marque: marque.value,
+  };
+  maintenanceStore.createMaintenance(maintenanceData);
+};
 </script>
 
 <style scoped>

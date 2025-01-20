@@ -12,6 +12,10 @@ export const useShow = defineStore("Show", () => {
   const showNotificationDetail = ref(false)
   const showParcDetailData = ref({})
   const showParcDetail = ref(true)
+  const showVoirAlerteData = ref(false)
+
+  const showDeleteMaintenanceData= ref()
+  const showDeleteMaintenance = ref(false)
 
   const showDeleteParc = ref(false)
   const showParcNameDelete = ref('')
@@ -412,6 +416,9 @@ export const useShow = defineStore("Show", () => {
     showParcNameDelete,
     showParcNameDeleteId,
     showEditParc,
+    showDeleteMaintenanceData,
+    showDeleteMaintenance,
+    showVoirAlerteData,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,

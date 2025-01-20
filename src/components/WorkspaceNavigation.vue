@@ -6,6 +6,105 @@
       <h3 class="liking">Utilisateurs</h3>
       <!-- <h3 class="liking">Paramètres</h3> -->
     </div>
+    <div class="parc" @click="toggleDropdown()">
+      <div>
+        <h1>
+        {{
+          useParc?.parcSuperviser?.nom_parc ||
+          parcSuperviserLocal?.nom_parc ||
+          ""
+        }}
+      </h1>
+      <h6>
+        {{
+          useParc?.parcSuperviser?.adresse || parcSuperviserLocal?.adresse || ""
+        }}
+      </h6>
+      </div>
+      <div class="drop"   >
+        <svg
+          class="dropdown-open:rotate-180 w-2.5 h-2.5 text-white"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+      </div>
+      
+    </div>
+
+    <div class="dropdown absolute inline-flex position" >
+  
+      <div
+        id="dropdown-with-radiobutton"
+        class="dropdown-menu rounded-xl shadow-lg bg-white absolute  w-60 mt-2 p-6"
+        v-if="dropdownOpen"
+      >
+        <div class="relative mb-4">
+          <div
+            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.75 15.75L14.25 14.25M15 8.25C15 11.9779 11.9779 15 8.25 15C4.52208 15 1.5 11.9779 1.5 8.25C1.5 4.52208 4.52208 1.5 8.25 1.5C11.9779 1.5 15 4.52208 15 8.25Z"
+                stroke="#6B7280"
+                stroke-width="1.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="input-group-search"
+            class="block w-full py-2 px-4 pl-10 text-sm text-gray-900 placeholder-gray-500 border border-gray-300 rounded-full focus:outline-none"
+            placeholder="Search in list.."
+          />
+        </div>
+        <ul class="space-y-4">
+          <li   v-for="parcItem in useParc.parcsData"
+          :key="parcItem.id" class="list"  @click="fermer(parcItem)">
+            <div class="flex items-center">
+              <label
+                for="radio-group-1"
+                class="flex items-center cursor-pointer text-gray-600 text-sm font-medium p-2 "
+              >
+               
+                {{ parcItem.nom_parc }}
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="profil">
       <div class="notif">
         <div class="notification show" @click="show.showNotificationFunc()">
@@ -44,8 +143,8 @@
               />
             </div>
             <div class="info">
-              <h4>{{ user.userName  || user.userInfo.name}}</h4>
-              <h5>{{ user.userEmail || user.userInfo.eamil}}</h5>
+              <h4>{{ user.userName || user.userInfo.name }}</h4>
+              <h5>{{ user.userEmail || user.userInfo.eamil }}</h5>
             </div>
           </div>
 
@@ -184,11 +283,30 @@
 import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
+import { parcStore } from "@/stores/parcStore";
+import { ref } from "vue";
 
 const show = useShow();
 const user = useUser();
-user.userInfo = JSON.parse(localStorage.getItem("user")).user
+const useParc = parcStore();
+user.userInfo = JSON.parse(localStorage.getItem("user")).user;
+const parcSuperviserLocal = ref(
+  JSON.parse(localStorage.getItem("parcSuperviser"))
+);
+const dropdownOpen = ref(false);
+function toggleDropdown() {
+ 
+  dropdownOpen.value = !dropdownOpen.value;
+  console.log('rrrrrrrr' , dropdownOpen.value);
+}
 
+function fermer(parc) {
+  useParc.test = true
+  dropdownOpen.value = false
+  useParc.parcSuperviserFunc(parc)
+  useParc.parcSuperviser = parc
+  console.log( 'tttttt',useParc.parcSuperviser);
+}
 </script>
 
 <style scoped>
@@ -216,11 +334,35 @@ user.userInfo = JSON.parse(localStorage.getItem("user")).user
   border-radius: 2px;
   background-color: #1d222b;
 }
+
 .profil {
   width: 20%;
   text-align: right;
   display: flex;
   justify-content: space-between;
+}
+
+.position {
+  top: 100px;
+  right: 350px;
+}
+
+.parc h1 {
+  color: #fb7a58;
+  font-weight: 600;
+}
+.parc h6 {
+  color: #d8d7d7;
+  font-size: 12px;
+}
+.parc {
+  width: 20%;
+  /* background-color: #89bece; */
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 .photo {
   width: 50px;
@@ -229,6 +371,9 @@ user.userInfo = JSON.parse(localStorage.getItem("user")).user
   background-color: chartreuse;
   text-align: center;
   margin-right: 10px;
+}
+.list:hover{
+  background-color: #fb7a58 !important;
 }
 .notif {
   width: 70%;

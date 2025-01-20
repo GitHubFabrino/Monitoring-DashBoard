@@ -4,154 +4,51 @@
       <h3>Visualisation des données</h3>
     </div>
     <div class="contenu">
-      <div class="entete">
+      <!-- <div class="entete">
         <div class="option">
-          <div class="opt1">
+          <div
+            class="opt1"
+            v-for="item in batterie.allBatteryData"
+            :key="item.id"
+          >
             <h4
-              @click="show.setShowVisSelect('bat1')"
-              :class="{
-                select: show.showVisBat1 == true,
-              }"
+              @click="selectBattery(item)"
+              :class="{ select: selectedBattery?.id === item.id }"
             >
-              Batterie 01
+              Batterie {{ item.nom }}
             </h4>
-            <div class="optionType" v-if="show.showVisBat1Horo">
-              <h4 @click="show.setshowSeletHorodatage('Jour')">Jour</h4>
-              <h4 @click="show.setshowSeletHorodatage('Semaine')">Semaine</h4>
-              <h4 @click="show.setshowSeletHorodatage('Mois')">Mois</h4>
-              <h4 @click="show.setshowSeletHorodatage('Année')">Année</h4>
-            </div>
-          </div>
-
-          <div class="opt1">
-            <h4
-              @click="show.setShowVisSelect('bat2')"
-              :class="{
-                select: show.showVisBat2 == true,
-              }"
+            <div
+              class="optionType"
+              v-show="type && selectedBattery?.id === item.id"
             >
-              Batterie 02
-            </h4>
-            <div class="optionType" v-if="show.showVisBat2Horo">
-              <h4 @click="show.setshowSeletHorodatage('Jour')">Jour</h4>
-              <h4 @click="show.setshowSeletHorodatage('Semaine')">Semaine</h4>
-              <h4 @click="show.setshowSeletHorodatage('Mois')">Mois</h4>
-              <h4 @click="show.setshowSeletHorodatage('Année')">Année</h4>
-            </div>
-          </div>
-
-          <div class="opt1">
-            <h4
-              @click="show.setShowVisSelect('bat3')"
-              :class="{
-                select: show.showVisBat3 == true,
-              }"
-            >
-              Batterie 03
-            </h4>
-            <div class="optionType" v-if="show.showVisBat3Horo">
-              <h4 @click="show.setshowSeletHorodatage('Jour')">Jour</h4>
-              <h4 @click="show.setshowSeletHorodatage('Semaine')">Semaine</h4>
-              <h4 @click="show.setshowSeletHorodatage('Mois')">Mois</h4>
-              <h4 @click="show.setshowSeletHorodatage('Année')">Année</h4>
+              <h4 @click="selectTimeRange('Jour')">Jour</h4>
+              <h4 @click="selectTimeRange('Semaine')">Semaine</h4>
+              <h4 @click="selectTimeRange('Mois')">Mois</h4>
+              <h4 @click="selectTimeRange('Année')">Année</h4>
             </div>
           </div>
         </div>
-        <h4>{{ show.showSeletHorodatage }}</h4>
-      </div>
+        <h4>{{ selectedTimeRange }}</h4>
+      </div> -->
 
       <div class="recent" v-if="show.showRecents">
-        <VoltageCurrentTemperatureChart
-          :timeData="[
-            '0s',
-            '1s',
-            '2s',
-            '3s',
-            '4s',
-            '5s',
-            '6s',
-            '7s',
-            '8s',
-            '9s',
-            '10s',
-            '11s',
-            '12s',
-            '13s',
-            '14s',
-            '15s',
-            '16s',
-            '17s',
-            '18s',
-            '19s',
-            '20s',
-            '21s',
-            '22s',
-            '23s',
-            '24s',
-            '25s',
-            '26s',
-            '27s',
-            '28s',
-            '29s',
-            '30s',
-            '31s',
-            '32s',
-            '33s',
-            '34s',
-            '35s',
-            '36s',
-            '37s',
-            '38s',
-            '39s',
-            '40s',
-            '41s',
-            '42s',
-            '43s',
-            '44s',
-            '45s',
-            '46s',
-            '47s',
-            '48s',
-            '49s',
-            '50s',
-            '51s',
-            '52s',
-            '53s',
-            '54s',
-            '55s',
-            '56s',
-            '57s',
-            '58s',
-            '59s',
-          ]"
-          :voltageData="[
-            12.5, 12.52, 12.54, 12.56, 12.58, 12.6, 12.61, 12.63, 12.64, 12.66,
-            12.67, 12.68, 12.69, 12.69, 12.7, 12.7, 12.7, 12.69, 12.69, 12.69,
-            12.68, 12.67, 12.66, 12.64, 12.63, 12.61, 12.6, 12.59, 12.57, 12.55,
-            12.53, 12.51, 12.49, 12.47, 12.45, 12.43, 12.41, 12.39, 12.37,
-            12.36, 12.34, 12.33, 12.32, 12.31, 12.3, 12.3, 12.3, 12.3, 12.3,
-            12.3, 12.3, 12.3, 12.31, 12.32, 12.33, 12.34, 12.35, 12.36, 12.37,
-            12.38, 12.39, 12.4, 12.41,
-          ]"
-          :currentData="[
-            2.0, 2.02, 2.04, 2.06, 2.07, 2.08, 2.09, 2.1, 2.1, 2.09, 2.09, 2.08,
-            2.07, 2.05, 2.03, 2.01, 1.99, 1.97, 1.95, 1.93, 1.92, 1.91, 1.9,
-            1.9, 1.9, 1.9, 1.91, 1.92, 1.93, 1.95, 1.97, 1.99, 2.01, 2.03, 2.04,
-            2.06, 2.07, 2.08, 2.09, 2.1, 2.1, 2.09, 2.09, 2.08, 2.07, 2.06,
-            2.04, 2.03, 2.02, 2.02, 2.02, 2.03, 2.04, 2.06, 2.07, 2.09, 2.1,
-            2.1, 2.1, 2.1, 2.1,
-          ]"
-          :temperatureData="[
-            25.0, 25.1, 25.2, 25.3, 25.4, 25.5, 25.6, 25.7, 25.8, 25.9, 26.0,
-            26.1, 26.2, 26.3, 26.4, 26.5, 26.6, 26.7, 26.8, 26.9, 27.0, 27.1,
-            27.2, 27.3, 27.4, 27.5, 27.6, 27.7, 27.8, 27.9, 28.0, 28.1, 28.2,
-            28.3, 28.4, 28.5, 28.6, 28.7, 28.8, 28.9, 29.0, 29.1, 29.2, 29.3,
-            29.4, 29.5, 29.6, 29.7, 29.8, 29.9, 30.0, 30.1, 30.2, 30.3, 30.4,
-            30.5, 30.6, 30.7, 30.8, 30.9,
-          ]"
+        <!-- <VoltageCurrentTemperatureChart
+          :timeData="lectureStore.voltageData"
+          :voltageData="lectureStore.currentData"
+          :currentData="lectureStore.temperatureData"
+          :temperatureData="lectureStore.timeData"
           :height="'350px'"
+        /> -->
+        <VoltageCurrentTemperatureChart
+  
         />
       </div>
+      <!-- {{ voltageData }}
+      {{ temperatureData }}
+      {{ currentData }}
+      {{ timeData }}
+
+      {{ lectureStore.allLectureData }} -->
 
       <div class="historique" v-if="show.showHistoriqueCale">
         <div class="item">
@@ -214,10 +111,115 @@
 
 <script setup>
 import "primeicons/primeicons.css";
+import { ref, onMounted } from "vue";
 import { useShow } from "@/stores/show";
-import VoltageCurrentTemperatureChart from "@/components/containtes/VoltageCurrentTemperatureChart.vue";
-
+import { useBatterie } from "@/stores/batterieStore";
+import { parcStore } from "@/stores/parcStore";
+import { useLectureStore } from "@/stores/lectureStore";
+const batterie = useBatterie();
 const show = useShow();
+const useParc = parcStore();
+
+const lectureStore = useLectureStore();
+
+import VoltageCurrentTemperatureChart from "@/components/containtes/VoltageCurrentTemperatureChart.vue";
+const selectedBattery = ref("");
+const selectedTimeRange = ref("");
+const type = ref(false);
+
+function selectBattery(item) {
+  selectedBattery.value = item;
+  console.log("selectedBattery.value ", selectedBattery.value);
+  type.value = selectedBattery.value && selectedBattery.value.id === item.id;
+  console.log("type", type.value);
+}
+
+function selectTimeRange(range) {
+  selectedTimeRange.value = range;
+  type.value = false;
+}
+
+const voltageData = ref([]);
+const currentData = ref([]);
+const temperatureData = ref([]);
+const timeData = ref([]);
+
+function selecteData(idBat) {
+  // Réinitialisation des tableaux pour éviter l'accumulation de données
+  voltageData.value = [];
+  currentData.value = [];
+  temperatureData.value = [];
+  timeData.value = [];
+
+  // Parcours des données de lecture
+  for (let index = 0; index < lectureStore.allLectureData.length; index++) {
+    console.log("ato");
+
+    if (lectureStore.allLectureData[index].batterie_id === idBat) {
+      console.log("oui", lectureStore.allLectureData[index]);
+
+      // Parcours des lectures de la batterie sélectionnée
+      for (
+        let i = 0;
+        i < lectureStore.allLectureData[index].lectures.length;
+        i++
+      ) {
+        voltageData.value.push(
+          Number(lectureStore.allLectureData[index].lectures[i].tension)
+        );
+        currentData.value.push(
+          Number(lectureStore.allLectureData[index].lectures[i].courant)
+        );
+        temperatureData.value.push(
+          Number(lectureStore.allLectureData[index].lectures[i].temperature)
+        );
+        timeData.value.push(
+          lectureStore.allLectureData[index].lectures[i].created_at
+        );
+      }
+    }
+  }
+
+  console.log("voltageData", voltageData.value);
+  console.log("currentData", currentData.value);
+  console.log("temperatureData", temperatureData.value);
+  console.log("timeData", timeData.value);
+}
+
+// onMounted(() => {
+//   let parcid = useParc.parcSuperviser.id;
+//   console.log("id", parcid);
+
+//   // Récupération des données de la batterie avant de les sélectionner
+//   console.log("######################");
+//   lectureStore.getLectureByParcId(parcid);
+
+//   // Sélection des données pour la première batterie
+//   selecteData(batterie.allBatteryData[0].id);
+// });
+
+
+import { watch } from "vue";
+
+onMounted(async () => {
+  let parcid = useParc.parcSuperviser.id;
+  console.log("id", parcid);
+
+  // Récupération des données initiales
+  await lectureStore.getLectureByParcId(parcid);
+
+  // Surveille les données et met à jour lorsque disponibles
+  watch(
+    () => batterie.allBatteryData,
+    (newVal) => {
+      if (newVal.length > 0) {
+        selecteData(newVal[0].id); // Charge les données de la première batterie
+      }
+    },
+    { immediate: true } // Exécute au moment où le `watch` est défini
+  );
+});
+
 </script>
 
 <style scoped>

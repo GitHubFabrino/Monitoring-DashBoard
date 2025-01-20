@@ -1,5 +1,5 @@
 <template >
-  <div class="cardItem">
+  <div class="cardItem1">
    <div class="card">
     <div class="titre">
         <div class="icon">
@@ -67,7 +67,7 @@ console.log("curent ",props );
   margin: 0 auto;
   align-content: center;
 }
-.cardItem{
+.cardItem1{
   /* background-color: red; */
   background-color: rgb(253, 253, 253);
   width: 32%;

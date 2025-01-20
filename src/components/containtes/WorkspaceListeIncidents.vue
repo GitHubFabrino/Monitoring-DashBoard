@@ -34,132 +34,66 @@
       </div>
 
       <div class="recent" v-if="show.showRecents">
-        <div class="item">
-          <div class="check">
-            <label>
-              <input type="checkbox" />
-            </label>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
+        <div v-for="item in filteredItems">
+          <div
+            v-if="!item.read === 0 ? false : true"
+            :key="item.id"
+            class="item"
+          >
+            <div class="check">
+              <label>
+                <input
+                  type="checkbox"
+                  :checked="item.read === 0 ? false : true"
+                />
+              </label>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action">
-            <div class="icon orange">
-              <i class="pi pi-eye" style="font-size: 12px; color: #fff"></i>
-            </div>
-          </div>
-        </div>
 
-        <div class="item">
-          <div class="check">
-            <label>
-              <input type="checkbox" />
-            </label>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
+            <div class="text">
+              <div class="icon">
+                <i
+                  class="pi pi-calendar"
+                  style="font-size: 12px; color: #2d4051"
+                ></i>
+              </div>
+              <h4>{{ item.message }} {{ item.batterie.nom }}</h4>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action">
-            <div class="icon orange">
-              <i class="pi pi-eye" style="font-size: 12px; color: #fff"></i>
+            <div class="date">
+              <h5>{{ formatDateTime(item.created_at) }}</h5>
             </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="check">
-            <label>
-              <input type="checkbox" />
-            </label>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
-            </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action">
-            <div class="icon orange">
-              <i class="pi pi-eye" style="font-size: 12px; color: #fff"></i>
+            <div class="action">
+              <div class="icon orange" @click="voir(item)">
+                <i class="pi pi-eye" style="font-size: 12px; color: #fff"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div class="historique" v-if="show.showHistoriqueCale">
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-check" style="font-size: 18px; color: #3af130"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
+        <div v-for="item in filteredItems">
+          <div class="item" v-if="item.read === 0 ? false : true">
+            <div class="check">
               <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
+                class="pi pi-check"
+                style="font-size: 18px; color: #3af130"
               ></i>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action"></div>
-        </div>
 
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-check" style="font-size: 18px; color: #3af130"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
+            <div class="text">
+              <div class="icon">
+                <i
+                  class="pi pi-calendar"
+                  style="font-size: 12px; color: #2d4051"
+                ></i>
+              </div>
+              <h4>{{ item.message }} {{ item.batterie.nom }}</h4>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action"></div>
-        </div>
-
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-times" style="font-size: 18px; color: #f13030"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
+            <div class="date">
+              <h5>{{ formatDateTime(item.created_at) }}</h5>
             </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
+            <div class="action"></div>
           </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action"></div>
         </div>
       </div>
     </div>
@@ -168,10 +102,60 @@
 
 <script setup>
 import "primeicons/primeicons.css";
+import { onMounted, ref ,computed  } from "vue";
 import { useShow } from "@/stores/show";
-import AjoutCalendrierMaintenance from "@/components/containtes/modals/AjoutCalendrierMaintenance.vue";
-
+import { useBatterie } from "@/stores/batterieStore";
+import { parcStore } from "@/stores/parcStore";
+import { useAlerteBatterieStore } from "@/stores/alerteBatterie";
 const show = useShow();
+const batterie = useBatterie();
+const useParc = parcStore();
+const alerteBatterieStore = useAlerteBatterieStore();
+const search = ref("");
+
+function formatDateTime(dateString) {
+  const date = new Date(dateString);
+
+  const mois = [
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre",
+  ]; // Récupérer le jour, le mois et l'année
+  const jour = date.getDate();
+  const moisNom = mois[date.getMonth()];
+  const annee = date.getFullYear();
+
+  const heures = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Construire la chaîne de date et heure formatée
+  return `${jour} ${moisNom} ${annee} à ${heures}h${minutes}`;
+}
+const filteredItems = computed(() => {
+  return alerteBatterieStore.allAllerteDataByParc.filter((item) =>
+    item.message.toLowerCase().includes(search.value.toLowerCase())
+  );
+});
+
+function voir(item) {
+  alerteBatterieStore.voirAlerteData = item;
+  show.showVoirAlerteData = true;
+}
+
+onMounted(() => {
+  try {
+    let parcid = useParc.parcSuperviser.id;
+    console.log("parc", parcid);
+    alerteBatterieStore.getAlerteByParcId(parcid);
+  } catch (error) {}
+});
 </script>
 
 <style scoped>

@@ -8,6 +8,8 @@ export const parcStore = defineStore("Parc", () => {
   const show = useShow();
   const URL = useUrl().url;
 
+  const parcSuperviser = ref({})
+
   const parc = ref("");
   const description = ref("");
   const adresse = ref("");
@@ -27,6 +29,14 @@ export const parcStore = defineStore("Parc", () => {
   const idContactEmailEdit = ref("");
   const idContactPhoneEdit = ref("");
   const parcIdEdit = ref("");
+
+  const test = ref(false);
+
+  function parcSuperviserFunc(parcItem) {
+    parcSuperviser.value = parcItem
+    localStorage.setItem("parcSuperviser", JSON.stringify(parcItem));
+    
+  }
 
   function register() {
     show.showNewParc = false;
@@ -100,19 +110,21 @@ export const parcStore = defineStore("Parc", () => {
         console.log("tena ", response.data);
         parcsData.value = response.data;
 
-        if (type === "all") {
-          show.showParcDetailData.value = response.data[0];
-          parcIdEdit.value = response.data[0].id;
-          console.log("ito ary", show.showParcDetailData.value);
-        } else if (type === "register") {
-          let index = response.data.length > 0 ? response.data.length - 1 : 0;
-          console.log("index", index);
-          show.showParcDetailData.value = response.data[index];
-          parcIdEdit.value = response.data[index].id;
-          console.log("ito ary", show.showParcDetailData.value);
-        } else {
-          // Traiter d'autres types si nécessaire
-          console.warn("Type non reconnu:", type);
+        if (response.data.length !== 0) {
+          if (type === "all") {
+            show.showParcDetailData.value = response.data[0];
+            parcIdEdit.value = response.data[0].id;
+            console.log("ito ary", show.showParcDetailData.value);
+          } else if (type === "register") {
+            let index = response.data.length > 0 ? response.data.length - 1 : 0;
+            console.log("index", index);
+            show.showParcDetailData.value = response.data[index];
+            parcIdEdit.value = response.data[index].id;
+            console.log("ito ary", show.showParcDetailData.value);
+          } else {
+            // Traiter d'autres types si nécessaire
+            console.warn("Type non reconnu:", type);
+          }
         }
 
         // Assigner les parcs récupérés au ref
@@ -249,8 +261,12 @@ export const parcStore = defineStore("Parc", () => {
 
   // Charger les parcs au montage du composant
   onMounted(() => {
-    const userId = JSON.parse(localStorage.getItem("user")).user.id;
+    try {
+      const userId = JSON.parse(localStorage.getItem("user")).user.id;
     getParcs(userId, "all");
+    } catch (error) {
+      
+    }
   });
 
   return {
@@ -272,6 +288,9 @@ export const parcStore = defineStore("Parc", () => {
     parcIdEdit,
     idContactEmailEdit,
     idContactPhoneEdit,
+    parcSuperviser,
+    test,
+    parcSuperviserFunc,
     register,
     getParcs,
     deleteParc,

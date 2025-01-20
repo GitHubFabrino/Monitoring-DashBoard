@@ -13,5 +13,8 @@ export const colors = {
     muted: '#95a5a6',
     white: '#ffffff',
     black: '#000000',
+    text1: '#2d4051',
+    text2: "#fb7a58"
+    // bgnav : '#2d4051;'
   };
   

@@ -15,6 +15,9 @@ import Logout from "./components/containtes/modals/Logout.vue";
 import NotificationComponent from "./components/containtes/modals/NotificationComponent.vue";
 import NewParcComponent from "./components/containtes/modals/NewParcComponent.vue";
 import DeleteComponent from "./components/containtes/modals/DeleteComponent.vue";
+import DeleteMaintenance from "./components/containtes/modals/DeleteMaintenance.vue";
+import ModifierCalendrierMaintenance from "./components/containtes/modals/ModifierCalendrierMaintenance.vue";
+import VoireAlerteBatterie from "./components/containtes/modals/VoireAlerteBatterie.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -67,7 +70,32 @@ if (
     <Teleport to="body">
       <DeleteComponent />
     </Teleport>
+    <Teleport to="body">
+      <DeleteMaintenance />
+    </Teleport>
+    <Teleport to="body">
+      <ModifierCalendrierMaintenance />
+    </Teleport>
+    <Teleport to="body">
+      <VoireAlerteBatterie />
+    </Teleport>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+html,
+body,
+.app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: red;
+}
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
