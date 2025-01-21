@@ -3,25 +3,27 @@
     <div class="linka">
       <h3 class="liking" @click="show.setActiveItem('Acceuil')">Acceuil</h3>
       <!-- <RouterLink to="" class="liking">Contact </RouterLink> -->
-      <h3 class="liking">Utilisateurs</h3>
+      <!-- <h3 class="liking">Utilisateurs</h3> -->
       <!-- <h3 class="liking">Paramètres</h3> -->
     </div>
     <div class="parc" @click="toggleDropdown()">
       <div>
         <h1>
-        {{
-          useParc?.parcSuperviser?.nom_parc ||
-          parcSuperviserLocal?.nom_parc ||
-          ""
-        }}
-      </h1>
-      <h6>
-        {{
-          useParc?.parcSuperviser?.adresse || parcSuperviserLocal?.adresse || ""
-        }}
-      </h6>
+          {{
+            useParc?.parcSuperviser?.nom_parc ||
+            parcSuperviserLocal?.nom_parc ||
+            ""
+          }}
+        </h1>
+        <h6>
+          {{
+            useParc?.parcSuperviser?.adresse ||
+            parcSuperviserLocal?.adresse ||
+            ""
+          }}
+        </h6>
       </div>
-      <div class="drop"   >
+      <div class="drop">
         <svg
           class="dropdown-open:rotate-180 w-2.5 h-2.5 text-white"
           width="16"
@@ -38,14 +40,12 @@
           ></path>
         </svg>
       </div>
-      
     </div>
 
-    <div class="dropdown absolute inline-flex position" >
-  
+    <div class="dropdown absolute inline-flex position">
       <div
         id="dropdown-with-radiobutton"
-        class="dropdown-menu rounded-xl shadow-lg bg-white absolute  w-60 mt-2 p-6"
+        class="dropdown-menu rounded-xl shadow-lg bg-white absolute w-60 mt-2 p-6"
         v-if="dropdownOpen"
       >
         <div class="relative mb-4">
@@ -73,17 +73,22 @@
             id="input-group-search"
             class="block w-full py-2 px-4 pl-10 text-sm text-gray-900 placeholder-gray-500 border border-gray-300 rounded-full focus:outline-none"
             placeholder="Search in list.."
+            v-model="searchQuery"
+            @input="filterParcs"
           />
         </div>
         <ul class="space-y-4">
-          <li   v-for="parcItem in useParc.parcsData"
-          :key="parcItem.id" class="list"  @click="fermer(parcItem)">
+          <li
+            v-for="parcItem in filteredParcs"
+            :key="parcItem.id"
+            class="list"
+            @click="fermer(parcItem)"
+          >
             <div class="flex items-center">
               <label
                 for="radio-group-1"
-                class="flex items-center cursor-pointer text-gray-600 text-sm font-medium p-2 "
+                class="flex items-center cursor-pointer text-gray-600 text-sm font-medium p-2"
               >
-               
                 {{ parcItem.nom_parc }}
               </label>
             </div>
@@ -92,32 +97,20 @@
       </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="profil">
       <div class="notif">
         <div class="notification show" @click="show.showNotificationFunc()">
-          <span>6</span>
+          <span>{{ show.competerAlerteBatterieUnRead }}</span>
           <i class="pi pi-bell" style="font-size: 18px; color: #fff"></i>
           <h5 class="text">Notification</h5>
         </div>
-        <div class="Mail show" @click="show.showEmailFunc()">
+        <!-- <div class="Mail show" @click="show.showEmailFunc()">
           <span>4</span>
           <i class="pi pi-envelope" style="font-size: 18px; color: #fff"></i>
           <h5 class="text">Mail</h5>
-        </div>
+        </div> -->
       </div>
+
       <div class="photo" @click="show.showDescFunc()">
         <img class="photo" src="/admin.png" alt="" width="100%" height="100%" />
       </div>
@@ -173,45 +166,18 @@
           <h4>Notification</h4>
           <div class="nb"><h5>3</h5></div>
         </div>
-        <div class="itemNotif" @click="show.showNotificationDetailFunc()">
+        <div
+          class="itemNotif"
+          @click="show.showNotificationDetailFunc()"
+          v-for="item in alerteBatterieStore.allAllerteDataByParc"
+          :key="item.id"
+        >
           <div class="icon">
             <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
           </div>
           <div class="textNotif">
-            <h4>Batterie 01</h4>
-            <h5>6h</h5>
-          </div>
-          <div class="icon">
-            <i
-              class="pi pi-ellipsis-v"
-              style="font-size: 14px; color: #2d4051"
-            ></i>
-          </div>
-        </div>
-
-        <div class="itemNotif">
-          <div class="icon">
-            <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
-          </div>
-          <div class="textNotif">
-            <h4>Batterie 01</h4>
-            <h5>6h</h5>
-          </div>
-          <div class="icon">
-            <i
-              class="pi pi-ellipsis-v"
-              style="font-size: 14px; color: #2d4051"
-            ></i>
-          </div>
-        </div>
-
-        <div class="itemNotif">
-          <div class="icon">
-            <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
-          </div>
-          <div class="textNotif">
-            <h4>Batterie 01</h4>
-            <h5>6h</h5>
+            <h4>{{item.batterie.nom}}</h4>
+            <h5 class="date">{{ formatDateTime(item.created_at) }}</h5>
           </div>
           <div class="icon">
             <i
@@ -222,7 +188,7 @@
         </div>
       </div>
 
-      <div class="notificationContainer" v-if="show.showEmail">
+      <!-- <div class="notificationContainer" v-if="show.showEmail">
         <div class="titre">
           <h4>Email</h4>
           <div class="nb"><h5>3</h5></div>
@@ -274,7 +240,7 @@
             ></i>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -284,29 +250,74 @@ import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
 import { parcStore } from "@/stores/parcStore";
-import { ref } from "vue";
-
+import { useMqttAlerteStore } from "@/stores/mqttAlertStore";
+import { ref, computed, onMounted } from "vue";
 const show = useShow();
 const user = useUser();
 const useParc = parcStore();
+const mqttAlerteStore = useMqttAlerteStore();
+
+import { useBatterie } from "@/stores/batterieStore";
+
+import { useAlerteBatterieStore } from "@/stores/alerteBatterie";
+
+const batterie = useBatterie();
+
+const alerteBatterieStore = useAlerteBatterieStore();
+
 user.userInfo = JSON.parse(localStorage.getItem("user")).user;
 const parcSuperviserLocal = ref(
   JSON.parse(localStorage.getItem("parcSuperviser"))
 );
+
+function formatDateTime(dateString) {
+  const date = new Date(dateString);
+
+  const mois = [
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre",
+  ]; // Récupérer le jour, le mois et l'année
+  const jour = date.getDate();
+  const moisNom = mois[date.getMonth()];
+  const annee = date.getFullYear();
+
+  const heures = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Construire la chaîne de date et heure formatée
+  return `${jour} ${moisNom} ${annee} à ${heures}h${minutes}`;
+}
 const dropdownOpen = ref(false);
+const searchQuery = ref("");
+const filteredParcs = computed(() =>
+  useParc.parcsData.filter((parc) =>
+    parc.nom_parc.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+);
 function toggleDropdown() {
- 
   dropdownOpen.value = !dropdownOpen.value;
-  console.log('rrrrrrrr' , dropdownOpen.value);
+  console.log("rrrrrrrr", dropdownOpen.value);
+}
+function fermer(parc) {
+  useParc.test = true;
+  dropdownOpen.value = false;
+  useParc.parcSuperviserFunc(parc);
+  useParc.parcSuperviser = parc;
+  console.log("tttttt", useParc.parcSuperviser);
 }
 
-function fermer(parc) {
-  useParc.test = true
-  dropdownOpen.value = false
-  useParc.parcSuperviserFunc(parc)
-  useParc.parcSuperviser = parc
-  console.log( 'tttttt',useParc.parcSuperviser);
-}
+onMounted(() => {
+  console.log("Store monté, initialisation MQTT...");
+  mqttAlerteStore.initializeMqtt();
+});
 </script>
 
 <style scoped>
@@ -326,8 +337,8 @@ function fermer(parc) {
 .liking {
   padding: 0px 10px;
   color: #f6f8fa;
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .liking:hover {
@@ -345,6 +356,7 @@ function fermer(parc) {
 .position {
   top: 100px;
   right: 350px;
+  z-index: 10;
 }
 
 .parc h1 {
@@ -362,7 +374,6 @@ function fermer(parc) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 .photo {
   width: 50px;
@@ -372,7 +383,7 @@ function fermer(parc) {
   text-align: center;
   margin-right: 10px;
 }
-.list:hover{
+.list:hover {
   background-color: #fb7a58 !important;
 }
 .notif {
@@ -539,8 +550,8 @@ span {
   align-items: center;
 }
 .textNotif {
-  display: flex;
-  width: 70%;
+  /* display: flex; */
+  width: 80%;
   justify-content: space-between;
   align-items: center;
   /* background-color: yellow; */
@@ -549,5 +560,9 @@ span {
 .textNotif h4,
 .textNotif h5 {
   font-weight: 600;
+}
+.date{
+  font-size: 10px;
+  font-weight: 300!important;
 }
 </style>

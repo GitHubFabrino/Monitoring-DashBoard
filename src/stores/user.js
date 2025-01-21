@@ -119,6 +119,7 @@ export const useUser = defineStore("User", () => {
 
           document.cookie = `access_token=${response.data.access_token};path=/;max-age=${response.data.expires_in}`;
           localStorage.setItem("user", JSON.stringify(response.data));
+          localStorage.removeItem("parcSuperviser");
           userInfo.value = response.data.user;
           userEmail.value = response.data.user.email
         } else {

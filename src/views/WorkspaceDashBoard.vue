@@ -22,7 +22,7 @@ import WorkspaceContainte from "@/components/WorkspaceContainte.vue";
   overflow: hidden;
   width: 200%;
   height: 100vh;
-  background-color: rgb(129, 55, 55) !important;
+  background-color: rgb(244, 230, 230) !important;
 }
 .cont {
   flex-grow: 1;

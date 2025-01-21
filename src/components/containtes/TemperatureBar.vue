@@ -1,6 +1,7 @@
 <template>
   <div class="temperature-display">
-    <i :class="iconClass" :style="{ fontSize: '40px', color: props.color }"></i>
+    
+    <h1>{{iconClass}}</h1>
     <span class="temperature-value">{{ temperature }}°C</span>
   </div>
 </template>
@@ -25,11 +26,11 @@ const props = defineProps({
 const iconClass = computed(() => {
   const temp = props.temperature; // Utilisez props.temperature ici
   if (temp < 15) {
-    return "pi pi-cloud"; // Icône pour températures froides
+    return "🌦️"; // Icône pour températures froides
   } else if (temp < 25) {
-    return "pi pi-face-smile"; // Icône pour températures modérées
+    return "🌡️"; // Icône pour températures modérées
   } else {
-    return "pi pi-sun"; // Icône pour températures chaudes
+    return "☀️"; // Icône pour températures chaudes
   }
 });
 </script>

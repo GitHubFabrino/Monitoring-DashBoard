@@ -1,6 +1,6 @@
 <template >
   <div class="cardItem1">
-   <div class="card">
+   <div class="card1">
     <div class="titre">
         <div class="icon">
           <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
@@ -31,14 +31,12 @@
    </div>
     <div class="btn" @click="show.showBattDetails(title , batteryIdBat)"><h4>Détails</h4></div>
   </div>
-  
 </template>
 
 <script setup>
 import { defineProps } from "vue";
 import Progression from "@/components/containtes/chart/Progression.vue";
 import TemperatureBar from "@/components/containtes/TemperatureBar.vue";
-import VoltageCurrentChart from "@/components/containtes/VoltageCurrentChart.vue";
 import BatterieDetail from "@/components/containtes/modals/BatterieDetail.vue";
 import { useShow } from "@/stores/show";
 import RealTimeCurrentTensionChart from "@/components/containtes/chart/RealTimeCurrentTensionChart.vue";
@@ -70,9 +68,9 @@ console.log("curent ",props );
 .cardItem1{
   /* background-color: red; */
   background-color: rgb(253, 253, 253);
-  width: 32%;
+  width: 35%;
 }
-.card{
+.card1{
   width: 100%;
   height: 450px;
   background-color: rgb(253, 253, 253);
@@ -154,7 +152,7 @@ console.log("curent ",props );
   text-align: center;
 }
 .temperature {
-  width: 140px;
+  width: 100%;
   height: 100px;
   align-items: center;
   display: flex;

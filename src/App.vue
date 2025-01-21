@@ -10,6 +10,8 @@ import AjoutCalendrierMaintenance from "@/components/containtes/modals/AjoutCale
 import CreationBatterieParam from "@/components/containtes/modals/CreationBatterieParam.vue";
 import SpinnerComponent from "@/components/containtes/modals/SpinnerComponent.vue";
 import AlertComponent from "@/components/containtes/modals/AlertComponent.vue";
+import AlerteAlerte from "@/components/containtes/modals/AlerteAlerte.vue";
+
 import ProfilUser from "./components/containtes/modals/ProfilUser.vue";
 import Logout from "./components/containtes/modals/Logout.vue";
 import NotificationComponent from "./components/containtes/modals/NotificationComponent.vue";
@@ -79,6 +81,10 @@ if (
     <Teleport to="body">
       <VoireAlerteBatterie />
     </Teleport>
+    <Teleport to="body">
+      <AlerteAlerte />
+    </Teleport>
+     
   </div>
 </template>
 
@@ -89,7 +95,7 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: red;
+
 }
 .app {
   display: flex;

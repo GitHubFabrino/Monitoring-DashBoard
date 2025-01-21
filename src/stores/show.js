@@ -7,60 +7,61 @@ export const useShow = defineStore("Show", () => {
   const showSingUp = ref(false);
   const showDashBoard = ref(false);
   const showDesc = ref(false);
-  const showSpinner = ref(false)
-  const showProfilDetail = ref(false)
-  const showNotificationDetail = ref(false)
-  const showParcDetailData = ref({})
-  const showParcDetail = ref(true)
-  const showVoirAlerteData = ref(false)
+  const showSpinner = ref(false);
+  const showProfilDetail = ref(false);
+  const showNotificationDetail = ref(false);
+  const showParcDetailData = ref({});
+  const showParcDetail = ref(true);
+  const showVoirAlerteData = ref(false);
 
-  const showDeleteMaintenanceData= ref()
-  const showDeleteMaintenance = ref(false)
+  const showDeleteMaintenanceData = ref();
+  const showDeleteMaintenance = ref(false);
 
-  const showDeleteParc = ref(false)
-  const showParcNameDelete = ref('')
-  const showParcNameDeleteId = ref('')
+  const showDeleteParc = ref(false);
+  const showParcNameDelete = ref("");
+  const showParcNameDeleteId = ref("");
 
-  const showEditParc = ref(false)
+  const showAlertBatterie = ref(false);
+  const showAlertBatType = ref("");
+  const showAlertBatterieMessage = ref("");
+  const competerAlerteBatterieUnRead  = ref(0)
+
+  const showEditParc = ref(false);
   function showEditParcFunc() {
     showParcDetail.value = !showParcDetail.value;
     showEditParc.value = !showEditParc.value;
   }
-  
-  function showDeleteParcFunc(itemdelete , idParc) {
-    showParcNameDelete.value = itemdelete
-    showParcNameDeleteId.value = idParc
+
+  function showDeleteParcFunc(itemdelete, idParc) {
+    showParcNameDelete.value = itemdelete;
+    showParcNameDeleteId.value = idParc;
     showDeleteParc.value = !showDeleteParc.value;
   }
 
   function showParcDetailFunc(parcItem) {
     showParcDetail.value = true;
-    showEditParc.value = false
-    showParcDetailData.value = parcItem
+    showEditParc.value = false;
+    showParcDetailData.value = parcItem;
   }
 
-  const showNewParc = ref(false)
+  const showNewParc = ref(false);
   function showNewParcFunc() {
     showNewParc.value = !showNewParc.value;
   }
-  
-
-  
 
   function showProfilDetailFunc() {
     // closeProfile()
-    showDesc.value = false
+    showDesc.value = false;
     showProfilDetail.value = !showProfilDetail.value;
   }
   function showLogoutFunc() {
-    showDesc.value = false
+    showDesc.value = false;
     showLogout.value = !showLogout.value;
   }
 
-
-  const showAlert = ref(false)
-  const showAlertMessage = ref('')
-  const showAlertType = ref('')
+  const showAlert = ref(false);
+  const showAlertMessage = ref("");
+  const showAlertType = ref("");
 
   function showLoginFunc() {
     showLogin.value = true;
@@ -185,8 +186,8 @@ export const useShow = defineStore("Show", () => {
   }
 
   const showBatt = ref(false);
-  const showBatterieItemId = ref()
-  function showBattDetails(itemName , itemId) {
+  const showBatterieItemId = ref();
+  function showBattDetails(itemName, itemId) {
     console.log("detail");
     showBatterieItem.value = itemName;
     showBatterieItemId.value = itemId;
@@ -307,25 +308,19 @@ export const useShow = defineStore("Show", () => {
   const showEmail = ref(false);
 
   function showNotificationDetailFunc() {
-    showNotification.value = false
+    showNotification.value = false;
     showNotificationDetail.value = !showNotificationDetail.value;
   }
 
-  const notifData = ref({})
+  const notifData = ref({});
   const showNotificationDetailOne = ref(false);
 
   function showNotificationDetailOneFunc(notif) {
-    console.log("data" , notif);
-    notifData.value = notif
-    console.log("data2" , notif);
-    showNotificationDetailOne.value = true
+    console.log("data", notif);
+    notifData.value = notif;
+    console.log("data2", notif);
+    showNotificationDetailOne.value = true;
   }
-
-
-
-
-
-
 
   function showNotificationFunc() {
     showNotification.value = !showNotification.value;
@@ -342,10 +337,9 @@ export const useShow = defineStore("Show", () => {
   }
 
   function hideenAlert() {
-    showAlert.value = false
-    showAlertMessage.value = ''
-    showAlertType.value = ''
-    
+    showAlert.value = false;
+    showAlertMessage.value = "";
+    showAlertType.value = "";
   }
 
   return {
@@ -377,6 +371,7 @@ export const useShow = defineStore("Show", () => {
     showBatt2,
     showBatt3,
     showBatt,
+    competerAlerteBatterieUnRead,
     showBatterieItemId,
     showTension,
     showCourant,
@@ -403,6 +398,9 @@ export const useShow = defineStore("Show", () => {
     showSpinner,
     showAlert,
     showAlertMessage,
+    showAlertBatterie,
+    showAlertBatType,
+    showAlertBatterieMessage,
     showAlertType,
     showProfilDetail,
     showLogout,
@@ -444,7 +442,6 @@ export const useShow = defineStore("Show", () => {
     showNewParcFunc,
     showParcDetailFunc,
     showDeleteParcFunc,
-    showEditParcFunc
-
+    showEditParcFunc,
   };
 });

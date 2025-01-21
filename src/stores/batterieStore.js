@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { useShow } from "@/stores/show";
 import { useUrl } from "@/stores/url";
-import { ref , onMounted} from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
 import { parcStore } from "@/stores/parcStore";
 import { format, parseISO } from "date-fns";
@@ -12,7 +12,7 @@ export const useBatterie = defineStore("Batterie", () => {
 
   const nom = ref("");
   const capaciteNominal = ref("");
-  const dateInstallation = ref('');
+  const dateInstallation = ref("");
   const technologie = ref("");
   const marque = ref("");
   const parcId = ref("");
@@ -24,17 +24,13 @@ export const useBatterie = defineStore("Batterie", () => {
   const courant = ref("");
   const temperature = ref("");
   const dodMax = ref("");
-  const parametreBatterieId= ref('')
+  const parametreBatterieId = ref("");
 
-  
+  const batterieModifier = ref();
+  const ismodifier = ref(false);
 
-
-
-  const batterieModifier = ref()
-  const ismodifier = ref(false)
-
-  const allBatteryData = ref([])
-const oneBatteryData =ref({})
+  const allBatteryData = ref([]);
+  const oneBatteryData = ref({});
   function registerBatterie() {
     // show.showNewBatterie = false;
     show.showSpinner = true;
@@ -81,7 +77,7 @@ const oneBatteryData =ref({})
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Batterie enregistrée avec succès! 🎉";
-         
+
           let parcid = useParc.parcSuperviser.id;
           getBatteriesByParcId(parcid);
         } else {
@@ -136,7 +132,7 @@ const oneBatteryData =ref({})
       dod_max: dodMax.value || "",
     };
 
-    console.log("batterie date" ,batterieData );
+    console.log("batterie date", batterieData);
     axios
       .put(`${URL}/api/batterie/${id}`, batterieData, {
         headers: { "Content-Type": "application/json" },
@@ -180,7 +176,7 @@ const oneBatteryData =ref({})
   function deleteBatterie(id) {
     // show.showDeleteBatterie = false;
     show.showSpinner = true;
-    console.log('id', id);
+    console.log("id", id);
     axios
       .delete(`${URL}/api/batterie/${id}`, {
         headers: { "Content-Type": "application/json" },
@@ -224,18 +220,17 @@ const oneBatteryData =ref({})
 
   function getBatteriesByParcId(parcId) {
     show.showSpinner = true;
-    
+
     axios
       .get(`${URL}/api/batterie/parc/${parcId}`, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
+        console.log('all bat by parc whit pram', response.data);
         if (response.status === 200) {
-          const batteries = response.data; // Récupérer les données des batteries show.showAlert = true; show.showAlertType = "success"; show.showAlertMessage = "Batteries récupérées avec succès! ✅";
-          // Vous pouvez ajouter une fonction ici pour traiter les batteries
+          const batteries = response.data; 
           console.log(batteries);
-          allBatteryData.value = response.data
-          // Afficher les batteries dans la console pour le moment
+          allBatteryData.value = response.data;
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";
@@ -264,16 +259,13 @@ const oneBatteryData =ref({})
       });
   }
 
-
-    // Charger les parcs au montage du composant
-    onMounted(() => {
-      try {
-        let parcid = useParc.parcSuperviser.id;
-        getBatteriesByParcId(parcid);
-      } catch (error) {
-        
-      }
-    });
+  // Charger les parcs au montage du composant
+  onMounted(() => {
+    try {
+      let parcid = useParc.parcSuperviser.id;
+      getBatteriesByParcId(parcid);
+    } catch (error) {}
+  });
   return {
     nom,
     capaciteNominal,
@@ -297,6 +289,6 @@ const oneBatteryData =ref({})
     registerBatterie, // Register function added here
     updateBatterie,
     deleteBatterie,
-    getBatteriesByParcId
+    getBatteriesByParcId,
   };
 });

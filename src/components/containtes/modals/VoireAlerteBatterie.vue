@@ -129,8 +129,8 @@ span {
   height: 40px;
   border-radius: 100%;
   position: absolute;
-  right: 425px;
-  top: 300px;
+  right: 33vw;
+  top: 25vh;
   align-items: center;
   display: flex;
   justify-content: center;
