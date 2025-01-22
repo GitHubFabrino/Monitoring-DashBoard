@@ -26,7 +26,7 @@
       <h4>{{ selectedTimeRange }}</h4>
     </div>
 
-    <div class="chart-container" style="height: 500px">
+    <div class="chart-container" style="height: 330px">
       <canvas ref="chartCanvas"></canvas>
     </div>
   </div>
@@ -597,6 +597,7 @@ option {
 .entete h4 {
   font-weight: 600;
   margin-right: 20px;
+  color: #2c3d5e;
 }
 
 .option {
@@ -610,6 +611,7 @@ option {
   font-weight: 600;
   border-bottom: 2px solid #ebedee00;
   padding: 5px 10px;
+  color: #2c3d5e;
 }
 .optionType {
   position: absolute;

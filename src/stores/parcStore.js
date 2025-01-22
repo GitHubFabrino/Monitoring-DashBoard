@@ -102,7 +102,7 @@ export const parcStore = defineStore("Parc", () => {
   }
 
   function getParcs(userId, type) {
-    axios
+    return axios
       .get(`${URL}/api/parcs/user/${userId}`, {
         headers: { "Content-Type": "application/json" },
       })

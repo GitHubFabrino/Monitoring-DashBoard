@@ -17,7 +17,7 @@ const marque = ref("");
 // Charger les parcs au montage du composant
 onMounted(() => {
   try {
-    const parcid = useParc.parcSuperviser.id;
+    const parcid = useParc.parcSuperviser?.id;
     batterie.getBatteriesByParcId(parcid);
   } catch (error) {
     console.error(error);

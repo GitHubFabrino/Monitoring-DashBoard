@@ -1,113 +1,50 @@
 <template>
   <div class="container1">
-    <template v-if="useParc?.parcsData.length !== 0">
-      <div class="containerAcceuil">
-        <template v-if="useParc.test">
-          <!-- {{ useParc.parcSuperviser }}
-          //////////////////////
-          {{ batterie.allBatteryData }}{{ isbat }} -->
-
-          <template v-if="isbat">
-            <template v-if="batterie.allBatteryData.length > 0">
-              <h1>Associer le dispositif à la plateforme</h1>
-              <div class="btn" @click="associer()">
-                <h4>Associer</h4>
-              </div>
-            </template>
-            <template v-else>
-              <div class="containerEmpty">
-                <div class="center">
-                  <i
-                    class="pi pi-globe"
-                    style="font-size: 100px; color: #555c6286"
-                  ></i>
-                  <h1>Paramétrez vos batteries ou ajoutez-en</h1>
-                </div>
-              </div>
-            </template>
-          </template>
-          <template v-else>
-            <template
-              v-if="dataReceived.length > 0 && dataReceived.length <= 3"
+    <div v-if="showparc" class="container1">
+      <div
+        v-if="isGetParc"
+        v-for="parcItem in useParc.parcsData"
+        :key="parcItem.id"
+        class="cardItem1 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
+        @click="handleParcItemClick(parcItem)"
+      >
+        <img class="rounded-t-lg" src="/bg1.png" alt="" height="40vh" />
+        <div class="p-5">
+          <a href="#">
+            <h5
+              class="text-xl font-bold tracking-tight text-gray-900 mycolortext"
             >
-              <BatteryItem
-                v-for="(item, index) in dataReceived"
-                :key="index"
-                :title="titles[index]"
-                :progress="store.progress1"
-                :color1="colors.progressionTextColor"
-                :temperature="parseFloat(temperatures[index])"
-                :color2="colors.temperatureColor"
-                :parc="
-                  useParc?.parcSuperviser?.nom_parc ||
-                  parcSuperviserLocal?.nom_parc
-                "
-                :batteryIdBat="index + 1"
-              />
-            </template>
-            <template v-else>
-              <div class="containerEmpty">
-                <div class="center">
-                  <i
-                    class="pi pi-globe"
-                    style="font-size: 100px; color: #555c6286"
-                  ></i>
-                  <h1>Aucune donnée reçue</h1>
-                  <h3 style="color: #7b7d7e">
-                    Le dispositif n'a pas renvoyé de données
-                  </h3>
-                </div>
-              </div>
-            </template>
-          </template>
-        </template>
-        <template v-else>
-          <div
-            v-for="parcItem in useParc.parcsData"
-            :key="parcItem.id"
-            class="cardItem1 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
+              {{ parcItem.nom_parc }}
+            </h5>
+          </a>
+          <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">
+            {{ parcItem.description }}
+          </p>
+          <a
             @click="handleParcItemClick(parcItem)"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none colorBg"
           >
-            <img class="rounded-t-lg" src="/bg1.png" alt="" height="40vh" />
-            <div class="p-5">
-              <a href="#">
-                <h5
-                  class="text-xl font-bold tracking-tight text-gray-900 mycolortext"
-                >
-                  {{ parcItem.nom_parc }}
-                </h5>
-              </a>
-              <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">
-                {{ parcItem.description }}
-              </p>
-              <a
-                @click="handleParcItemClick(parcItem)"
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none colorBg"
-              >
-                Suppervisé
-                <svg
-                  class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
-        </template>
+            Suppervisé
+            <svg
+              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
-    </template>
-    <template v-else>
-      <div class="containerEmptyParc">
+
+      <div class="containerEmptyParc" v-if="!isGetParc">
         <div class="w-full flex items-center flex-wrap justify-center gap-10">
           <div class="grid gap-4 w-60">
             <svg
@@ -234,13 +171,66 @@
           </div>
         </div>
       </div>
-    </template>
+    </div>
+
+    <div v-if="showAssocier" class="container2">
+      <div class="con" v-if="isBatExist">
+        <h1>Associer le dispositif à la plateforme</h1>
+
+        <div class="btn" @click="associer()">
+          <h4>Associer</h4>
+        </div>
+      </div>
+
+      <div class="containerEmpty" v-if="!isBatExist">
+        <div class="center">
+          <i class="pi pi-globe" style="font-size: 100px; color: #555c6286"></i>
+          <h1>Paramétrez vos batteries ou ajoutez-en</h1>
+          <div class="btn" @click="retour()">
+            <h4>Retourner</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="isbat" class="container1">
+      <template v-if="dataReceived.length > 0 && dataReceived.length <= 3">
+        <BatteryItem
+          v-for="(item, index) in dataReceived"
+          :key="index"
+          :title="titles[index]"
+          :progress="store.progress1"
+          :color1="colors.progressionTextColor"
+          :temperature="parseFloat(temperatures[index])"
+          :color2="colors.temperatureColor"
+          :parc="
+            useParc?.parcSuperviser?.nom_parc || parcSuperviserLocal?.nom_parc
+          "
+          :batteryIdBat="index + 1"
+        />
+      </template>
+      <template v-else>
+        <div class="containerEmpty">
+          <div class="center">
+            <i
+              class="pi pi-globe"
+              style="font-size: 100px; color: #555c6286"
+            ></i>
+            <h1>Aucune donnée reçue</h1>
+            <h3 style="color: #7b7d7e">
+              Le dispositif n'a pas renvoyé de données
+            </h3>
+          </div>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed, onBeforeMount } from "vue";
 import "primeicons/primeicons.css";
+import { Button } from "@/components/ui/button";
 import { useProgressStore } from "@/stores/progress";
 // import { useMqttStore } from "@/stores/mqttStore";
 import BatteryItem from "@/components/containtes/subContaines/BatteryItem.vue";
@@ -260,6 +250,19 @@ const batterie = useBatterie();
 
 const mqttParametreBatterieStore = useMqttParametreBatterieStore();
 
+const isSelectParc = ref(false);
+const isAssocier = ref(false);
+const isGetParc = ref(false);
+
+const voirCreatParc = ref(false);
+const voirCreatBatterie = ref(false);
+const voirCourbe = ref(false);
+
+const showparc = ref(true);
+const showAssocier = ref(false);
+
+const isBatExist = ref(false);
+
 // Store pour le progrès (si utilisé)
 const store = useProgressStore();
 // const mqttStore = useMqttStore()
@@ -270,10 +273,11 @@ const titles = ["01", "02", "03"];
 const parc = "Parc 01";
 const dataReceived = ref([]); // Liste de données reçues par MQTT
 
-const isbat = ref(true);
+const isbat = ref(false);
 
 function associer() {
-  isbat.value = false;
+  isbat.value = true;
+  showAssocier.value = false;
   console.log("asso", batterie.allBatteryData);
 
   // Initialize dataSendToDispositif as an empty array
@@ -291,8 +295,7 @@ function associer() {
   let s = [];
 
   // Iterate through allBatteryData and build the dataSendToDispositif array
-  batterie.allBatteryData.forEach((element , index) => {
-
+  batterie.allBatteryData.forEach((element, index) => {
     if (index >= 3) return;
 
     let contacta;
@@ -312,15 +315,49 @@ function associer() {
     d.push(element.parametre_batteries.seuil_alerte_dod);
     s.push(element.parametre_batteries.seuil_alerte_soc);
   });
-  mqttParametreBatterieStore.publierDonneesBatteries(i,c,cma,cmi,tema,temi,tma,tmi,d,s);
+
+  console.log("les id", i);
+  localStorage.setItem("idAssocier", JSON.stringify(i));
+  localStorage.setItem("datassocier", JSON.stringify(batterie.allBatteryData));
+  mqttParametreBatterieStore.publierDonneesBatteries(
+    i,
+    c,
+    cma,
+    cmi,
+    tema,
+    temi,
+    tma,
+    tmi,
+    d,
+    s
+  );
 }
 
-function handleParcItemClick(parcItem) {
+function retour() {
+  showAssocier.value = false;
+  showparc.value = true;
+}
+
+async function handleParcItemClick(parcItem) {
+  showAssocier.value = true;
+  showparc.value = false;
+  isSelectParc.value = true;
   useParc.test = true;
   useParc.parcSuperviserFunc(parcItem);
   parcSuperviserLocal.value = parcItem; // Assurez-vous de stocker l'objet, pas une chaîne JSON
   localStorage.setItem("parcSuperviser", JSON.stringify(parcItem));
-  console.log("Parc supervisé:", parcItem);
+
+  console.log("Parc Supervise : ", useParc.parcSuperviser);
+
+  try {
+    await batterie.getBatteriesByParcId(parcItem.id);
+    console.log("battery data de parc supervise : ", batterie.allBatteryData);
+    isBatExist.value = batterie.allBatteryData?.length != 0;
+
+    console.log("isBatexist", isBatExist.value);
+  } catch (error) {
+    isGetParc.value = false;
+  }
 }
 
 const parcSuperviserLocal = ref(
@@ -334,33 +371,36 @@ const isEmpty = (obj) => {
   } else if (Object.keys(obj).length === 0) {
     return false;
   }
-
-  // console.log("ty", Object.keys(obj).length);
-  // console.log("ta", !obj || Object.keys(obj).length !== 0);
   return true;
 };
-const isSuperviserEmpty = computed(() => {
-  parcSuperviserLocal.value = JSON.parse(
-    localStorage.getItem("parcSuperviser")
-  );
-  // const emptyUseParcSuperviser = isEmpty(useParc.parcSuperviser);
-  const emptyParcSuperviserLocal = isEmpty(parcSuperviserLocal.value);
-  console.log("useParc.parcSuperviser:", useParc.parcSuperviser);
-  console.log("parcSuperviserLocal:", parcSuperviserLocal.value);
-  return emptyParcSuperviserLocal;
-});
 
 onBeforeMount(() => {
   useParc.test = false;
 });
+
+onMounted(async () => {
+  try {
+    const userId = JSON.parse(localStorage.getItem("user")).user.id;
+    await useParc.getParcs(userId, "all");
+    console.log("azertyuioqsdfgfffff", useParc.parcsData?.length);
+    isGetParc.value = useParc.parcsData?.length != 0;
+  } catch (error) {
+    isGetParc.value = false;
+  }
+});
+
 onMounted(() => {
   console.log("Initialisation");
+
+  // JSON.parse(localStorage.getItem("idAssocier")).length === 0
+  //   ? (isbat = true)
+  //   : (isbat = false);
+
   try {
     const storedParcSuperviser = JSON.parse(
       localStorage.getItem("parcSuperviser")
     );
     parcSuperviserLocal.value = storedParcSuperviser;
-    // parcStore.parcSuperviser = storedParcSuperviser
     useParc.parcSuperviser = storedParcSuperviser;
     console.log(
       "Valeur récupérée depuis le localStorage:",
@@ -435,6 +475,21 @@ onMounted(() => {
   align-content: center;
   background-color: rgb(13, 0, 255);
 }
+.con {
+  width: 100%;
+  height: 20vh;
+  /* background-color: #f5572c; */
+  margin: auto 0px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.con h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2d4051;
+}
 .containerAcceuil {
   display: flex;
   justify-content: space-around;
@@ -463,25 +518,43 @@ onMounted(() => {
 }
 
 .btn {
-  background-color: #328ca8;
+  background-color: #fb7a58;
   padding: 10px;
-  width: 100%;
-  margin: 0 auto;
+  margin-top: 20px;
+  width: 20%;
+  /* margin: auto 10px; */
   text-align: center;
   border-radius: 5px;
+  color: #2d4051;
+  font-weight: 600;
+  font-size: 12px;
 }
 
 .container1 {
-  width: 99%;
+  width: 100%;
   height: 76vh;
+  /* background-color: red; */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin: 0 auto;
+  align-content: center;
+}
+
+.container2 {
+  width: 100%;
+  height: 76vh;
+  /* background-color: red; */
+  display: flex;
+  justify-content: space-between;
   margin: 0 auto;
   align-content: center;
 }
 .containerEmpty {
   display: flex;
+  margin: 0 auto;
+  justify-content: center;
   align-items: center;
+  /* background-color: #f5572c; */
 }
 .containerEmptyParc {
   display: flex;
@@ -491,6 +564,21 @@ onMounted(() => {
 }
 .center {
   text-align: center;
+  color: #2d4051;
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.center h1 {
+  text-align: center;
+  color: #2d4051;
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 10px;
 }
 .btnCreer {
   background-color: #fb7a58;

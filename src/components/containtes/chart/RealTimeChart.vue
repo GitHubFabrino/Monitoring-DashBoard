@@ -3,9 +3,10 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, defineExpose } from 'vue';
+import { ref, onMounted, defineExpose } from 'vue';
 import * as echarts from 'echarts';
 import mqtt from 'mqtt';
+import { useLectureStore } from "@/stores/lectureStore";
 
 export default {
   name: 'RealTimeChart',
@@ -47,34 +48,50 @@ export default {
   setup(props, { expose }) {
     const chart = ref(null);
     let chartInstance = null;
+    const data = ref([]); // Réactif pour stocker les données graphiques
+    const MAX_DATA_POINTS = 10;
 
-    onMounted(() => {
+    const lectureStore = useLectureStore();
+    let allId = JSON.parse(localStorage.getItem("idAssocier"));
+
+    // Chargement initial des données depuis la base
+    const loadInitialData = async () => {
+      try {
+        if (allId.includes(props.batteryId)) {
+          const dataAll = await lectureStore.fetchAllLecture(props.batteryId);
+          const lastTenData = dataAll.slice(-10); // Dernières 10 valeurs
+
+          // Ajouter au tableau réactif `data`
+          data.value = lastTenData.map(e => [
+            new Date(e.created_at).getTime(),
+            props.type === 'courant' ? e.courant : e.tension
+          ]);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des données :", error);
+      }
+    };
+
+    // Initialisation d'ECharts
+    const initChart = () => {
       chartInstance = echarts.init(chart.value);
-      const data = [];
-      const MAX_DATA_POINTS = 8;
 
       const option = {
         title: {
-          text: props.showTitle ? `Batterie ${props.batteryId} - ${props.type.charAt(0).toUpperCase() + props.type.slice(1)}` : ''
+          text: props.showTitle
+            ? `Batterie ${props.batteryId} - ${props.type.charAt(0).toUpperCase() + props.type.slice(1)}`
+            : ''
         },
-        tooltip: {
-          trigger: 'axis'
-        },
+        tooltip: { trigger: 'axis' },
         xAxis: {
           type: 'time',
           boundaryGap: false,
-          axisLabel: {
-            show: props.showTime
-          }
+          axisLabel: { show: props.showTime }
         },
         yAxis: {
           type: 'value',
           name: props.type.charAt(0).toUpperCase() + props.type.slice(1),
-          axisLine: {
-            lineStyle: {
-              color: props.color
-            }
-          }
+          axisLine: { lineStyle: { color: props.color } }
         },
         series: [
           {
@@ -82,19 +99,22 @@ export default {
             type: 'line',
             smooth: true,
             showSymbol: false,
-            data: [],
-            itemStyle: {color: props.color },
-           lineStyle: { color: props.color }
+            data: data.value,
+            itemStyle: { color: props.color },
+            lineStyle: { color: props.color }
           }
         ]
       };
 
       chartInstance.setOption(option);
+    };
 
+    // Mise à jour des données en temps réel via MQTT
+    const initMQTT = () => {
       const client = mqtt.connect('ws://localhost:9001');
 
       client.on('connect', () => {
-        client.subscribe(props.topic, (err) => {
+        client.subscribe(props.topic, err => {
           if (!err) {
             console.log(`Abonné au topic ${props.topic}`);
           }
@@ -103,27 +123,35 @@ export default {
 
       client.on('message', (topic, message) => {
         const batteriesData = JSON.parse(message.toString());
+        const now = new Date().getTime();
 
-        const now = new Date();
-        const value = props.type === 'courant' ? batteriesData[props.batteryId - 1].courant : batteriesData[props.batteryId - 1].tension;
-        data.push([now, value]);
+        const value = props.type === 'courant'
+          ? batteriesData[props.batteryId - 1].courant
+          : batteriesData[props.batteryId - 1].tension;
 
-        if (data.length > MAX_DATA_POINTS) {
-          data.shift();
+        data.value.push([now, value]);
+
+        if (data.value.length > MAX_DATA_POINTS) {
+          data.value.shift(); // Retirer les anciennes données
         }
 
         chartInstance.setOption({
           series: [
             {
-              name: props.type.charAt(0).toUpperCase() + props.type.slice(1),
-              data: data
+              data: data.value
             }
           ]
         });
       });
+    };
+
+    onMounted(async () => {
+      await loadInitialData();
+      initChart();
+      initMQTT();
     });
 
-    // Expose the resize method to allow the parent component to call it
+    // Expose resize pour la redimension
     expose({
       resize() {
         if (chartInstance) {

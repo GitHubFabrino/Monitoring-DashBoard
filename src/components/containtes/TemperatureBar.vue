@@ -40,6 +40,7 @@ const iconClass = computed(() => {
   display: flex;
   align-items: center;
   width: 100%;
+  /* background-color: red; */
   justify-content: space-around;
   font-size: 24px; /* Taille de l'icône et du texte */
 }

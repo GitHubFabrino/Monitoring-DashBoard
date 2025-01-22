@@ -221,16 +221,22 @@ export const useBatterie = defineStore("Batterie", () => {
   function getBatteriesByParcId(parcId) {
     show.showSpinner = true;
 
-    axios
+    return axios
       .get(`${URL}/api/batterie/parc/${parcId}`, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
-        console.log('all bat by parc whit pram', response.data);
+        console.log('all bat by parc whit pram response', response.data);
         if (response.status === 200) {
           const batteries = response.data; 
           console.log(batteries);
           allBatteryData.value = response.data;
+          console.log('all bat by parc allBatteryData.valuee', allBatteryData.value);
+
+
+
+
+         localStorage.setItem('allBatteryData', JSON.stringify(response.data) )
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";

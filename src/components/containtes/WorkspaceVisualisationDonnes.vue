@@ -50,7 +50,7 @@
 
       {{ lectureStore.allLectureData }} -->
 
-      <div class="historique" v-if="show.showHistoriqueCale">
+      <!-- <div class="historique" v-if="show.showHistoriqueCale">
         <div class="item">
           <div class="check">
             <i class="pi pi-check" style="font-size: 18px; color: #3af130"></i>
@@ -104,7 +104,7 @@
           <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
           <div class="action"></div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -234,6 +234,7 @@ onMounted(async () => {
 .titre h3 {
   font-weight: 600;
   width: 60%;
+  color: #2c3d5e;
 }
 .titre {
   display: flex;

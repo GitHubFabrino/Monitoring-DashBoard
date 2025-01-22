@@ -230,6 +230,9 @@ const useParc = parcStore();
   display: flex;
   justify-content: space-around;
   flex-flow: row wrap;
+  overflow-y: scroll;
+  /* background-color: #fb7a58; */
+  height: 65vh;
 }
 
 .item {

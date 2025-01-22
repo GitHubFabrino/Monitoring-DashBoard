@@ -2,7 +2,7 @@
   <div>
     <div class="nav">
       <h4>
-        Acceuil - {{ show.activeMenu }} /
+      {{ show.activeMenu }} /
         <span>{{ show.activeMenuItem }}</span>
       </h4>
     </div>

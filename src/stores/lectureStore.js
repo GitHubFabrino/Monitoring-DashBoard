@@ -128,6 +128,43 @@ export const useLectureStore = defineStore("LectureStore", () => {
       });
   }
 
+
+  function fetchAllLecture(id) {
+    show.showSpinner = true;
+    return axios
+      .get(`${URL}/api/lecture/${id}/batterie`, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+       
+          show.showAlertType = "success";
+          show.showAlertMessage = "Lecture récupérée avec succès! ✅";
+          return response.data; // Retourne les données si la requête réussit
+        } else {
+          show.showAlertType = "danger";
+          show.showAlertMessage =
+            "Erreur lors de la récupération de la lecture. ❌";
+          throw new Error("Erreur de récupération"); // Rejette si le statut n'est pas 200
+        }
+      })
+      .catch((error) => {
+        show.showAlertType = "warning";
+        show.showAlertMessage =
+          "Erreur lors de la récupération de la lecture. ⚠️";
+        console.error("Error fetching lecture:", error);
+        throw error; // Rejette l'erreur pour que l'appelant puisse la gérer
+      })
+      .finally(() => {
+        show.showSpinner = false;
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
+      });
+  }
+
   function createLecture() {
     show.showSpinner = true;
     const lectureData = {
@@ -347,6 +384,7 @@ export const useLectureStore = defineStore("LectureStore", () => {
     createLecture,
     updateLecture,
     getLectureByParcId,
+    fetchAllLecture,
     deleteLecture,
   };
 });

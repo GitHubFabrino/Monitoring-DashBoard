@@ -45,7 +45,7 @@ export const useMqttParametreBatterieStore = defineStore(
             show.showAlertType = "danger";
             show.showAlertMessage = "Erreur lors de la publication MQTT";
           } else {
-            console.log("Données publiées avec succès :", data);
+            console.log("Données publiées avec succès :");
             show.showAlert = true;
             show.showAlertType = "success";
             show.showAlertMessage = "Données publiées avec succès ";
