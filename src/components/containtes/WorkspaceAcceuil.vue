@@ -538,6 +538,7 @@ onMounted(() => {
   justify-content: space-between;
   margin: 0 auto;
   align-content: center;
+  padding: 10px;
 }
 
 .container2 {
