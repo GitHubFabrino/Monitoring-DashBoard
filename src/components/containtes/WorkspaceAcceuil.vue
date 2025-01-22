@@ -1,6 +1,6 @@
 <template>
   <div class="container1">
-    <div v-if="showparc" class="container1">
+    <div v-if="showparc" class="container3">
       <div
         v-if="isGetParc"
         v-for="parcItem in useParc.parcsData"
@@ -540,6 +540,18 @@ onMounted(() => {
   align-content: center;
   padding: 10px;
 }
+
+.container3 {
+  width: 100%;
+  height: 76vh;
+  /* background-color: red; */
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  align-content: center;
+  padding: 10px;
+}
+
 
 .container2 {
   width: 100%;
