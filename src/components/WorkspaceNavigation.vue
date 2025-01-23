@@ -72,7 +72,7 @@
             type="text"
             id="input-group-search"
             class="block w-full py-2 px-4 pl-10 text-sm text-gray-900 placeholder-gray-500 border border-gray-300 rounded-full focus:outline-none"
-            placeholder="Search in list.."
+            placeholder="Recherche.."
             v-model="searchQuery"
             @input="filterParcs"
           />
