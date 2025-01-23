@@ -465,7 +465,17 @@ onMounted(() => {
   border-bottom: 2px solid rgb(255, 255, 255);
   padding: 5px 10px;
 }
-
+.containerEmptyParc {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50vh;
+  /* background-color: #fb7a58; */
+  /* color: red!important;; */
+}
+.containerEmptyParc h2{
+  color: rgb(121, 125, 129)!important;;
+}
 .select {
   color: #328ca8 !important;
   border-bottom: 2px solid #328ca8 !important;

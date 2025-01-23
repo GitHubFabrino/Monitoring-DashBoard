@@ -169,7 +169,7 @@
               color: show.activeMenuItem === 'Liste des incidents récents',
             }"
           >
-            Liste des incidents récents et Historique
+            Liste des incidents récents et Historiques
           </h5>
         </div>
         <!-- <div
@@ -248,70 +248,7 @@
       </div>
     </div>
 
-    <!-- <div class="menu">
-      <div
-        class="menuTitle"
-        :class="{ active: show.activeMenu === 'Statistiques et rapports' }"
-        @click="show.setActiveMenu('Statistiques et rapports')"
-      >
-        <h4
-          :class="{
-            activeText: show.activeMenu === 'Statistiques et rapports',
-          }"
-        >
-          Statistiques et rapports
-        </h4>
-      </div>
-      <div v-if="show.showStatistique">
-        <div
-          class="menuItem"
-          :class="{
-            bg: show.activeMenuItem === 'Rapport mensuel de performance',
-          }"
-          @click="show.setActiveItem('Rapport mensuel de performance')"
-        >
-          <i
-            class="pi pi-chart-scatter"
-            style="font-size: 18px; color: #2d4051"
-            :class="{
-              color: show.activeMenuItem === 'Rapport mensuel de performance',
-            }"
-          ></i>
-
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Rapport mensuel de performance',
-            }"
-          >
-            Rapport mensuel de performance
-          </h5>
-        </div>
-        <div
-          class="menuItem"
-          :class="{
-            bg: show.activeMenuItem === 'Recommandations d\'optimisation',
-          }"
-          @click="show.setActiveItem('Recommandations d\'optimisation')"
-        >
-          <i
-            class="pi pi-chart-line"
-            style="font-size: 18px; color: #2d4051"
-            :class="{
-              color: show.activeMenuItem === 'Recommandations d\'optimisation',
-            }"
-          ></i>
-
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Recommandations d\'optimisation',
-            }"
-          >
-            Recommandations d'optimisation
-          </h5>
-        </div>
-      </div>
-    </div> -->
-  </div>
+ </div>
 </template>
 
 <script setup>

@@ -248,7 +248,12 @@ function supprimer(select) {
   align-items: center;
   width: 100%;
   height: 50vh;
+  margin: auto 0;
   /* background-color: #fb7a58; */
+}
+
+.containerEmptyParc h2{
+  color: rgb(59, 61, 63)!important;;
 }
 .btnCreer {
   background-color: #fb7a58;

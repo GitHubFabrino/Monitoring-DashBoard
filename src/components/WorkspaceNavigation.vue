@@ -1,7 +1,7 @@
 <template>
   <div class="navBar">
     <div class="linka">
-      <h3 class="liking" @click="show.setActiveItem('Acceuil')">Acceuil</h3>
+      <h3 class="liking" @click="show.setActiveItem('Acceuil')">Accueil</h3>
       <!-- <RouterLink to="" class="liking">Contact </RouterLink> -->
       <!-- <h3 class="liking">Utilisateurs</h3> -->
       <!-- <h3 class="liking">Paramètres</h3> -->

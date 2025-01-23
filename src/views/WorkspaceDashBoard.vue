@@ -35,3 +35,21 @@ import WorkspaceContainte from "@/components/WorkspaceContainte.vue";
   padding: 20px;
 }
 </style>
+
+<!-- 
+<template>
+  <div>
+    <h1>Test Input File</h1>
+    <input type="file" @change="handleFileChange" />
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    handleFileChange(event) {
+      console.log("File selected:", event.target.files[0]);
+    },
+  },
+};
+</script> -->

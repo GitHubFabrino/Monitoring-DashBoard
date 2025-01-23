@@ -158,19 +158,7 @@
                   Veuillez en créer une pour commencer
                 </p>
 
-                <div class="flex gap-3">
-                  <button
-                    class="w-full px-3 py-2 rounded-full border border-gray-300 text-gray-900 text-xs font-semibold leading-4"
-                  >
-                    Plus tard
-                  </button>
-                  <button
-                    @click="show.showCreationParamBattFunc()"
-                    class="w-full px-3 btnCreer py-2 transition-all duration-500 rounded-full text-white text-xs font-semibold leading-4"
-                  >
-                    Créer
-                  </button>
-                </div>
+              
               </div>
             </div>
           </div>
@@ -244,6 +232,18 @@ const useParc = parcStore();
 }
 .item h4 {
   padding: 5px;
+}
+.containerEmptyParc {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* 
+  
+  background-color: #fb7a58; */
+}
+
+.containerEmptyParc h2{
+  color: rgb(48, 50, 52)!important;;
 }
 .name {
   display: flex;

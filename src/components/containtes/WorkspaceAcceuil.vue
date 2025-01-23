@@ -6,9 +6,26 @@
         v-for="parcItem in useParc.parcsData"
         :key="parcItem.id"
         class="cardItem1 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
-        @click="handleParcItemClick(parcItem)"
       >
-        <img class="rounded-t-lg" src="/bg1.png" alt="" height="40vh" />
+        <div class="cardFile">
+          <img
+            v-if="parcItem.file_id"
+            :src="parcItem.file_url"
+            alt=""
+            class="card-image"
+          />
+          <div class="file-input-container" v-else>
+            <input
+              type="file"
+              @change="(event) => onFileChange(event, parcItem.id)"
+              id="file-upload"
+            />
+            <label for="file-upload" class="file-input-label">
+              <i class="pi pi-camera"></i>
+            </label>
+          </div>
+        </div>
+
         <div class="p-5">
           <a href="#">
             <h5
@@ -175,6 +192,7 @@
 
     <div v-if="showAssocier" class="container2">
       <div class="con" v-if="isBatExist">
+        <svg width="256px" height="256px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#ffa38a" stroke="#ffa38a" stroke-width="0.00016"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="m 3 1 c -1.644531 0 -3 1.355469 -3 3 v 4 c 0 1.644531 1.355469 3 3 3 h 1 v 1 c 0 1.644531 1.355469 3 3 3 h 6 c 1.644531 0 3 -1.355469 3 -3 v -4 c 0 -1.644531 -1.355469 -3 -3 -3 h -1 v -1 c 0 -1.644531 -1.355469 -3 -3 -3 z m 0 2 h 6 c 0.570312 0 1 0.429688 1 1 v 4 c 0 0.570312 -0.429688 1 -1 1 h -1 c -0.550781 0 -1 0.449219 -1 1 s 0.449219 1 1 1 h 1 c 1.644531 0 3 -1.355469 3 -3 v -1 h 1 c 0.570312 0 1 0.429688 1 1 v 4 c 0 0.570312 -0.429688 1 -1 1 h -6 c -0.570312 0 -1 -0.429688 -1 -1 v -4 c 0 -0.570312 0.429688 -1 1 -1 h 1 c 0.550781 0 1 -0.449219 1 -1 s -0.449219 -1 -1 -1 h -1 c -1.644531 0 -3 1.355469 -3 3 v 1 h -1 c -0.570312 0 -1 -0.429688 -1 -1 v -4 c 0 -0.570312 0.429688 -1 1 -1 z m 0 0" fill="#fd987c"></path> </g></svg>
         <h1>Associer le dispositif à la plateforme</h1>
 
         <div class="btn" @click="associer()">
@@ -184,7 +202,8 @@
 
       <div class="containerEmpty" v-if="!isBatExist">
         <div class="center">
-          <i class="pi pi-globe" style="font-size: 100px; color: #555c6286"></i>
+          <!-- <i class="pi pi-globe" style="font-size: 100px; color: #555c6286"></i> -->
+          <svg width="101px" height="101px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="m 8.152344 4.007812 c -0.4375 -0.023437 -0.882813 0.046876 -1.300782 0.222657 c -1.117187 0.460937 -1.851562 1.558593 -1.851562 2.769531 h 2 c 0 -0.40625 0.242188 -0.765625 0.617188 -0.921875 s 0.800781 -0.074219 1.089843 0.214844 c 0.289063 0.289062 0.371094 0.714843 0.21875 1.089843 c -0.15625 0.378907 -0.519531 0.617188 -0.925781 0.617188 c -0.550781 0 -1 0.449219 -1 1 v 2 h 2 v -1.179688 c 0.785156 -0.277343 1.441406 -0.875 1.769531 -1.671874 c 0.464844 -1.117188 0.207031 -2.414063 -0.648437 -3.269532 c -0.535156 -0.535156 -1.242188 -0.835937 -1.96875 -0.871094 z m -0.152344 7.992188 c -0.550781 0 -1 0.449219 -1 1 c 0 0.554688 0.449219 1 1 1 s 1 -0.445312 1 -1 c 0 -0.550781 -0.449219 -1 -1 -1 z m 0 0" fill="#2e3434"></path> <path d="m 7 0 c -1 0 -1 1 -1 1 v 1 h -1 s -0.707031 -0.015625 -1.449219 0.355469 c -0.738281 0.371093 -1.550781 1.3125 -1.550781 2.644531 v 8 s -0.015625 0.707031 0.355469 1.449219 c 0.371093 0.738281 1.3125 1.550781 2.644531 1.550781 h 6 s 0.707031 0.015625 1.449219 -0.355469 c 0.738281 -0.371093 1.550781 -1.3125 1.550781 -2.644531 v -8 c 0 -1.332031 -0.8125 -2.273438 -1.550781 -2.644531 c -0.742188 -0.371094 -1.449219 -0.355469 -1.449219 -0.355469 h -1 v -1 c 0 -1 -1 -1 -1 -1 z m 0 3 h 2 v 0.125 c 0.609375 0.160156 1.171875 0.457031 1.644531 0.875 h 0.355469 c 0.554688 0 1 0.445312 1 1 v 8 c 0 0.554688 -0.445312 1 -1 1 h -1.273438 c -0.355468 0.617188 -1.015624 0.996094 -1.726562 1 c -0.710938 -0.003906 -1.371094 -0.382812 -1.726562 -1 h -1.273438 c -0.554688 0 -1 -0.445312 -1 -1 v -8 c 0 -0.554688 0.445312 -1 1 -1 h 0.355469 c 0.472656 -0.414062 1.035156 -0.710938 1.644531 -0.863281 z m 0 0" fill="#2e3436" fill-opacity="0.34902"></path> </g></svg>
           <h1>Paramétrez vos batteries ou ajoutez-en</h1>
           <div class="btn" @click="retour()">
             <h4>Retourner</h4>
@@ -240,7 +259,9 @@ import { useBatterie } from "@/stores/batterieStore";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
 import { parcStore } from "@/stores/parcStore";
+import axios from "axios";
 import { useMqttParametreBatterieStore } from "@/stores/mqttParametreStore";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 const show = useShow();
 const user = useUser();
@@ -360,6 +381,37 @@ async function handleParcItemClick(parcItem) {
   }
 }
 
+const onFileChange = async (event, parcId) => {
+  console.log("etoeoeoeoeoeo");
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await axios.post(
+      `http://localhost:8000/api/parcs/${parcId}/upload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    console.log(response.data);
+    const userId = JSON.parse(localStorage.getItem("user")).user.id;
+    await useParc.getParcs(userId, "all");
+
+    const updatedParc = useParc.parcsData.find((parc) => parc.id === parcId);
+    if (updatedParc) {
+      updatedParc.file = response.data.url; // Assurez-vous que votre API renvoie l'URL de l'image
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'upload de l'image :", error);
+  }
+};
+
 const parcSuperviserLocal = ref(
   JSON.parse(localStorage.getItem("parcSuperviser"))
 );
@@ -389,6 +441,9 @@ onMounted(async () => {
   }
 });
 
+function test() {
+  console.log("eeeeeeeeeedddddddddddddddddddd");
+}
 onMounted(() => {
   console.log("Initialisation");
 
@@ -490,6 +545,23 @@ onMounted(() => {
   font-weight: 700;
   color: #2d4051;
 }
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px 5px 0px 0px;
+  box-sizing: border-box;
+  object-fit: cover; /* Cette propriété permet de conserver le ratio de l'image tout en la remplissant */
+}
+
+.cardFile {
+  width: 100%;
+  height: 40vh;
+  background-color: #b2b0b030;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .containerAcceuil {
   display: flex;
   justify-content: space-around;
@@ -500,6 +572,43 @@ onMounted(() => {
   border: 1px solid #ddd;
   overflow-y: scroll;
   width: 100%;
+}
+input[type="file"] {
+  display: block;
+  margin-top: 10px;
+}
+
+.file-input-container {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  /* background-color: #f5572c; */
+}
+
+.file-input-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #e1dada;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.file-input-label i {
+  color: #555;
+}
+
+input[type="file"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .cardItem1 {
@@ -551,7 +660,6 @@ onMounted(() => {
   align-content: center;
   padding: 10px;
 }
-
 
 .container2 {
   width: 100%;

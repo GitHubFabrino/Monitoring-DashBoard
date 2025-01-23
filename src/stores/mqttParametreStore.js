@@ -37,7 +37,7 @@ export const useMqttParametreBatterieStore = defineStore(
     ) => {
       client.publish(
         "parametreBatterie",
-        `[{\"i\":[${i}],\"c\":[${c}],\"cma\":[${cma}],\"cmi\":[${cmi}],\"tema\":[${tema}],\"tma\":[${tma}],\"tmi\":[${tmi}],\"d\":[${d}],\"s\":[${s}]}]`,
+        `[{\i\:[${i}],\c\:[${c}],\cma\:[${cma}],\cmi\:[${cmi}],\tema\:[${tema}],\tma\:[${tma}],\tmi\:[${tmi}],\d\:[${d}],\s\:[${s}]}]`,
         (err) => {
           if (err) {
             console.error("Erreur lors de la publication MQTT :", err);
