@@ -34,10 +34,11 @@
       <div class="recent" v-if="show.showRecents">
         <template v-if="filteredItems.length > 0">
           <div v-for="item in filteredItems" :key="item.id">
-            <div v-if="!item.read === 0 ? false : true" class="item">
+            <div v-if="item.read === 0" class="item">
               <div class="check">
                 <label>
                   <input
+                    @click="checked(item)"
                     type="checkbox"
                     :checked="item.read === 0 ? false : true"
                   />
@@ -180,7 +181,7 @@
       <div class="historique" v-if="show.showHistoriqueCale">
         <template v-if="filteredItems.length > 0">
           <div v-for="item in filteredItems" :key="item.id">
-            <div class="item" v-if="item.read === 0 ? false : true">
+            <div class="item" v-if="item.read !== 0">
               <div class="check">
                 <i
                   class="pi pi-check"
@@ -318,7 +319,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
@@ -367,15 +367,37 @@ const filteredItems = computed(() => {
   );
 });
 
+
+
 function voir(item) {
   alerteBatterieStore.voirAlerteData = item;
   show.showVoirAlerteData = true;
 }
 
+function checked(item) {
+  console.log("itzm", item.id);
+
+  let data = {
+    valeur_alerte: item.valeur_alerte,
+    valeur_seuil: item.valeur_seuil,
+    message: item.message,
+    read: 1,
+    type: item.type,
+    graviter: item.graviter,
+    contact_id: item.contact_id,
+    batterie_id: item.batterie_id,
+  };
+  console.log("data", data);
+  alerteBatterieStore.updateAlerte(item.id, data);
+  // try {
+  //   let parcid = useParc.parcSuperviser.id;
+  //   alerteBatterieStore.getAlerteByParcId(parcid);
+  // } catch (error) {}
+}
+
 onMounted(() => {
   try {
     let parcid = useParc.parcSuperviser.id;
-    console.log("parc", parcid);
     alerteBatterieStore.getAlerteByParcId(parcid);
   } catch (error) {}
 });
@@ -473,8 +495,8 @@ onMounted(() => {
   /* background-color: #fb7a58; */
   /* color: red!important;; */
 }
-.containerEmptyParc h2{
-  color: rgb(121, 125, 129)!important;;
+.containerEmptyParc h2 {
+  color: rgb(121, 125, 129) !important;
 }
 .select {
   color: #328ca8 !important;
@@ -497,6 +519,16 @@ onMounted(() => {
   justify-content: space-around;
   padding: 10px;
   width: 15%;
+}
+
+.recent {
+  /* background-color: red; */
+  height: 53vh;
+  overflow-y: scroll;
+}
+.historique {
+  height: 53vh;
+  overflow-y: scroll;
 }
 .check {
   background-color: #feffff;

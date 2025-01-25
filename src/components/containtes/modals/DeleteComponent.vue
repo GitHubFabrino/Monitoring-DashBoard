@@ -9,7 +9,6 @@ const user = useUser();
 const parc = parcStore()
 
 function supprimer() {
-  console.log("idSup" , show.showParcNameDeleteId);
   parc.deleteParc(show.showParcNameDeleteId)
 }
 </script>

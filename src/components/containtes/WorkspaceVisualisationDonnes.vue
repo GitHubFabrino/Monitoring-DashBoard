@@ -181,9 +181,7 @@ const type = ref(false);
 
 function selectBattery(item) {
   selectedBattery.value = item;
-  console.log("selectedBattery.value ", selectedBattery.value);
   type.value = selectedBattery.value && selectedBattery.value.id === item.id;
-  console.log("type", type.value);
 }
 
 function selectTimeRange(range) {
@@ -205,10 +203,8 @@ function selecteData(idBat) {
 
   // Parcours des données de lecture
   for (let index = 0; index < lectureStore.allLectureData.length; index++) {
-    console.log("ato");
 
     if (lectureStore.allLectureData[index].batterie_id === idBat) {
-      console.log("oui", lectureStore.allLectureData[index]);
 
       // Parcours des lectures de la batterie sélectionnée
       for (
@@ -232,30 +228,14 @@ function selecteData(idBat) {
     }
   }
 
-  console.log("voltageData", voltageData.value);
-  console.log("currentData", currentData.value);
-  console.log("temperatureData", temperatureData.value);
-  console.log("timeData", timeData.value);
+ 
 }
-
-// onMounted(() => {
-//   let parcid = useParc.parcSuperviser.id;
-//   console.log("id", parcid);
-
-//   // Récupération des données de la batterie avant de les sélectionner
-//   console.log("######################");
-//   lectureStore.getLectureByParcId(parcid);
-
-//   // Sélection des données pour la première batterie
-//   selecteData(batterie.allBatteryData[0].id);
-// });
 
 
 import { watch } from "vue";
 
 onMounted(async () => {
   let parcid = useParc.parcSuperviser.id;
-  console.log("id", parcid);
 
   // Récupération des données initiales
   await lectureStore.getLectureByParcId(parcid);

@@ -15,7 +15,7 @@
               <h3>{{ batterie.nom }}</h3>
               <h5>{{ useParc.parcSuperviser.nom_parc }}</h5>
             </div>
-            <i
+            <!-- <i
               @click="voirModifier(batterie)"
               class="pi pi-pen-to-square"
               style="font-size: 16px; color: #2d4051"
@@ -25,7 +25,7 @@
               @click="supprimer(batterie)"
               class="pi pi-trash"
               style="font-size: 16px; color: #2d4051"
-            ></i>
+            ></i> -->
           </div>
           <div class="detail">
             <div class="detailItem">
@@ -226,6 +226,7 @@ const useParc = parcStore();
 .item {
   background-color: #fb7b582d;
   width: 30%;
+  height: 200px;
   padding: 10px;
   margin-top: 30px;
   border-radius: 5px;
@@ -255,14 +256,19 @@ const useParc = parcStore();
 .name h3 {
   color: #fb7a58;
   font-weight: 600;
+  font-size: 14px;
 }
 .name h5 {
   font-weight: 600;
+  font-size: 12px;
 }
 
 .detail {
   display: flex;
   justify-content: space-between;
+}
+.detail h4{
+  font-size: 12px;
 }
 .valeur h4 {
   font-weight: 600;

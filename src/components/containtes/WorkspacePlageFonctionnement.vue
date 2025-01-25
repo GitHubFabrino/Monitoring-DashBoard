@@ -18,7 +18,8 @@
               <h3>{{ batterie.nom }}</h3>
               <h5>{{ useParc.parcSuperviser.nom_parc }}</h5>
             </div>
-            <i
+            <div class="icon">
+              <i
               @click="voirModifier(batterie)"
               class="pi pi-pen-to-square"
               style="font-size: 16px; color: #2d4051"
@@ -29,32 +30,54 @@
               class="pi pi-trash"
               style="font-size: 16px; color: #2d4051"
             ></i>
+            </div>
+           
           </div>
-          <h4>{{ batterie.description }}</h4>
+          <h4  class="label1">{{ batterie.description }}</h4>
           <div class="detail">
             <div class="detailItem">
-              <h4>Marque</h4>
-              <h4>Tension Nominal</h4>
-              <h4>Capacité</h4>
-              <h4>utilisation en veille</h4>
-              <h4>utilisation cyclique</h4>
-              <h4>Courant</h4>
-              <h4>Température</h4>
-              <h4>DOD Max</h4>
-              <h4>Technologie</h4>
-              <h4>Date installation</h4>
-            </div>
-            <div class="valeur">
-              <h4>{{ batterie.marque }}</h4>
-              <h4>{{ batterie.tension_nominale }}</h4>
-              <h4>{{ batterie.capacite }} Ah</h4>
-              <h4>{{ batterie.utilisation_veille }} V</h4>
-              <h4>{{ batterie.utilisation_cyclique }} V</h4>
-              <h4>{{ batterie.courant }} A</h4>
-              <h4>{{ batterie.temperature }} °C</h4>
-              <h4>{{ batterie.dod_max }} %</h4>
-              <h4>{{ batterie.technologie }} </h4>
-              <h4>{{ batterie.dateInstallation }} </h4>
+              <div class="text">
+                <h4 class="label">Technologie</h4>
+                <h4 class="value">{{ batterie.technologie }} </h4>
+              </div>
+              <div class="text">
+                <h4 class="label">Marque</h4>
+                <h4 class="value">{{ batterie.marque }}</h4>
+              </div>
+
+              <div class="text">
+                <h4 class="label">Tension Nominal</h4>
+                <h4 class="value">{{ batterie.tension_nominale }}V</h4>
+              </div>
+              <div class="text">
+                <h4 class="label">Capacité</h4>
+                <h4 class="value">{{ batterie.capacite }} Ah</h4>
+              </div>
+              <div class="text">
+                <h4 class="label">utilisation en veille</h4>
+                <h4 class="value">{{ batterie.utilisation_veille }} V</h4>
+              </div>
+              <div class="text">
+                <h4 class="label">utilisation cyclique</h4>
+                <h4 class="value">{{ batterie.utilisation_cyclique }} V</h4>
+              </div>
+              <div class="text">
+                <h4 class="label">Courant</h4>
+                <h4 class="value">{{ batterie.courant }} A</h4>
+              </div>
+              <div class="text">
+                <h4 class="label">Température</h4>
+                <h4 class="value">{{ batterie.temperature }} °C</h4>
+              </div>
+              <div class="text">
+                <h4 class="label">DOD Max</h4>
+                <h4 class="value">{{ batterie.dod_max }} %</h4>
+              </div>
+           
+              <div class="text">
+                <h4 class="label">Date installation</h4>
+                <h4 class="value">{{formatDateTime(batterie.date_installation)  }} </h4>
+              </div>
             </div>
           </div>
         </div>
@@ -203,9 +226,7 @@ const show = useShow();
 const useParc = parcStore();
 
 function voirModifier(selectBat) {
-  console.log("select", selectBat);
   batterie.batterieModifier = selectBat;
-  console.log("bat", batterie.batterieModifier);
   batterie.ismodifier = true;
 
   batterie.oneBatteryData = selectBat;
@@ -229,8 +250,34 @@ function voirModifier(selectBat) {
 }
 
 function supprimer(select) {
-  console.log("select", select);
   batterie.deleteBatterie(select.id);
+}
+
+
+function formatDateTime(dateString) {
+  const date = new Date(dateString);
+
+  const mois = [
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre",
+  ]; // Récupérer le jour, le mois et l'année
+  const jour = date.getDate();
+  const moisNom = mois[date.getMonth()];
+  const annee = date.getFullYear();
+
+  const heures = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Construire la chaîne de date et heure formatée
+  return `${jour} ${moisNom} ${annee}`;
 }
 </script>
 
@@ -241,7 +288,7 @@ function supprimer(select) {
   height: 76vh;
   box-shadow: 0px 0px 5px rgb(189, 189, 189);
   border-radius: 5px;
-  padding: 20px;
+  padding: 10px 20px;
 }
 .containerEmptyParc {
   display: flex;
@@ -268,9 +315,10 @@ function supprimer(select) {
 .titre {
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   border-bottom: 1px solid #d3d3d3;
   align-items: center;
+  padding-bottom: 2px;
 }
 .btn {
   background-color: #fb7a58;
@@ -282,11 +330,27 @@ function supprimer(select) {
   justify-content: center;
 }
 .contenu {
-  height: 60vh;
+  height: 65vh;
   display: flex;
   justify-content: space-around;
   flex-flow: row wrap;
   overflow-y: scroll;
+
+}
+.label{
+  font-size: 12px;
+
+
+}
+.label1{
+  font-size: 12px;
+  height: 50px;
+}
+.value{
+  font-size: 12px;
+  /* background-color: #f5572c; */
+  text-align:right;
+  font-weight: 600;
 }
 
 .item {
@@ -299,12 +363,21 @@ function supprimer(select) {
 .item h4 {
   padding: 5px;
 }
+.titreName{
+  font-size: 12px;
+}
 .name {
   display: flex;
   /* background-color: red; */
   justify-content: space-between;
   border-bottom: 2px solid #328ca8;
   margin-bottom: 5px;
+}
+.icon{
+  /* background-color: red; */
+  width: 15%;
+  display: flex;
+  justify-content: space-between;
 }
 .name h3 {
   color: #328ca8;
@@ -317,6 +390,18 @@ function supprimer(select) {
 .detail {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+}
+.detailItem{
+  width: 100%;
+}
+.text{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: #328ca8; */
+  width: 100%;
+  margin: 2px;
 }
 .valeur h4 {
   font-weight: 600;

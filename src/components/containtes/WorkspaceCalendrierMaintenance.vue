@@ -37,19 +37,14 @@
       </div>
 
       <div class="recent" v-if="show.showRecents">
-        <div v-for="item in filteredMaintenances" :key="item.id">
-          <div
-            class="item"
-            v-if="item.maintenance.marque === '0' ? true : false"
-          >
-            <!-- {{ item }} -->
-
+        <div v-for="maintenance in filteredMaintenances" :key="maintenance.id">
+          <div class="item" v-if="maintenance.marque !== 'oui'">
             <div class="check">
               <label>
                 <input
-                  @click="checked(item)"
+                  @click="checked(maintenance)"
                   type="checkbox"
-                  :checked="item.maintenance.marque === '0' ? false : true"
+                  :checked="maintenance.marque === 'oui'"
                 />
               </label>
             </div>
@@ -62,22 +57,26 @@
                 ></i>
               </div>
               <h4>
-                {{ item.maintenance.details }}
-                {{ item.maintenance.batterie.nom }}
-                {{ useParc.parcSuperviser.nom_parc }}
+                {{ maintenance.details || "Détails indisponibles" }}
+                {{ maintenance.batterie?.nom || "Batterie inconnue" }}
+                {{ useParc.parcSuperviser?.nom_parc || "Parc non spécifié" }}
               </h4>
             </div>
+
             <div class="date">
-              <h5>{{ formatDateTime(item.maintenance.created_at) }}</h5>
+              <h5>
+                {{ formatDateTime(maintenance.created_at || new Date()) }}
+              </h5>
             </div>
+
             <div class="action">
-              <div class="icon orange" @click="modifier(item)">
+              <div class="icon orange" @click="modifier(maintenance)">
                 <i
                   class="pi pi-pen-to-square"
                   style="font-size: 12px; color: #fff"
                 ></i>
               </div>
-              <div class="icon red" @click="supprimer(item)">
+              <div class="icon red" @click="supprimer(maintenance)">
                 <i class="pi pi-trash" style="font-size: 12px; color: #fff"></i>
               </div>
             </div>
@@ -138,7 +137,7 @@
         <div v-for="item in filteredMaintenances" :key="item.id">
           <div
             class="item"
-            v-if="item.maintenance.marque === '0' ? false : true"
+            v-if="item.marque === 'oui'"
           >
             <div class="check">
               <i
@@ -155,13 +154,13 @@
                 ></i>
               </div>
               <h4>
-                {{ item.maintenance.details }}
-                {{ item.maintenance.batterie.nom }}
+                {{ item.details }}
+                {{ item.batterie.nom }}
                 {{ useParc.parcSuperviser.nom_parc }}
               </h4>
             </div>
             <div class="date">
-              <h5>{{ formatDateTime(item.maintenance.created_at) }}</h5>
+              <h5>{{ formatDateTime(item.created_at) }}</h5>
             </div>
             <div class="action"></div>
           </div>
@@ -221,7 +220,7 @@
 
 <script setup>
 import axios from "axios";
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch, computed, watchEffect } from "vue";
 import { useShow } from "@/stores/show";
 import { useMaintenanceStore } from "@/stores/maintenanceStore";
 import { parcStore } from "@/stores/parcStore";
@@ -280,32 +279,38 @@ const fetchMaintenances = async (batterieId) => {
 
 // Propriété calculée pour filtrer les maintenances
 const filteredMaintenances = computed(() => {
-  return maintenanceStore.maintenances.filter((item) => {
-    return item.maintenance.details
-      .toLowerCase()
-      .includes(search.value.toLowerCase());
-  });
+  return maintenanceStore.maintenances
+    .map((item) => {
+      // Vérifiez si la clé `maintenance` est présente et extrayez-la si nécessaire
+      return item.maintenance ? item.maintenance : item;
+    })
+    .filter((maintenance) => {
+      // Vérifiez que `details` existe avant de filtrer
+      return maintenance.details
+        ?.toLowerCase()
+        .includes(search.value.toLowerCase());
+    })
+    .sort((a, b) => b.id - a.id); // Trier par ID décroissant
+});
+
+watchEffect(() => {
+  console.log("Maintenances:", maintenanceStore.maintenances);
 });
 
 function checked(item) {
   let data = {
-    details: item.maintenance.details,
-    batterie_id: item.maintenance.batterie.id,
+    details: item.details,
+    batterie_id: item.batterie.id,
     marque: "oui",
   };
-  console.log("data", data);
-  maintenanceStore.updateMaintenance(item.maintenance.id, data);
+  maintenanceStore.updateMaintenance(item.id, data);
 }
 
 function modifier(item) {
-  console.log("item modif", item.maintenance.batterie_id);
   maintenanceStore.ismodifierMaintenance = true;
-
-  maintenanceStore.detailsM = item.maintenance.details;
-  maintenanceStore.batterie_idM = item.maintenance.batterie_id;
-  maintenanceStore.idMataitenanceM = item.maintenance.id;
-  console.log("maintenanceStore.details", maintenanceStore.details);
-  console.log("maintenanceStore.batterie_id", maintenanceStore.batterie_id);
+  maintenanceStore.detailsM = item.details;
+  maintenanceStore.batterie_idM = item.batterie_id;
+  maintenanceStore.idMataitenanceM = item.id;
 }
 
 function supprimer(item) {
@@ -324,7 +329,6 @@ onMounted(async () => {
     const maintenanceResults = await Promise.all(maintenancePromises);
     maintenanceArray.value = maintenanceResults.flat();
     maintenanceStore.maintenances = maintenanceArray.value;
-    console.log("Maintenances:", maintenanceStore.maintenances);
   } catch (error) {
     console.error(error);
   } finally {
@@ -367,6 +371,17 @@ const addMaintenance = () => {
   justify-content: space-around;
   display: flex;
   align-items: center;
+}
+.recent{
+  /* background-color: rebeccapurple; */
+  height: 52vh;
+  overflow-y: scroll;
+}
+
+.historique{
+  /* background-color: rebeccapurple; */
+  height: 52vh;
+  overflow-y: scroll;
 }
 
 .searchInput {

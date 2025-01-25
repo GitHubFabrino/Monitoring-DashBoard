@@ -55,7 +55,6 @@ export const useMqttStore = defineStore("mqtt", () => {
         progress3.value = parseFloat(parsedMessage[2].soc).toFixed(0);
       }
 
-      console.log(`Données reçues :`, parsedMessage);
     } catch (error) {
       console.error("Erreur lors du traitement du message MQTT :", error);
     }

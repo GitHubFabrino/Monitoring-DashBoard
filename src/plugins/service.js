@@ -90,7 +90,6 @@ class Service {
   }
 
   checkIfModuleIsUsed() {
-    console.log("Module service is used !");
   }
 
   getLastItem(data) {

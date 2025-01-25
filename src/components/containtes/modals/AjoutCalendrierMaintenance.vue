@@ -29,7 +29,7 @@ const addMaintenance = () => {
   const maintenanceData = {
     details: details.value,
     batterie_id: batterie_id.value,
-    marque: "0",
+    marque: "non",
   };
   maintenanceStore.createMaintenance(maintenanceData);
 };
@@ -38,10 +38,16 @@ const addMaintenance = () => {
 <template>
   <Transition>
     <div class="showModal" v-if="show.showAddMaintenance">
+     
       <div class="formModal">
-        <h3>
-          Planifier une maintenance"
+        <div class="title">
+          <h3>
+          Planifier une maintenance
         </h3>
+        <div class="closeForm" @click="show.showAddMaintenanceFunc()">
+        <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
+      </div>
+        </div>
         <div class="formulaire">
           <div class="itemContainer">
             <h5>Détails de la maintenance <span>*</span></h5>
@@ -54,7 +60,7 @@ const addMaintenance = () => {
           </div>
 
           <div class="block w-full">
-            <h5>ID de la batterie <span>*</span></h5>
+            <h5>Sélectionner la batterie <span>*</span></h5>
             <select
               v-model="batterie_id"
               id="countries"
@@ -78,9 +84,7 @@ const addMaintenance = () => {
           </div>
         </div>
       </div>
-      <div class="closeForm" @click="show.showAddMaintenanceFunc()">
-        <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
-      </div>
+     
     </div>
   </Transition>
 </template>
@@ -105,9 +109,10 @@ span {
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  position: absolute;
-  right: 300px;
-  top: 300px;
+  /* position: relative;
+  right: 0px;
+  top: 50px;
+  right: 0px; */
   align-items: center;
   display: flex;
   justify-content: center;
@@ -121,6 +126,7 @@ span {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   background: rgba(43, 38, 38, 0.801);
   justify-content: center;
   align-items: center;
@@ -131,6 +137,13 @@ span {
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
+}
+
+.title{
+  /* background-color: red; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .itemContainer {

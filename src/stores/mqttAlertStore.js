@@ -2,12 +2,14 @@ import { defineStore } from "pinia";
 import { ref, onMounted } from "vue";
 import mqtt from "mqtt";
 import { useShow } from "@/stores/show";
+import { useAlerteBatterieStore } from "@/stores/alerteBatterie";
 
 export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
   // Données reçues par MQTT
   const dataReceived = ref([]);
   const alertes = ref([]);
   const show = useShow();
+  const alerteBatterieStore = useAlerteBatterieStore();
   
 
   // Connexion MQTT
@@ -16,7 +18,7 @@ export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
   const initializeMqtt = () => {
     client.on("connect", () => {
       console.log("Connecté au broker MQTT");
-      client.subscribe("alerte_batteries", (err) => {
+      client.subscribe("alerts", (err) => {
         if (err) {
           console.error("Erreur d'abonnement :", err);
         } else {
@@ -29,13 +31,30 @@ export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
       try {
         const parsedMessage = JSON.parse(message.toString());
 
-        if (topic === "alerte_batteries") {
+        if (topic === "alerts") {
           // Ajout de l'alerte à la liste des alertes reçues
           alertes.value.push(parsedMessage);
           show.showAlertBatterie=true
           show.showAlertBatType = parsedMessage.graviter
           show.showAlertBatterieMessage = parsedMessage.message
           show.competerAlerteBatterieUnRead = show.competerAlerteBatterieUnRead + 1
+
+          // Ajouter kes alertes dans la base de donne 
+            let newAlerte = {
+            valeur_alerte : parsedMessage.Valert,
+              valeur_seuil: parsedMessage.Vseuil,
+              message :parsedMessage.sms,
+              read  :parsedMessage.read,
+              type  :parsedMessage.type,
+              graviter  :parsedMessage.gravite,
+              contact_id :parsedMessage.contact,
+              batterie_id :parsedMessage.idbat,
+            }
+
+           
+            console.log('newAlertre' , newAlerte);
+            
+            alerteBatterieStore.createAlerte(newAlerte)
 
           setTimeout(() => {
             show.showAlertBatterie=true

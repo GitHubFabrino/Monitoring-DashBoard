@@ -54,17 +54,14 @@ export default {
     const MAX_DATA_POINTS = 10;
     const lectureStore = useLectureStore();
 
-    console.log("props.batteryId", props.batteryId);
 
     let allId = JSON.parse(localStorage.getItem("idAssocier"));
 
     allId.forEach(async (element) => {
       if (element == props.batteryId) {
-        console.log("oui", props.batteryId);
 
         try {
           const data = await lectureStore.fetchAllLecture(element); // Attendre la résolution de la Promise
-          console.log("data récupérée", data);
 
           // Ne prendre que les 10 dernières données
           const lastTenData = data.slice(-10); // Sélectionne les 10 derniers éléments
@@ -75,8 +72,7 @@ export default {
             tensionData.push([e.created_at, e.tension]);
           });
 
-          console.log("courantData après récupération", courantData);
-          console.log("tensionData après récupération", tensionData);
+
         } catch (error) {
           console.error("Erreur lors de la récupération des données :", error);
         }
@@ -168,8 +164,15 @@ export default {
         console.log("data mqtt", batteriesData);
 
         const now = new Date();
-        courantData.push([now, batteriesData[props.batteryId - 1].courant]);
-        tensionData.push([now, batteriesData[props.batteryId - 1].tension]);
+        const courant = parseFloat(
+          batteriesData[props.batteryId - 1].courant
+        ).toFixed(1);
+        const tension = parseFloat(
+          batteriesData[props.batteryId - 1].tension
+        ).toFixed(1);
+
+        courantData.push([now, courant]);
+        tensionData.push([now, tension]);
 
         console.log("courantData", courantData);
 

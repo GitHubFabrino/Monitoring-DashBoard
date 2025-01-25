@@ -8,7 +8,7 @@
             :class="{ select: isselectedBattery?.id === item.id }"
             :value="item.id"
           >
-            Batterie {{ item.nom }}
+             {{ item.nom }}
           </h4>
           <div
             class="optionType"
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="chart-container" style="height: 330px">
+    <div class="chart-container" style="height: 350px">
       <canvas ref="chartCanvas"></canvas>
     </div>
   </div>
@@ -200,23 +200,6 @@ export default {
       currentData.value = averagedData.map((item) => item.current);
       temperatureData.value = averagedData.map((item) => item.temperature);
 
-      console.log("Données filtrées et moyennes:", averagedData);
-      console.log(
-        "Données filtrées et moyennes dans la courbe timeData.value:",
-        timeData.value
-      );
-      console.log(
-        "Données filtrées et moyennes dans la courbe voltageData.value:",
-        voltageData.value
-      );
-      console.log(
-        "Données filtrées et moyennes dans la courbe currentData.value:",
-        currentData.value
-      );
-      console.log(
-        "Données filtrées et moyennes dans la courbe temperatureData.value:",
-        temperatureData.value
-      );
     }
 
     // Les fonctions de calcul des moyennes restent les mêmes, comme dans ton code :
@@ -228,7 +211,6 @@ export default {
       currentData,
       temperatureData
     ) {
-      console.log("day");
       let hourlyData = [];
       let currentHour = [];
       let currentVoltage = [];
@@ -619,9 +601,12 @@ option {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  width: 40%;
+  width: 90%;
 }
-
+.opt1{
+  width: 100%;
+  /* background-color: #328ca8; */
+}
 .option h4 {
   font-weight: 600;
   border-bottom: 2px solid #ebedee00;

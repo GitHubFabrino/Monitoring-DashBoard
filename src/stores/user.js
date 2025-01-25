@@ -53,7 +53,6 @@ export const useUser = defineStore("User", () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
         if (response.status === 201) {
           show.showSingUp = false;
@@ -64,7 +63,6 @@ export const useUser = defineStore("User", () => {
           userInfo.value = JSON.stringify(response.data);
           userName.value = response.data.name
           userEmail.value = response.data.email
-          console.log("eeeeeeeeeeee",userInfo.value );
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";
@@ -100,8 +98,6 @@ export const useUser = defineStore("User", () => {
     formData.append("email", email.value);
     formData.append("password", password.value);
 
-    console.log("email", email.value);
-    console.log("mdp", password.value);
     axios
       .post(`${URL}/api/login`, formData, {
         headers: {
@@ -109,7 +105,6 @@ export const useUser = defineStore("User", () => {
         },
       })
       .then((response) => {
-        console.log("response", response.data);
         if (response.status === 200) {
           show.showLogin = false;
           show.showDashBoard = true;
@@ -160,7 +155,6 @@ export const useUser = defineStore("User", () => {
       phone: userphone.value,
       adresse: useradresse.value,
     };
-    console.log("UPDATE", formData);
 
     axios
       .put(`${URL}/api/user/${userId}`, formData, {
@@ -170,13 +164,11 @@ export const useUser = defineStore("User", () => {
         },
       })
       .then((response) => {
-        console.log("response", response.data);
         if (response.status === 200) {
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Profil mis à jour";
           userInfo.value = response.data;
-          console.log("userInfo", userInfo.value.name);
 
           isEditing.value = false;
         } else {
@@ -226,7 +218,6 @@ export const useUser = defineStore("User", () => {
         }
       )
       .then((response) => {
-        console.log("response", response.data);
         if (response.status === 200) {
           show.showLogout = false;
           show.showDashBoard = false;

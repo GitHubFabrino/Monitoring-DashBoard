@@ -22,12 +22,17 @@ onMounted(() => {
 
 // Fonction pour ajouter une maintenance
 const addMaintenance = () => {
+  // console.log('tiiiiiiiiii', item);
   const maintenanceData = {
     details: maintenanceStore.detailsM,
     batterie_id: maintenanceStore.batterie_idM,
     marque: "0",
   };
-  maintenanceStore.updateMaintenance(maintenanceStore.idMataitenanceM,maintenanceData);
+  console.log("rrrrr", maintenanceData);
+  maintenanceStore.updateMaintenance(
+    maintenanceStore.idMataitenanceM,
+    maintenanceData
+  );
 };
 </script>
 
@@ -35,7 +40,18 @@ const addMaintenance = () => {
   <Transition>
     <div class="showModal" v-if="maintenanceStore.ismodifierMaintenance">
       <div class="formModal">
-        <h3>Modifier</h3>
+        <div class="title">
+          <h3>Modifier</h3>
+          <div
+            class="closeForm"
+            @click="
+              maintenanceStore.ismodifierMaintenance =
+                !maintenanceStore.ismodifierMaintenance
+            "
+          >
+            <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
+          </div>
+        </div>
         <div class="formulaire">
           <div class="itemContainer">
             <h5>Détails de la maintenance <span>*</span></h5>
@@ -72,15 +88,6 @@ const addMaintenance = () => {
           </div>
         </div>
       </div>
-      <div
-        class="closeForm"
-        @click="
-          maintenanceStore.ismodifierMaintenance =
-            !maintenanceStore.ismodifierMaintenance
-        "
-      >
-        <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
-      </div>
     </div>
   </Transition>
 </template>
@@ -105,12 +112,17 @@ span {
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  position: absolute;
+  /* position: absolute;
   right: 300px;
-  top: 300px;
+  top: 300px; */
   align-items: center;
   display: flex;
   justify-content: center;
+}
+.title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .showModal {
   position: fixed;

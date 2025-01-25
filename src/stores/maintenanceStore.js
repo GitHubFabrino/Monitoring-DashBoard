@@ -28,6 +28,8 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
   const error = ref(null);
   const batteries = ref([]);
 
+
+
   const fetchMaintenances = () => {
     show.showSpinner = true;
     axios
@@ -87,18 +89,17 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
       const response = await axios.post(`${URL}/api/maintenances`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log("maintenance ", response.data);
       if (response.status === 201) {
         show.showAddMaintenance = false;
         maintenances.value.push(response.data);
         show.showAlert = true;
         show.showAlertType = "success";
         show.showAlertMessage = "Maintenance ajoutée avec succès";
+        show.showAddMaintenance = false
 
         const parcid = useParc.parcSuperviser.id;
-        await batterie.getBatteriesByParcId(parcid);
+        batterie.getBatteriesByParcId(parcid);
         batteries.value = batterie.allBatteryData;
-        console.log("all", batteries.value);
 
         const maintenancePromises = batteries.value.map((batterie) =>
           axios.get(`${URL}/api/maintenances/batterie/${batterie.id}`)
@@ -110,8 +111,7 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
         });
 
         maintenances.value = baatteryArray;
-        console.log("mainten all", baatteryArray);
-        console.log("store m", maintenances.value);
+     
       } else {
         show.showAlert = true;
         show.showAlertType = "danger";
@@ -135,20 +135,15 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
   };
 
   const updateMaintenance = (id, maintenanceData) => {
-   
-   console.log('data main' , maintenanceData);
-   console.log('data main id' , id);
-    show.showSpinner = true;
-    let formData = new FormData();
-    formData.append("details", "maintenanceData.details");
-    formData.append("batterie_id", 1);
-    formData.append("marque", "maintenanceData.marque");
 
+    show.showSpinner = true;
     axios
       .put(`${URL}/api/maintenances/${id}`, maintenanceData, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
+
+        console.log('response' , response.data);
         if (response.status === 200) {
           const index = maintenances.value.findIndex((m) => m.id === id);
           if (index !== -1) {
@@ -157,6 +152,11 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Maintenance mise à jour avec succès";
+
+          const parcid = useParc.parcSuperviser.id;
+          batterie.getBatteriesByParcId(parcid);
+          batteries.value = batterie.allBatteryData;
+          ismodifierMaintenance.value=false
 
           getAll();
         } else {
@@ -193,7 +193,6 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
     const parcid = useParc.parcSuperviser.id;
     await batterie.getBatteriesByParcId(parcid);
     batteries.value = batterie.allBatteryData;
-    console.log("all", batteries.value);
 
     const maintenancePromises = batteries.value.map((batterie) =>
       axios.get(`${URL}/api/maintenances/batterie/${batterie.id}`)
@@ -205,8 +204,7 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
     });
 
     maintenances.value = baatteryArray;
-    console.log("mainten all", baatteryArray);
-    console.log("store m", maintenances.value);
+ 
   };
 
   const deleteMaintenance = (id) => {

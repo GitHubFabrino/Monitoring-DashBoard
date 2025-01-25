@@ -70,7 +70,6 @@ export const useLectureStore = defineStore("LectureStore", () => {
       .then((response) => {
         if (response.status === 200) {
           allLectureData.value = response.data;
-          console.log("response data lecteur", response.data);
           show.showAlertType = "success";
           show.showAlertMessage = "Lectures récupérées avec succès! ✅";
         } else {
@@ -293,10 +292,8 @@ export const useLectureStore = defineStore("LectureStore", () => {
 
     // Parcours des données de lecture
     for (let index = 0; index < allLectureData.length; index++) {
-      console.log("ato");
 
       if (allLectureData[index].batterie_id === idBat) {
-        console.log("oui", allLectureData[index]);
 
         // Parcours des lectures de la batterie sélectionnée
         for (let i = 0; i < allLectureData[index].lectures.length; i++) {
@@ -314,17 +311,12 @@ export const useLectureStore = defineStore("LectureStore", () => {
       }
     }
 
-    console.log("voltageData", voltageData.value);
-    console.log("currentData", currentData.value);
-    console.log("temperatureData", temperatureData.value);
-    console.log("timeData", timeData.value);
+  
   }
 
   // Charger les lectures au montage du composant
   onMounted(async () => {
-    console.log("atyyyyyyyyyyyyyyyy");
     let parcid = useParc.parcSuperviser.id;
-    console.log("id", parcid);
     getLectureByParcId(parcid);
 
     // Surveille les données et met à jour lorsque disponibles
@@ -359,10 +351,7 @@ export const useLectureStore = defineStore("LectureStore", () => {
     temperatureData.value = [ 1, -1.58, -8.33, 7.92, 0.5, 2.81, -9.32, 8.95, 2.86, 2.67, -4.19, 4.08, 9.24, -3.83, 8.39, -7.1, 1.78, -5.88, -4.39, 9.19, -0.76, -2.86, -8.83, -4.39, -9.62, 3.97, -9.2, 2.59, 6.7, 3.94, -7.65, 4.65, 5.31, -1.76, -2.26, 3.97, -0.17, -6.21, -9.19, -8.67, 3.94, -4.35, -7.58, 8.87, 1.69, -0.37, -6.27, -4.95, -8.93, -0.7, -2.2, 7.72, 6.09, -1.36, 5.58, -1.44, -1.15, -2.06, -5.34, 3.66, -6.61, -2.55, 0.86, -8.39, 9.21, -8.83, -1.63, 5.73, 8.37, -0.03, -2.71, -3 ] 
     timeData.value = [ "2025-01-02T18:00:09.000000Z", "2025-01-19T17:26:12.000000Z", "2025-01-19T17:26:17.000000Z", "2025-01-19T17:26:22.000000Z", "2025-01-19T17:26:27.000000Z", "2025-01-19T17:26:32.000000Z", "2025-01-19T17:26:37.000000Z", "2025-01-19T17:26:42.000000Z", "2025-01-19T17:26:47.000000Z", "2025-01-19T17:26:52.000000Z", "2025-01-19T17:26:57.000000Z", "2025-01-19T17:27:02.000000Z", "2025-01-19T17:27:07.000000Z", "2025-01-19T17:27:12.000000Z", "2025-01-19T17:27:17.000000Z", "2025-01-19T17:27:22.000000Z", "2025-01-19T17:27:27.000000Z", "2025-01-19T17:27:32.000000Z", "2025-01-19T17:27:37.000000Z", "2025-01-19T17:27:42.000000Z", "2025-01-19T17:27:47.000000Z", "2025-01-19T17:27:52.000000Z", "2025-01-19T17:27:57.000000Z", "2025-01-19T17:28:02.000000Z", "2025-01-19T17:28:07.000000Z", "2025-01-19T17:28:12.000000Z", "2025-01-19T17:28:17.000000Z", "2025-01-19T17:28:22.000000Z", "2025-01-19T17:28:27.000000Z", "2025-01-19T17:28:32.000000Z", "2025-01-19T17:28:37.000000Z", "2025-01-19T17:28:42.000000Z", "2025-01-19T17:28:47.000000Z", "2025-01-19T17:28:52.000000Z", "2025-01-19T17:28:57.000000Z", "2025-01-19T17:29:02.000000Z", "2025-01-19T17:29:07.000000Z", "2025-01-19T17:29:12.000000Z", "2025-01-19T17:29:17.000000Z", "2025-01-19T17:29:22.000000Z", "2025-01-19T17:29:27.000000Z", "2025-01-19T17:29:32.000000Z", "2025-01-19T17:29:37.000000Z", "2025-01-19T17:29:42.000000Z", "2025-01-19T17:29:47.000000Z", "2025-01-19T17:29:52.000000Z", "2025-01-19T17:29:57.000000Z", "2025-01-19T17:30:02.000000Z", "2025-01-19T17:30:07.000000Z", "2025-01-19T17:30:12.000000Z", "2025-01-19T17:30:17.000000Z", "2025-01-19T17:30:22.000000Z", "2025-01-19T17:30:27.000000Z", "2025-01-19T17:30:32.000000Z", "2025-01-19T17:30:37.000000Z", "2025-01-19T17:30:42.000000Z", "2025-01-19T17:30:47.000000Z", "2025-01-19T17:30:52.000000Z", "2025-01-19T17:30:57.000000Z", "2025-01-19T17:31:02.000000Z", "2025-01-19T17:31:07.000000Z", "2025-01-19T17:31:12.000000Z", "2025-01-19T17:31:17.000000Z", "2025-01-19T17:31:22.000000Z", "2025-01-19T17:31:27.000000Z", "2025-01-19T17:31:32.000000Z", "2025-01-19T17:31:37.000000Z", "2025-01-19T17:31:42.000000Z", "2025-01-19T17:31:47.000000Z", "2025-01-19T17:31:52.000000Z", "2025-01-19T17:31:57.000000Z", "2025-01-19T17:32:02.000000Z" ]
 
-    console.log("voltageData", voltageData.value);
-    console.log("currentData", currentData.value);
-    console.log("temperatureData", temperatureData.value);
-    console.log("timeData", timeData.value);
+
   });
 
   return {

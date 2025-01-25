@@ -13,13 +13,11 @@ const batterieStore = useBatterie();
 const selectedDate = ref(null);
 
 const registerBatterie = () => {
-  console.log("Parc supervisé:", useParc.parcSuperviser.id);
   batterieStore.registerBatterie();
 };
 
 function modifier() {
-  console.log('atotttt');
-  batterieStore.updateBatterie(batterieStore.batterieModifier.id)
+  batterieStore.updateBatterie(batterieStore.batterieModifier.id);
 }
 </script>
 
@@ -27,8 +25,18 @@ function modifier() {
   <Transition>
     <div class="showModal" v-if="show.showCreationParamBatt">
       <div class="formModal">
-        <h3>{{ !batterieStore.ismodifier ? 'Ajouter une nouvelle batterie pour votre parc' : 'Modifier les paramètres de la batterie' }}</h3>
-        
+        <div class="titre">
+          <h3>
+            {{
+              !batterieStore.ismodifier
+                ? "Ajouter une nouvelle batterie pour votre parc"
+                : "Modifier les paramètres de la batterie"
+            }}
+          </h3>
+          <div class="closeForm" @click="show.showCreationParamBattFunc()">
+            <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
+          </div>
+        </div>
         <div class="formulaire">
           <div class="itemContainer">
             <div class="flex">
@@ -139,16 +147,20 @@ function modifier() {
                     format="yyyy-MM-dd"
                   />
                 </div>
-                <div class="btn" @click="!batterieStore.ismodifier? registerBatterie() : modifier()">
-                  <h4>{{ !batterieStore.ismodifier? 'Enregistrer': 'Modifier'}}</h4>
+                <div
+                  class="btn"
+                  @click="
+                    !batterieStore.ismodifier ? registerBatterie() : modifier()
+                  "
+                >
+                  <h4>
+                    {{ !batterieStore.ismodifier ? "Enregistrer" : "Modifier" }}
+                  </h4>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="closeForm" @click="show.showCreationParamBattFunc()">
-        <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
       </div>
     </div>
   </Transition>
@@ -169,12 +181,16 @@ function modifier() {
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  position: absolute;
+  /* position: absolute;
   right: 300px;
-  top: 210px;
+  top: 210px; */
   align-items: center;
   display: flex;
   justify-content: center;
+}
+.titre{
+  display: flex;
+  justify-content: space-between;
 }
 
 .showModal {

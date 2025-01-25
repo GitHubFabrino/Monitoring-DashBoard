@@ -45,7 +45,6 @@ export const useBatterie = defineStore("Batterie", () => {
     };
 
     let parcid = useParc.parcSuperviser.id;
-    console.log("formate ", formatDate(dateInstallation.value));
     const batterieData = {
       nom: nom.value,
       capacite_nominal: capaciteNominal.value,
@@ -63,7 +62,6 @@ export const useBatterie = defineStore("Batterie", () => {
       dod_max: dodMax.value || "",
     };
 
-    console.log("batterieData", batterieData);
 
     axios
       .post(`${URL}/api/batterie`, batterieData, {
@@ -132,7 +130,6 @@ export const useBatterie = defineStore("Batterie", () => {
       dod_max: dodMax.value || "",
     };
 
-    console.log("batterie date", batterieData);
     axios
       .put(`${URL}/api/batterie/${id}`, batterieData, {
         headers: { "Content-Type": "application/json" },
@@ -142,6 +139,9 @@ export const useBatterie = defineStore("Batterie", () => {
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Batterie mise à jour avec succès! 🎉";
+          show.showCreationParamBatt= false
+          let parcid = useParc.parcSuperviser.id;
+          getBatteriesByParcId(parcid);
           // Add a function here to fetch updated batteries if needed
         } else {
           show.showAlert = true;
@@ -176,7 +176,6 @@ export const useBatterie = defineStore("Batterie", () => {
   function deleteBatterie(id) {
     // show.showDeleteBatterie = false;
     show.showSpinner = true;
-    console.log("id", id);
     axios
       .delete(`${URL}/api/batterie/${id}`, {
         headers: { "Content-Type": "application/json" },
@@ -226,12 +225,9 @@ export const useBatterie = defineStore("Batterie", () => {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
-        console.log('all bat by parc whit pram response', response.data);
         if (response.status === 200) {
           const batteries = response.data; 
-          console.log(batteries);
           allBatteryData.value = response.data;
-          console.log('all bat by parc allBatteryData.valuee', allBatteryData.value);
 
 
 

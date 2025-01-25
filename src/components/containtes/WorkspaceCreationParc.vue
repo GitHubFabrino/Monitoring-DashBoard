@@ -424,9 +424,7 @@ import { formatDateAndTime } from "@/service/functionService";
 function voir(parcItem) {
   show.showParcDetailFunc(parcItem);
   useParc.parcIdEdit = parcItem.id;
-  console.log("aaaaaaaa", parcItem.id);
-  console.log("eeeeee", useParc.parcIdEdit);
-  // id = idParc;
+
 }
 
 function edit() {
@@ -448,7 +446,6 @@ function edit() {
     show.showParcDetailData.contacts || show.showParcDetailData.value.contacts;
 
   for (let item = 0; item < contacts.length; item++) {
-    console.log(contacts[item]);
     if (contacts[item].type === "email") {
       useParc.emailEdit = contacts[item].valeur;
       useParc.choixEmailEdit = contacts[item].choix;
@@ -470,7 +467,6 @@ function selectedFunc(type, option) {
 }
 
 function Enregistrer() {
-  console.log("idparcedit", useParc.parcIdEdit);
   useParc.update(useParc.parcIdEdit);
 }
 </script>

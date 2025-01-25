@@ -83,12 +83,10 @@ export default {
         },
       });
 
-      console.log("Chart created", chart.value);
     };
 
     // Créer le graphique lorsque le composant est monté
     onMounted(() => {
-      console.log("Composant monté");
       createChart();
       
       // Connexion au broker MQTT
@@ -107,13 +105,10 @@ export default {
 
       client.on("message", (topic, message) => {
         try {
-          console.log("Message reçu :", message.toString()); // Vérifier la réception des messages
           const parsedMessage = JSON.parse(message.toString());
 
           if (parsedMessage.length > 0) {
-            console.log("Données MQTT reçues :", parsedMessage);
             progress.value = parseFloat(parsedMessage[props.batteryId - 1].soc).toFixed(0);
-            console.log("Progress value updated to:", progress.value); // Vérifier la mise à jour de `progress`
 
             // Recréer le graphique avec la nouvelle valeur de progression
             createChart();
@@ -121,7 +116,6 @@ export default {
             console.warn("Le message reçu est vide ou mal formé");
           }
 
-          console.log("Données reçues et mises à jour :", parsedMessage);
         } catch (error) {
           console.error("Erreur lors du traitement du message MQTT :", error);
         }

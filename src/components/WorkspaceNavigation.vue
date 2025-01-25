@@ -45,12 +45,12 @@
     <div class="dropdown absolute inline-flex position">
       <div
         id="dropdown-with-radiobutton"
-        class="dropdown-menu rounded-xl shadow-lg bg-white absolute w-60 mt-2 p-6"
+        class="dropdown-menu rounded-xl shadow-lg bg-white absolute w-60  p-6"
         v-if="dropdownOpen"
       >
         <div class="relative mb-4">
           <div
-            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none"
           >
             <svg
               width="18"
@@ -84,10 +84,10 @@
             class="list"
             @click="fermer(parcItem)"
           >
-            <div class="flex items-center">
+            <div class=" items-center">
               <label
                 for="radio-group-1"
-                class="flex items-center cursor-pointer text-gray-600 text-sm font-medium p-2"
+                class=" items-center cursor-pointer text-gray-600 text-sm font-medium p-2 parcs "
               >
                 {{ parcItem.nom_parc }}
               </label>
@@ -188,7 +188,7 @@
         </div>
       </div>
 
-      <!-- <div class="notificationContainer" v-if="show.showEmail">
+      <div class="notificationContainer" v-if="show.showEmail">
         <div class="titre">
           <h4>Email</h4>
           <div class="nb"><h5>3</h5></div>
@@ -240,7 +240,9 @@
             ></i>
           </div>
         </div>
-      </div> -->
+      </div>
+    
+    
     </div>
   </div>
 </template>
@@ -304,14 +306,12 @@ const filteredParcs = computed(() =>
 );
 function toggleDropdown() {
   dropdownOpen.value = !dropdownOpen.value;
-  console.log("rrrrrrrr", dropdownOpen.value);
 }
 function fermer(parc) {
   useParc.test = true;
   dropdownOpen.value = false;
   useParc.parcSuperviserFunc(parc);
   useParc.parcSuperviser = parc;
-  console.log("tttttt", useParc.parcSuperviser);
 }
 
 onMounted(() => {
@@ -354,8 +354,9 @@ onMounted(() => {
 }
 
 .position {
-  top: 100px;
-  right: 350px;
+  position: relative;
+  top: 30px;
+  right: 250px;
   z-index: 10;
 }
 
@@ -383,8 +384,13 @@ onMounted(() => {
   text-align: center;
   margin-right: 10px;
 }
+
+.list{
+padding: 5px;
+border-radius: 5px;
+}
 .list:hover {
-  background-color: #fb7a58 !important;
+  background-color: #fb7b587a !important;
 }
 .notif {
   width: 70%;
@@ -406,6 +412,9 @@ onMounted(() => {
 
 .show:hover .text {
   display: block;
+}
+.parcs{
+  padding: 15px;
 }
 
 .showProfil {

@@ -116,7 +116,6 @@ const verify = () => {
     return;
   }
 
-  console.log('data', pseudo.value, email.value, mdp.value);
   user.email = email.value;
   user.password = mdp.value;
   user.name = name.value;

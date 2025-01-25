@@ -9,7 +9,6 @@ const user = useUser();
 
 function logoutFunc() {
   user.logout();
-  console.log("isis");
 }
 </script>
 

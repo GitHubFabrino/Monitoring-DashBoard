@@ -12,7 +12,6 @@ const parc = parcStore()
 const maintenanceStore = useMaintenanceStore();
 
 function supprimer() {
-  console.log(typeof show.showDeleteMaintenanceData.maintenance.id);
   maintenanceStore.deleteMaintenance(show.showDeleteMaintenanceData.maintenance.id)
 }
 </script>

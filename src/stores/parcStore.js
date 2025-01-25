@@ -61,7 +61,6 @@ export const parcStore = defineStore("Parc", () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         if (response.status === 201) {
           show.showAlert = true;
           show.showAlertType = "success";
@@ -107,20 +106,16 @@ export const parcStore = defineStore("Parc", () => {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
-        console.log("tena ", response.data);
         parcsData.value = response.data;
 
         if (response.data.length !== 0) {
           if (type === "all") {
             show.showParcDetailData.value = response.data[0];
             parcIdEdit.value = response.data[0].id;
-            console.log("ito ary", show.showParcDetailData.value);
           } else if (type === "register") {
             let index = response.data.length > 0 ? response.data.length - 1 : 0;
-            console.log("index", index);
             show.showParcDetailData.value = response.data[index];
             parcIdEdit.value = response.data[index].id;
-            console.log("ito ary", show.showParcDetailData.value);
           } else {
             // Traiter d'autres types si nécessaire
             console.warn("Type non reconnu:", type);
@@ -151,7 +146,6 @@ export const parcStore = defineStore("Parc", () => {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
-        console.log("tena vofafa", response.data);
         if (response.status === 204) {
           getParcs(JSON.parse(localStorage.getItem("user")).user.id, "all");
           show.showAlert = true;
@@ -191,18 +185,6 @@ export const parcStore = defineStore("Parc", () => {
   function update(idParc) {
     show.showSpinner = true;
 
-    console.log("nom_parcEdit", nom_parcEdit.value);
-    console.log("descriptionEdit", descriptionEdit.value);
-    console.log("adresseEdit", adresseEdit.value);
-    console.log("nombre_batteriesEdit", nombre_batteriesEdit.value);
-    console.log("emailEdit", emailEdit.value);
-    console.log("phoneEdit", phoneEdit.value);
-    console.log("choixEmailEdit", choixEmailEdit.value);
-    console.log("choixPhoneEdit", choixPhoneEdit.value);
-    console.log("idContactEmailEdit", idContactEmailEdit.value);
-    console.log("idContactPhoneEdit", idContactPhoneEdit.value);
-    console.log("parcIdEdit", parcIdEdit.value);
-
     let formData = {
       nom_parc: nom_parcEdit.value,
       description: descriptionEdit.value,
@@ -224,7 +206,6 @@ export const parcStore = defineStore("Parc", () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         if (response.status === 200) {
           show.showAlert = true;
           show.showAlertType = "success";

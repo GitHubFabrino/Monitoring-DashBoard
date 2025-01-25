@@ -188,7 +188,6 @@ export const useShow = defineStore("Show", () => {
   const showBatt = ref(false);
   const showBatterieItemId = ref();
   function showBattDetails(itemName, itemId) {
-    console.log("detail");
     showBatterieItem.value = itemName;
     showBatterieItemId.value = itemId;
     showBatt.value = !showBatt.value;
@@ -202,10 +201,8 @@ export const useShow = defineStore("Show", () => {
   const showCourant = ref(false);
   const showTensionCourant = ref(false);
   const showGraph = ref("");
-  console.log(showGraph);
 
   function setShowGraph(option) {
-    // console.log(option);
     showGraph.value = option;
     option === "Tension"
       ? (showTension.value = true)
@@ -316,9 +313,7 @@ export const useShow = defineStore("Show", () => {
   const showNotificationDetailOne = ref(false);
 
   function showNotificationDetailOneFunc(notif) {
-    console.log("data", notif);
     notifData.value = notif;
-    console.log("data2", notif);
     showNotificationDetailOne.value = true;
   }
 

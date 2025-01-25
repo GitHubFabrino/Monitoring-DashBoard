@@ -49,6 +49,9 @@ export const useMqttParametreBatterieStore = defineStore(
             show.showAlert = true;
             show.showAlertType = "success";
             show.showAlertMessage = "Données publiées avec succès ";
+            setTimeout(() => {
+              show.showAlert = false;
+            }, 3000);
           }
         }
       );

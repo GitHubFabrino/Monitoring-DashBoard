@@ -20,7 +20,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
   const ismodifierMaintenance = ref(false);
   const allAllerteDataByParc = ref([]);
   const allAllerteDataByBatterie = ref([]);
-  const voirAlerteData = ref()
+  const voirAlerteData = ref();
 
   const fetchAlertes = () => {
     loading.value = true;
@@ -99,7 +99,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
       .get(`${URL}/api/alerte-batteries/parc/${idParc}`)
       .then((response) => {
         if (response.status === 200) {
-          console.log('getAlerteByParcId' , response.data);
+          console.log("getAlerteByParcId", response.data);
           allAllerteDataByParc.value = response.data;
           show.showAlert = true;
           show.showAlertType = "success";
@@ -170,7 +170,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
   const createAlerte = (newAlerte) => {
     loading.value = true;
     axios
-      .post(`${URL}/alerte-batteries`, newAlerte)
+      .post(`${URL}/api/alerte-batteries`, newAlerte)
       .then((response) => {
         alertes.value.push(response.data);
         show.showAlert = true;
@@ -206,6 +206,8 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
         show.showAlert = true;
         show.showAlertType = "success";
         show.showAlertMessage = "Alerte mise à jour avec succès";
+        let parcid = useParc.parcSuperviser.id;
+        getAlerteByParcId(parcid);
       })
       .catch((err) => {
         error.value = err;
@@ -254,7 +256,6 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
   onMounted(() => {
     try {
       let parcid = useParc.parcSuperviser.id;
-      console.log('id' , parcid);
       getAlerteByParcId(parcid);
     } catch (error) {}
   });

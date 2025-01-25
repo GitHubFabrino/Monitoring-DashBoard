@@ -192,8 +192,30 @@
 
     <div v-if="showAssocier" class="container2">
       <div class="con" v-if="isBatExist">
-        <svg width="256px" height="256px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#ffa38a" stroke="#ffa38a" stroke-width="0.00016"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="m 3 1 c -1.644531 0 -3 1.355469 -3 3 v 4 c 0 1.644531 1.355469 3 3 3 h 1 v 1 c 0 1.644531 1.355469 3 3 3 h 6 c 1.644531 0 3 -1.355469 3 -3 v -4 c 0 -1.644531 -1.355469 -3 -3 -3 h -1 v -1 c 0 -1.644531 -1.355469 -3 -3 -3 z m 0 2 h 6 c 0.570312 0 1 0.429688 1 1 v 4 c 0 0.570312 -0.429688 1 -1 1 h -1 c -0.550781 0 -1 0.449219 -1 1 s 0.449219 1 1 1 h 1 c 1.644531 0 3 -1.355469 3 -3 v -1 h 1 c 0.570312 0 1 0.429688 1 1 v 4 c 0 0.570312 -0.429688 1 -1 1 h -6 c -0.570312 0 -1 -0.429688 -1 -1 v -4 c 0 -0.570312 0.429688 -1 1 -1 h 1 c 0.550781 0 1 -0.449219 1 -1 s -0.449219 -1 -1 -1 h -1 c -1.644531 0 -3 1.355469 -3 3 v 1 h -1 c -0.570312 0 -1 -0.429688 -1 -1 v -4 c 0 -0.570312 0.429688 -1 1 -1 z m 0 0" fill="#fd987c"></path> </g></svg>
+        <svg
+          width="256px"
+          height="256px"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#ffa38a"
+          stroke="#ffa38a"
+          stroke-width="0.00016"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="m 3 1 c -1.644531 0 -3 1.355469 -3 3 v 4 c 0 1.644531 1.355469 3 3 3 h 1 v 1 c 0 1.644531 1.355469 3 3 3 h 6 c 1.644531 0 3 -1.355469 3 -3 v -4 c 0 -1.644531 -1.355469 -3 -3 -3 h -1 v -1 c 0 -1.644531 -1.355469 -3 -3 -3 z m 0 2 h 6 c 0.570312 0 1 0.429688 1 1 v 4 c 0 0.570312 -0.429688 1 -1 1 h -1 c -0.550781 0 -1 0.449219 -1 1 s 0.449219 1 1 1 h 1 c 1.644531 0 3 -1.355469 3 -3 v -1 h 1 c 0.570312 0 1 0.429688 1 1 v 4 c 0 0.570312 -0.429688 1 -1 1 h -6 c -0.570312 0 -1 -0.429688 -1 -1 v -4 c 0 -0.570312 0.429688 -1 1 -1 h 1 c 0.550781 0 1 -0.449219 1 -1 s -0.449219 -1 -1 -1 h -1 c -1.644531 0 -3 1.355469 -3 3 v 1 h -1 c -0.570312 0 -1 -0.429688 -1 -1 v -4 c 0 -0.570312 0.429688 -1 1 -1 z m 0 0"
+              fill="#fd987c"
+            ></path>
+          </g>
+        </svg>
         <h1>Associer le dispositif à la plateforme</h1>
+        <input type="text" name="" id="" class="serie" placeholder="Entrer le code">
 
         <div class="btn" @click="associer()">
           <h4>Associer</h4>
@@ -203,7 +225,31 @@
       <div class="containerEmpty" v-if="!isBatExist">
         <div class="center">
           <!-- <i class="pi pi-globe" style="font-size: 100px; color: #555c6286"></i> -->
-          <svg width="101px" height="101px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="m 8.152344 4.007812 c -0.4375 -0.023437 -0.882813 0.046876 -1.300782 0.222657 c -1.117187 0.460937 -1.851562 1.558593 -1.851562 2.769531 h 2 c 0 -0.40625 0.242188 -0.765625 0.617188 -0.921875 s 0.800781 -0.074219 1.089843 0.214844 c 0.289063 0.289062 0.371094 0.714843 0.21875 1.089843 c -0.15625 0.378907 -0.519531 0.617188 -0.925781 0.617188 c -0.550781 0 -1 0.449219 -1 1 v 2 h 2 v -1.179688 c 0.785156 -0.277343 1.441406 -0.875 1.769531 -1.671874 c 0.464844 -1.117188 0.207031 -2.414063 -0.648437 -3.269532 c -0.535156 -0.535156 -1.242188 -0.835937 -1.96875 -0.871094 z m -0.152344 7.992188 c -0.550781 0 -1 0.449219 -1 1 c 0 0.554688 0.449219 1 1 1 s 1 -0.445312 1 -1 c 0 -0.550781 -0.449219 -1 -1 -1 z m 0 0" fill="#2e3434"></path> <path d="m 7 0 c -1 0 -1 1 -1 1 v 1 h -1 s -0.707031 -0.015625 -1.449219 0.355469 c -0.738281 0.371093 -1.550781 1.3125 -1.550781 2.644531 v 8 s -0.015625 0.707031 0.355469 1.449219 c 0.371093 0.738281 1.3125 1.550781 2.644531 1.550781 h 6 s 0.707031 0.015625 1.449219 -0.355469 c 0.738281 -0.371093 1.550781 -1.3125 1.550781 -2.644531 v -8 c 0 -1.332031 -0.8125 -2.273438 -1.550781 -2.644531 c -0.742188 -0.371094 -1.449219 -0.355469 -1.449219 -0.355469 h -1 v -1 c 0 -1 -1 -1 -1 -1 z m 0 3 h 2 v 0.125 c 0.609375 0.160156 1.171875 0.457031 1.644531 0.875 h 0.355469 c 0.554688 0 1 0.445312 1 1 v 8 c 0 0.554688 -0.445312 1 -1 1 h -1.273438 c -0.355468 0.617188 -1.015624 0.996094 -1.726562 1 c -0.710938 -0.003906 -1.371094 -0.382812 -1.726562 -1 h -1.273438 c -0.554688 0 -1 -0.445312 -1 -1 v -8 c 0 -0.554688 0.445312 -1 1 -1 h 0.355469 c 0.472656 -0.414062 1.035156 -0.710938 1.644531 -0.863281 z m 0 0" fill="#2e3436" fill-opacity="0.34902"></path> </g></svg>
+          <svg
+            width="101px"
+            height="101px"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#000000"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="m 8.152344 4.007812 c -0.4375 -0.023437 -0.882813 0.046876 -1.300782 0.222657 c -1.117187 0.460937 -1.851562 1.558593 -1.851562 2.769531 h 2 c 0 -0.40625 0.242188 -0.765625 0.617188 -0.921875 s 0.800781 -0.074219 1.089843 0.214844 c 0.289063 0.289062 0.371094 0.714843 0.21875 1.089843 c -0.15625 0.378907 -0.519531 0.617188 -0.925781 0.617188 c -0.550781 0 -1 0.449219 -1 1 v 2 h 2 v -1.179688 c 0.785156 -0.277343 1.441406 -0.875 1.769531 -1.671874 c 0.464844 -1.117188 0.207031 -2.414063 -0.648437 -3.269532 c -0.535156 -0.535156 -1.242188 -0.835937 -1.96875 -0.871094 z m -0.152344 7.992188 c -0.550781 0 -1 0.449219 -1 1 c 0 0.554688 0.449219 1 1 1 s 1 -0.445312 1 -1 c 0 -0.550781 -0.449219 -1 -1 -1 z m 0 0"
+                fill="#2e3434"
+              ></path>
+              <path
+                d="m 7 0 c -1 0 -1 1 -1 1 v 1 h -1 s -0.707031 -0.015625 -1.449219 0.355469 c -0.738281 0.371093 -1.550781 1.3125 -1.550781 2.644531 v 8 s -0.015625 0.707031 0.355469 1.449219 c 0.371093 0.738281 1.3125 1.550781 2.644531 1.550781 h 6 s 0.707031 0.015625 1.449219 -0.355469 c 0.738281 -0.371093 1.550781 -1.3125 1.550781 -2.644531 v -8 c 0 -1.332031 -0.8125 -2.273438 -1.550781 -2.644531 c -0.742188 -0.371094 -1.449219 -0.355469 -1.449219 -0.355469 h -1 v -1 c 0 -1 -1 -1 -1 -1 z m 0 3 h 2 v 0.125 c 0.609375 0.160156 1.171875 0.457031 1.644531 0.875 h 0.355469 c 0.554688 0 1 0.445312 1 1 v 8 c 0 0.554688 -0.445312 1 -1 1 h -1.273438 c -0.355468 0.617188 -1.015624 0.996094 -1.726562 1 c -0.710938 -0.003906 -1.371094 -0.382812 -1.726562 -1 h -1.273438 c -0.554688 0 -1 -0.445312 -1 -1 v -8 c 0 -0.554688 0.445312 -1 1 -1 h 0.355469 c 0.472656 -0.414062 1.035156 -0.710938 1.644531 -0.863281 z m 0 0"
+                fill="#2e3436"
+                fill-opacity="0.34902"
+              ></path>
+            </g>
+          </svg>
           <h1>Paramétrez vos batteries ou ajoutez-en</h1>
           <div class="btn" @click="retour()">
             <h4>Retourner</h4>
@@ -211,7 +257,9 @@
         </div>
       </div>
     </div>
-
+    <div class="showModal" v-if="showSpinner">
+      <div class="spinner-6"></div>
+    </div>
     <div v-if="isbat" class="container1">
       <template v-if="dataReceived.length > 0 && dataReceived.length <= 3">
         <BatteryItem
@@ -266,7 +314,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 const show = useShow();
 const user = useUser();
 const useParc = parcStore();
-
+const showSpinner = ref(false);
 const batterie = useBatterie();
 
 const mqttParametreBatterieStore = useMqttParametreBatterieStore();
@@ -297,12 +345,8 @@ const dataReceived = ref([]); // Liste de données reçues par MQTT
 const isbat = ref(false);
 
 function associer() {
-  isbat.value = true;
+  showSpinner.value = true;
   showAssocier.value = false;
-  console.log("asso", batterie.allBatteryData);
-
-  // Initialize dataSendToDispositif as an empty array
-  let dataSendToDispositif = [];
 
   let i = [];
   let c = [];
@@ -337,7 +381,6 @@ function associer() {
     s.push(element.parametre_batteries.seuil_alerte_soc);
   });
 
-  console.log("les id", i);
   localStorage.setItem("idAssocier", JSON.stringify(i));
   localStorage.setItem("datassocier", JSON.stringify(batterie.allBatteryData));
   mqttParametreBatterieStore.publierDonneesBatteries(
@@ -352,6 +395,7 @@ function associer() {
     d,
     s
   );
+  connect();
 }
 
 function retour() {
@@ -368,21 +412,15 @@ async function handleParcItemClick(parcItem) {
   parcSuperviserLocal.value = parcItem; // Assurez-vous de stocker l'objet, pas une chaîne JSON
   localStorage.setItem("parcSuperviser", JSON.stringify(parcItem));
 
-  console.log("Parc Supervise : ", useParc.parcSuperviser);
-
   try {
     await batterie.getBatteriesByParcId(parcItem.id);
-    console.log("battery data de parc supervise : ", batterie.allBatteryData);
     isBatExist.value = batterie.allBatteryData?.length != 0;
-
-    console.log("isBatexist", isBatExist.value);
   } catch (error) {
     isGetParc.value = false;
   }
 }
 
 const onFileChange = async (event, parcId) => {
-  console.log("etoeoeoeoeoeo");
   const file = event.target.files[0];
   if (!file) return;
 
@@ -399,7 +437,6 @@ const onFileChange = async (event, parcId) => {
         },
       }
     );
-    console.log(response.data);
     const userId = JSON.parse(localStorage.getItem("user")).user.id;
     await useParc.getParcs(userId, "all");
 
@@ -434,43 +471,31 @@ onMounted(async () => {
   try {
     const userId = JSON.parse(localStorage.getItem("user")).user.id;
     await useParc.getParcs(userId, "all");
-    console.log("azertyuioqsdfgfffff", useParc.parcsData?.length);
     isGetParc.value = useParc.parcsData?.length != 0;
   } catch (error) {
     isGetParc.value = false;
   }
 });
-
-function test() {
-  console.log("eeeeeeeeeedddddddddddddddddddd");
-}
-onMounted(() => {
-  console.log("Initialisation");
-
-  // JSON.parse(localStorage.getItem("idAssocier")).length === 0
-  //   ? (isbat = true)
-  //   : (isbat = false);
-
-  try {
-    const storedParcSuperviser = JSON.parse(
-      localStorage.getItem("parcSuperviser")
-    );
-    parcSuperviserLocal.value = storedParcSuperviser;
-    useParc.parcSuperviser = storedParcSuperviser;
-    console.log(
-      "Valeur récupérée depuis le localStorage:",
-      parcSuperviserLocal.value
-    );
-    console.log("rrrrr", isEmpty(parcSuperviserLocal.value));
-    useParc.test = isEmpty(parcSuperviserLocal.value);
-    console.log(useParc.test);
-  } catch (error) {
-    console.error("Erreur lors de la récupération du localStorage:", error);
-  }
+function connect() {
   const client = mqtt.connect("ws://192.168.1.116:9001");
 
+  let isConnected = false; // Indique si la connexion est établie
+
+  // Définir un timeout pour gérer une connexion qui échoue après 5 secondes
+  const connectionTimeout = setTimeout(() => {
+    if (!isConnected) {
+      console.error("Connexion au broker MQTT échouée après 5 secondes.");
+      isbat.value = false; // Signalement d'un problème de connexion
+      showSpinner.value = false; // Arrêt du spinner
+    }
+  }, 5000);
+
+  // Gestion de l'événement "connect"
   client.on("connect", () => {
+    isConnected = true; // La connexion est établie
+    clearTimeout(connectionTimeout); // Annule le timeout
     console.log("Connecté au broker MQTT");
+
     client.subscribe("batteries", (err) => {
       if (err) {
         console.error("Erreur d'abonnement :", err);
@@ -480,31 +505,54 @@ onMounted(() => {
     });
   });
 
+  // Gestion des messages reçus
   client.on("message", (topic, message) => {
     try {
       const parsedMessage = JSON.parse(message.toString());
 
       // Mise à jour des données reçues
       dataReceived.value = parsedMessage;
+      console.log("Données reçues :", dataReceived.value);
+
+      if (dataReceived.value.length > 0) {
+        isbat.value = true; // Les données sont disponibles
+        showSpinner.value = false; // Arrêter le spinner
+      }
 
       // Mise à jour des températures (converties en nombres)
       temperatures.value = parsedMessage.map((battery) =>
         parseFloat(battery.temperature).toFixed(0)
       );
-
-      console.log(`Données reçues :`, parsedMessage);
     } catch (error) {
       console.error("Erreur lors du traitement du message MQTT :", error);
     }
   });
 
+  // Gestion des erreurs
   client.on("error", (err) => {
     console.error("Erreur MQTT :", err);
   });
 
+  // Arrêter le client MQTT lorsque le composant est démonté
   onUnmounted(() => {
     client.end();
   });
+}
+
+
+onMounted(() => {
+  try {
+    const storedParcSuperviser = JSON.parse(
+      localStorage.getItem("parcSuperviser")
+    );
+    parcSuperviserLocal.value = storedParcSuperviser;
+    useParc.parcSuperviser = storedParcSuperviser;
+
+    useParc.test = isEmpty(parcSuperviserLocal.value);
+  } catch (error) {
+    console.error("Erreur lors de la récupération du localStorage:", error);
+  }
+  // connect()
 });
 </script>
 
@@ -517,6 +565,53 @@ onMounted(() => {
   height: 60vh;
   width: 30%;
 } */
+.showModal {
+  /* position: fixed; */
+  top: 0;
+  width: 100%;
+  /* background-color: rgba(216, 213, 213, 0.326); */
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* background: rgba(43, 38, 38, 0.801); */
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner-6 {
+  width: 80px;
+  aspect-ratio: 1;
+  display: grid;
+  -webkit-mask: conic-gradient(from 15deg, #0000, #000);
+  -moz-mask: conic-gradient(from 15deg, #0000, #000);
+  mask: conic-gradient(from 15deg, #0000, #000); /* Standard property */
+  animation: s6 1s infinite steps(12);
+}
+
+.spinner-6,
+.spinner-6:before,
+.spinner-6:after {
+  background: radial-gradient(closest-side at 50% 12.5%, #fb7a58 96%, #0000) 50%
+      0/20% 80% repeat-y,
+    radial-gradient(closest-side at 12.5% 50%, #fb7a58 96%, #0000) 0 50%/80% 20%
+      repeat-x;
+}
+.spinner-6:before,
+.spinner-6:after {
+  content: "";
+  grid-area: 1/1;
+  transform: rotate(30deg);
+}
+.spinner-6:after {
+  transform: rotate(60deg);
+}
+
+@keyframes s6 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
 
 .colorBg {
   background-color: #fb7a58 !important;
@@ -692,6 +787,11 @@ input[type="file"] {
   flex-direction: column;
 
   align-items: center;
+}
+.serie{
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .center h1 {
