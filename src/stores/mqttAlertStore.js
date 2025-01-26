@@ -3,7 +3,7 @@ import { ref, onMounted } from "vue";
 import mqtt from "mqtt";
 import { useShow } from "@/stores/show";
 import { useAlerteBatterieStore } from "@/stores/alerteBatterie";
-
+import { useBatterie } from "@/stores/batterieStore";
 export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
   // Données reçues par MQTT
   const dataReceived = ref([]);
@@ -11,7 +11,7 @@ export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
   const show = useShow();
   const alerteBatterieStore = useAlerteBatterieStore();
   
-
+  const batterie = useBatterie();
   // Connexion MQTT
   const client = mqtt.connect("ws://192.168.1.116:9001");
 
@@ -27,21 +27,39 @@ export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
       });
     });
 
-    client.on("message", (topic, message) => {
+    client.on("message", async (topic, message) => {
       try {
         const parsedMessage = JSON.parse(message.toString());
 
-        // console.log("Parseeee", parsedMessage);
-
+        
         if (topic === "alerts") {
           // Ajout de l'alerte à la liste des alertes reçues
-          alertes.value.push(parsedMessage);
+
+         console.log("Parseeee", parsedMessage);
+
+         //get batt par id 
+         let batdata = await batterie.getBatteriesById(parsedMessage.idbat);
+         console.log('batdata', batdata);
+
+        //  let formaAlerte ={
+        //   Valert : parsedMessage.Valert, 
+        //   Vseuil : parsedMessage.Vseuil, 
+        //   contact : parsedMessage.contact, 
+        //   gravite : parsedMessage.gravite, 
+        //   idbat : parsedMessage.idbat, 
+        //   read : parsedMessage.read, 
+        //   sms : parsedMessage.sms, 
+        //   type : parsedMessage.type, 
+        //   parc: batdata.parc.nom_parc,
+        //   nomBat: batdata.nom
+        //  }
+
+        //   alertes.value.push(formaAlerte);
           show.showAlertBatterie=true
           show.showAlertBatType = parsedMessage.graviter
           show.showAlertBatterieMessage = parsedMessage.message
           show.competerAlerteBatterieUnRead = show.competerAlerteBatterieUnRead + 1
 
-          // Ajouter kes alertes dans la base de donne 
             let newAlerte = {
             valeur_alerte : parsedMessage.Valert,
               valeur_seuil: parsedMessage.Vseuil,
@@ -54,7 +72,7 @@ export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
             }
 
            
-            // console.log('newAlertre' , newAlerte);
+            console.log('newAlertre' , newAlerte);
             
             alerteBatterieStore.createAlerte(newAlerte)
 

@@ -20,7 +20,11 @@ export const useBatterie = defineStore("Batterie", () => {
   const tensionNominale = ref("");
   const capacite = ref("");
   const utilisationVeille = ref("");
+  const utilisationVeillemax = ref("");
+  const utilisationVeillemin = ref("");
   const utilisationCyclique = ref("");
+  const utilisationCycliquemin = ref("");
+  const utilisationCycliquemax = ref("");
   const courant = ref("");
   const temperature = ref("");
   const dodMax = ref("");
@@ -31,11 +35,31 @@ export const useBatterie = defineStore("Batterie", () => {
 
   const allBatteryData = ref([]);
   const oneBatteryData = ref({});
-  function registerBatterie() {
-    // show.showNewBatterie = false;
-    show.showSpinner = true;
 
-    // Fonction pour formater la date
+  function clear() {
+    nom.value = "";
+    capaciteNominal.value = "";
+    dateInstallation.value = "";
+    technologie.value = "";
+    marque.value = "";
+    parcId.value = "";
+    description.value = "";
+    tensionNominale.value = "";
+    capacite.value = "";
+    utilisationVeille.value = "";
+    utilisationVeillemax.value = "";
+    utilisationVeillemin.value = "";
+    utilisationCyclique.value = "";
+    utilisationCycliquemin.value = "";
+    utilisationCycliquemax.value = "";
+    courant.value = "";
+    temperature.value = "";
+    dodMax.value = "";
+    parametreBatterieId.value = "";
+  }
+
+  function registerBatterie() {
+    show.showSpinner = true;
     const formatDate = (date) => {
       const d = new Date(date);
       const year = d.getFullYear();
@@ -44,10 +68,15 @@ export const useBatterie = defineStore("Batterie", () => {
       return `${year}-${month}-${day}`;
     };
 
+    let enveuille = `${utilisationVeillemin.value}-${utilisationVeillemax.value}`;
+    let cyclique = `${utilisationCycliquemin.value}-${utilisationCycliquemax.value}`;
+
+    console.log("enveuille", enveuille);
+
     let parcid = useParc.parcSuperviser.id;
     const batterieData = {
       nom: nom.value,
-      capacite_nominal: capaciteNominal.value,
+      capacite_nominal: capacite.value,
       date_installation: dateInstallation.value,
       technologie: technologie.value,
       marque: marque.value,
@@ -55,13 +84,12 @@ export const useBatterie = defineStore("Batterie", () => {
       description: description.value || "",
       tension_nominale: tensionNominale.value || "",
       capacite: capacite.value || "",
-      utilisation_veille: utilisationVeille.value || "",
-      utilisation_cyclique: utilisationCyclique.value || "",
+      utilisation_veille: enveuille || "",
+      utilisation_cyclique: cyclique || "",
       courant: courant.value || "",
       temperature: temperature.value || "",
       dod_max: dodMax.value || "",
     };
-
 
     axios
       .post(`${URL}/api/batterie`, batterieData, {
@@ -78,6 +106,7 @@ export const useBatterie = defineStore("Batterie", () => {
 
           let parcid = useParc.parcSuperviser.id;
           getBatteriesByParcId(parcid);
+          clear()
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";
@@ -112,6 +141,10 @@ export const useBatterie = defineStore("Batterie", () => {
   function updateBatterie(id) {
     let parcid = useParc.parcSuperviser.id;
     show.showSpinner = true;
+
+    let enveuille = `${utilisationVeillemin.value}-${utilisationVeillemax.value}`;
+    let cyclique = `${utilisationCycliquemin.value}-${utilisationCycliquemax.value}`;
+
     const batterieData = {
       nom: nom.value,
       capacite_nominal: capaciteNominal.value,
@@ -123,8 +156,8 @@ export const useBatterie = defineStore("Batterie", () => {
       description: description.value || "",
       tension_nominale: tensionNominale.value || "",
       capacite: capacite.value || "",
-      utilisation_veille: utilisationVeille.value || "",
-      utilisation_cyclique: utilisationCyclique.value || "",
+      utilisation_veille: enveuille || "",
+      utilisation_cyclique: cyclique || "",
       courant: courant.value || "",
       temperature: temperature.value || "",
       dod_max: dodMax.value || "",
@@ -139,10 +172,10 @@ export const useBatterie = defineStore("Batterie", () => {
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Batterie mise à jour avec succès! 🎉";
-          show.showCreationParamBatt= false
+          show.showCreationParamBatt = false;
           let parcid = useParc.parcSuperviser.id;
           getBatteriesByParcId(parcid);
-          // Add a function here to fetch updated batteries if needed
+          clear()
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";
@@ -226,13 +259,12 @@ export const useBatterie = defineStore("Batterie", () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          const batteries = response.data; 
+          const batteries = response.data;
           allBatteryData.value = response.data;
 
+          console.log("icicicicic", allBatteryData.value);
 
-
-
-         localStorage.setItem('allBatteryData', JSON.stringify(response.data) )
+          localStorage.setItem("allBatteryData", JSON.stringify(response.data));
         } else {
           show.showAlert = true;
           show.showAlertType = "danger";
@@ -261,6 +293,68 @@ export const useBatterie = defineStore("Batterie", () => {
       });
   }
 
+
+
+  // function getBatteriesById(idbat) {
+  //   show.showSpinner = true;
+  
+  //   return axios
+  //     .get(`${URL}/api/batterie/${idbat}`, {
+  //       headers: { "Content-Type": "application/json" },
+  //     })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         const batteries = response.data;
+  //         return batteries; // Retourne les données des batteries
+  //       } else {
+  //         show.showAlert = true;
+  //         show.showAlertType = "danger";
+  //         show.showAlertMessage = "Échec de la récupération des batteries. ❌";
+  //         return null; // Retourne null en cas d'échec
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       show.showAlert = true;
+  //       show.showAlertType = "warning";
+  //       show.showAlertMessage = "Erreur lors de la récupération des batteries. ⚠️";
+  //       console.error(err);
+  //       return null; // Retourne null en cas d'erreur
+  //     })
+  //     .finally(() => {
+  //       show.showSpinner = false;
+  //     });
+  // }
+  
+
+  async function getBatteriesById(idbat) {
+  
+    try {
+      const response = await axios.get(`${URL}/api/batterie/${idbat}`, {
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (response.status === 200) {
+        const batteries = response.data;
+        return batteries; // Retourne les données des batteries
+      } else {
+        show.showAlert = true;
+        show.showAlertType = "danger";
+        show.showAlertMessage = "Échec de la récupération des batteries. ❌";
+        return null; // Retourne null en cas d'échec
+      }
+    } catch (err) {
+      show.showAlert = true;
+      show.showAlertType = "warning";
+      show.showAlertMessage = "Erreur lors de la récupération des batteries. ⚠️";
+      console.error(err);
+      return null; // Retourne null en cas d'erreur
+    } finally {
+      show.showSpinner = false;
+    }
+  }
+
+
+
   // Charger les parcs au montage du composant
   onMounted(() => {
     try {
@@ -271,6 +365,7 @@ export const useBatterie = defineStore("Batterie", () => {
   return {
     nom,
     capaciteNominal,
+    getBatteriesById,
     dateInstallation,
     technologie,
     marque,
@@ -287,7 +382,11 @@ export const useBatterie = defineStore("Batterie", () => {
     parametreBatterieId,
     dodMax,
     allBatteryData,
+    utilisationVeillemax,
+    utilisationVeillemin,
     oneBatteryData,
+    utilisationCycliquemin,
+    utilisationCycliquemax,
     registerBatterie, // Register function added here
     updateBatterie,
     deleteBatterie,

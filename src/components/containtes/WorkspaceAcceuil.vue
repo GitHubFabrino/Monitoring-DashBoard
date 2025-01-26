@@ -344,6 +344,11 @@ const dataReceived = ref([]); // Liste de données reçues par MQTT
 
 const isbat = ref(false);
 
+function recupererValeurs(chaine) {
+  return chaine.split("-").map(Number);
+}
+
+
 function associer() {
   showSpinner.value = true;
   showAssocier.value = false;
@@ -359,54 +364,53 @@ function associer() {
   let d = [];
   let s = [];
 
-  // Iterate through allBatteryData and build the dataSendToDispositif array
+  console.log('batterie all' , batterie.allBatteryData);
+
   batterie.allBatteryData.forEach((element, index) => {
+  if (index >= 3) return; // Limiter à 3 éléments maximum
 
-    console.log("element ", element.parc.contacts.forEach((e,i)=> { if (e.type === 'phone') {
-      console.log('id',e.id);
-    }}));
-    if (index >= 3) return;
+  let contacta = "";
 
-    let contacta;
-
-    element.parc.contacts.forEach((contact) => {
-      contacta = contact.type === "phone" ? contact.id : "";
-    });
-
-    i.push(element.id);
-    c.push(contacta);
-    cma.push(element.parametre_batteries.plage_courant_max);
-    cmi.push(element.parametre_batteries.plage_courant_min);
-    tema.push(element.parametre_batteries.plage_temperature_max);
-    temi.push(element.parametre_batteries.plage_temperature_min);
-    tma.push(element.parametre_batteries.plage_tension_max);
-    tmi.push(element.parametre_batteries.plage_tension_min);
-    d.push(element.parametre_batteries.seuil_alerte_dod);
-    s.push(element.parametre_batteries.seuil_alerte_soc);
+  // Récupération du contact de type "phone"
+  element.parc.contacts.forEach((contact) => {
+    if (contact.type === "phone") {
+      contacta = contact.id;
+    }
   });
+
+  // Récupération des valeurs de tension
+  let tension = recupererValeurs(element.utilisation_cyclique).map(parseFloat); // Convertir en float
+  console.log(tension);
+
+  // Conversion des champs en float
+  const courant = parseFloat(element.courant) || 0; // Gestion des valeurs non numériques
+  const temperature = parseFloat(element.temperature) || 0; // Gestion des valeurs non numériques
+  const dodMax = parseFloat(element.dod_max) || 0;
+
+  // Ajout des valeurs dans les tableaux
+  i.push(element.id);               // ID reste en chaîne
+  c.push(contacta);                 // Contact reste en chaîne
+  cma.push(courant);
+  cmi.push(courant);
+  tema.push(temperature + 10);      // Ajouter 10 à la température
+  temi.push(temperature);
+  tma.push(tension[1] || 0);        // Tension max (par défaut 0 si invalide)
+  tmi.push(tension[0] || 0);        // Tension min (par défaut 0 si invalide)
+  d.push(dodMax);                   // DoD max
+  s.push(90);                       // Ajout d'une valeur fixe de 90
+});
+
   
-console.log('i', i);
-console.log('c', c);
-console.log('cma', cma);
-console.log('cmi', cmi);
-console.log('tema', tema);
-console.log('temi', temi);
-console.log('tma', tma);
-console.log('tmi', tmi);
-console.log('d', d);
-console.log('s', s);
-
-
-
-
-
-
-
-
-
-
-
-
+// console.log('i', i);
+// console.log('c', c);
+// console.log('cma', cma);
+// console.log('cmi', cmi);
+// console.log('tema', tema);
+// console.log('temi', temi);
+// console.log('tma', tma);
+// console.log('tmi', tmi);
+// console.log('d', d);
+// console.log('s', s);
 
 
 

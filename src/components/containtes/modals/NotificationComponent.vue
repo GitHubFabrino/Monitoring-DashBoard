@@ -16,7 +16,8 @@
             <div class="cardheader">
               <i
                 @click="
-                  show.showNotificationDetailOne = !show.showNotificationDetailOne
+                  show.showNotificationDetailOne =
+                    !show.showNotificationDetailOne
                 "
                 class="pi pi-arrow-left"
                 style="
@@ -43,8 +44,12 @@
 
         <div class="bodyNotif">
           <template v-if="!show.showNotificationDetailOne">
+
+            <div v-if=" alerteBatterieStore.alertes.length === 0">
+              Aucun notification
+            </div>
             <div
-              v-for="notif in dataNotif"
+              v-for="notif in alerteBatterieStore.alertes"
               :key="notif.id"
               class="cardNotif"
               :class="notif.read ? 'read' : 'notread'"
@@ -56,21 +61,14 @@
                     style="font-size: 12px; color: #2d4051"
                   ></i>
                 </div>
-                <div class="numberNotif">
-                  <h6>2</h6>
-                </div>
               </div>
               <div class="textNotif">
                 <div>
-                  <h4>{{ notif.battery }}</h4>
+                  <h4>{{ notif.nomBat }}</h4>
                   <h6>{{ notif.parc }}</h6>
                 </div>
-                <h5>{{ notif.time }}</h5>
               </div>
-              <div
-                class="icon1"
-                @click="show.showNotificationDetailOneFunc(notif)"
-              >
+              <div class="icon1" @click="voir(notif)">
                 <i
                   class="pi pi-ellipsis-v"
                   style="font-size: 14px; color: #2d4051"
@@ -80,8 +78,12 @@
           </template>
           <template v-else>
             <div class="cardNotifDetail">
-              <h3>{{ show.notifData.message }}</h3>
-              <h6>{{ show.notifData.time }}</h6>
+              <h1>{{ show.notifData.parc }}</h1>
+              <h1>{{ show.notifData.nomBat }}</h1>
+
+              <h1>Type : {{ show.notifData.type.toUpperCase() }}</h1>
+              <h3>{{ show.notifData.sms }}</h3>
+              <h4>{{ formatDateTime(show.notifData.time) }}</h4>
             </div>
           </template>
         </div>
@@ -93,8 +95,65 @@
 <script setup>
 import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
+import { useAlerteBatterieStore } from "@/stores/alerteBatterie";
 import { colors } from "@/service/color";
+import { useBatterie } from "@/stores/batterieStore";
+
 const show = useShow();
+const alerteBatterieStore = useAlerteBatterieStore();
+const batterie = useBatterie();
+function formatDateTime(dateString) {
+  const date = new Date(dateString);
+
+  const mois = [
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre",
+  ]; // Récupérer le jour, le mois et l'année
+  const jour = date.getDate();
+  const moisNom = mois[date.getMonth()];
+  const annee = date.getFullYear();
+
+  const heures = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Construire la chaîne de date et heure formatée
+  return `${jour} ${moisNom} ${annee} à ${heures}h${minutes}`;
+}
+
+const removeAlert = (id) => {
+      alerteBatterieStore.alertes = alerteBatterieStore.alertes.filter(alert => alert.id !== id);
+    };
+
+
+async function voir(notif) {
+  show.showNotificationDetailOneFunc(notif);
+
+  console.log("notif ", notif);
+
+  let batdata = await batterie.getBatteriesById(notif.idbat);
+  console.log("batdata", batdata);
+  let data = {
+    valeur_alerte: notif.Valert,
+    valeur_seuil: notif.Vseuil,
+    message: notif.sms,
+    read: 1,
+    type: notif.type,
+    graviter: notif.gravite,
+    // contact_id: n
+    batterie_id: notif.idbat,
+  };
+  console.log("data", data);
+  alerteBatterieStore.updateAlerte(notif.id, data);
+  removeAlert(notif.id)
+}
 
 const dataNotif = [
   {
