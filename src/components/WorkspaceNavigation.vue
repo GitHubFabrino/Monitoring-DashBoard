@@ -45,7 +45,7 @@
     <div class="dropdown absolute inline-flex position">
       <div
         id="dropdown-with-radiobutton"
-        class="dropdown-menu rounded-xl shadow-lg bg-white absolute w-60  p-6"
+        class="dropdown-menu rounded-xl shadow-lg bg-white absolute w-60 p-6"
         v-if="dropdownOpen"
       >
         <div class="relative mb-4">
@@ -84,10 +84,10 @@
             class="list"
             @click="fermer(parcItem)"
           >
-            <div class=" items-center">
+            <div class="items-center">
               <label
                 for="radio-group-1"
-                class=" items-center cursor-pointer text-gray-600 text-sm font-medium p-2 parcs "
+                class="items-center cursor-pointer text-gray-600 text-sm font-medium p-2 parcs"
               >
                 {{ parcItem.nom_parc }}
               </label>
@@ -99,7 +99,7 @@
 
     <div class="profil">
       <div class="notif">
-        <div class="notification show" @click="show.showNotificationFunc()">
+        <div class="notification show" @click="show.showNotificationDetailFunc()">
           <span>{{ show.competerAlerteBatterieUnRead }}</span>
           <i class="pi pi-bell" style="font-size: 18px; color: #fff"></i>
           <h5 class="text">Notification</h5>
@@ -168,16 +168,19 @@
         </div>
         <div
           class="itemNotif"
-          @click="show.showNotificationDetailFunc()"
-          v-for="item in alerteBatterieStore.allAllerteDataByParc"
-          :key="item.id"
+          @click="show.showNotificationDetail = !show.showNotificationDetail"
+       
+        
         >
+        <!-- :key="item.id" -->
+        <!-- v-for="item in alerteBatterieStore.allAllerteDataByParc" -->
           <div class="icon">
             <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
           </div>
           <div class="textNotif">
-            <h4>{{item.batterie.nom}}</h4>
-            <h5 class="date">{{ formatDateTime(item.created_at) }}</h5>
+            <!-- <h4>{{ item.batterie.nom }}sss</h4>
+            <h5 class="date">{{ formatDateTime(item.created_at) }}</h5> -->
+            <h1>z</h1>
           </div>
           <div class="icon">
             <i
@@ -241,13 +244,12 @@
           </div>
         </div>
       </div>
-    
-    
     </div>
   </div>
 </template>
 
 <script setup>
+
 import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
@@ -385,9 +387,9 @@ onMounted(() => {
   margin-right: 10px;
 }
 
-.list{
-padding: 5px;
-border-radius: 5px;
+.list {
+  padding: 5px;
+  border-radius: 5px;
 }
 .list:hover {
   background-color: #fb7b587a !important;
@@ -413,7 +415,7 @@ border-radius: 5px;
 .show:hover .text {
   display: block;
 }
-.parcs{
+.parcs {
   padding: 15px;
 }
 
@@ -509,8 +511,9 @@ span {
   position: absolute;
   background-color: rgb(255, 255, 255);
   top: 65px;
-  right: 60px;
-  width: 20%;
+  right: 10px;
+  width: 25%;
+  height: 85vh;
   text-align: left !important;
   border-radius: 5px;
   padding: 10px;
@@ -570,8 +573,8 @@ span {
 .textNotif h5 {
   font-weight: 600;
 }
-.date{
+.date {
   font-size: 10px;
-  font-weight: 300!important;
+  font-weight: 300 !important;
 }
 </style>

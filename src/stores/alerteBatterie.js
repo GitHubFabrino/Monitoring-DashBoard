@@ -54,6 +54,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
     axios
       .get(`${URL}/api/alerte-batteries/batterie/${idBat}`)
       .then((response) => {
+        console.log('response alerte : ' , response.data);
         if (response.status === 200) {
           allAllerteDataByBatterie.value = response.data;
 
@@ -172,6 +173,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
     axios
       .post(`${URL}/api/alerte-batteries`, newAlerte)
       .then((response) => {
+        // console.log('response alerte' , response.data);
         alertes.value.push(response.data);
         show.showAlert = true;
         show.showAlertType = "success";

@@ -361,12 +361,16 @@ function associer() {
 
   // Iterate through allBatteryData and build the dataSendToDispositif array
   batterie.allBatteryData.forEach((element, index) => {
+
+    console.log("element ", element.parc.contacts.forEach((e,i)=> { if (e.type === 'phone') {
+      console.log('id',e.id);
+    }}));
     if (index >= 3) return;
 
     let contacta;
 
     element.parc.contacts.forEach((contact) => {
-      contacta = contact.type === "phone" ? contact.valeur : "";
+      contacta = contact.type === "phone" ? contact.id : "";
     });
 
     i.push(element.id);
@@ -380,6 +384,31 @@ function associer() {
     d.push(element.parametre_batteries.seuil_alerte_dod);
     s.push(element.parametre_batteries.seuil_alerte_soc);
   });
+  
+console.log('i', i);
+console.log('c', c);
+console.log('cma', cma);
+console.log('cmi', cmi);
+console.log('tema', tema);
+console.log('temi', temi);
+console.log('tma', tma);
+console.log('tmi', tmi);
+console.log('d', d);
+console.log('s', s);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   localStorage.setItem("idAssocier", JSON.stringify(i));
   localStorage.setItem("datassocier", JSON.stringify(batterie.allBatteryData));

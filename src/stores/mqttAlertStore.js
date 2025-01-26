@@ -31,6 +31,8 @@ export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
       try {
         const parsedMessage = JSON.parse(message.toString());
 
+        // console.log("Parseeee", parsedMessage);
+
         if (topic === "alerts") {
           // Ajout de l'alerte à la liste des alertes reçues
           alertes.value.push(parsedMessage);
@@ -46,13 +48,13 @@ export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
               message :parsedMessage.sms,
               read  :parsedMessage.read,
               type  :parsedMessage.type,
-              graviter  :parsedMessage.gravite,
+              graviter  : parsedMessage.gravite,
               contact_id :parsedMessage.contact,
               batterie_id :parsedMessage.idbat,
             }
 
            
-            console.log('newAlertre' , newAlerte);
+            // console.log('newAlertre' , newAlerte);
             
             alerteBatterieStore.createAlerte(newAlerte)
 
@@ -61,8 +63,8 @@ export const useMqttAlerteStore = defineStore("mqttAlerte", () => {
           }, 3000);
 
           // Affichage des alertes dans la console
-          console.log("Alerte reçue :", parsedMessage);
-          console.log("Alerte reçue nombre :", show.competerAlerteBatterieUnRead);
+          // console.log("Alerte reçue :", parsedMessage);
+          // console.log("Alerte reçue nombre :", show.competerAlerteBatterieUnRead);
         }
       } catch (error) {
         console.error("Erreur lors du traitement du message MQTT :", error);

@@ -1,88 +1,90 @@
 <template>
-  <Transition>
-    <div class="cardItem" v-if="show.showNotificationDetail">
-      <div class="header">
-        <template v-if="!show.showNotificationDetailOne">
-          <h2>Notifications</h2>
-          <div class="icon" @click="show.showNotificationDetailFunc()">
-            <i
-              class="pi pi-times"
-              style="font-size: 16px; font-weight: 900; color: #fb7a58"
-            ></i>
-          </div>
-        </template>
-        <template v-else>
-          <div class="cardheader">
-            <i
-              @click="
-                show.showNotificationDetailOne = !show.showNotificationDetailOne
-              "
-              class="pi pi-arrow-left"
-              style="
-                font-size: 16px;
-                font-weight: 900;
-                color: #f7f7f7;
-                margin-right: 20px;
-              "
-            ></i>
-            <div>
-              <h4>{{ show.notifData.battery }}</h4>
-              <h6>{{ show.notifData.parc }}</h6>
-            </div>
-          </div>
-
-          <div class="icon" @click="show.showNotificationDetailFunc()">
-            <i
-              class="pi pi-times"
-              style="font-size: 16px; font-weight: 900; color: #fb7a58"
-            ></i>
-          </div>
-        </template>
-      </div>
-
-      <div class="bodyNotif">
-        <template v-if="!show.showNotificationDetailOne">
-          <div
-            v-for="notif in dataNotif"
-            :key="notif.id"
-            class="cardNotif"
-            :class="notif.read ? 'read' : 'notread'"
-          >
-            <div class="CardIcon">
-              <div class="icon">
-                <i
-                  class="pi pi-bolt"
-                  style="font-size: 12px; color: #2d4051"
-                ></i>
-              </div>
-              <div class="numberNotif">
-                <h6>2</h6>
-              </div>
-            </div>
-            <div class="textNotif">
-              <div>
-                <h4>{{ notif.battery }}</h4>
-                <h6>{{ notif.parc }}</h6>
-              </div>
-              <h5>{{ notif.time }}</h5>
-            </div>
-            <div
-              class="icon1"
-              @click="show.showNotificationDetailOneFunc(notif)"
-            >
+  <Transition name="sheet" mode="out-in">
+    <div class="showModal" v-if="show.showNotificationDetail">
+      <div class="cardItem">
+        <div class="header">
+          <template v-if="!show.showNotificationDetailOne">
+            <h2>Notifications</h2>
+            <div class="icon" @click="show.showNotificationDetailFunc()">
               <i
-                class="pi pi-ellipsis-v"
-                style="font-size: 14px; color: #2d4051"
+                class="pi pi-times"
+                style="font-size: 16px; font-weight: 900; color: #fb7a58"
               ></i>
             </div>
-          </div>
-        </template>
-        <template v-else>
-          <div class="cardNotifDetail">
-            <h3>{{ show.notifData.message }}</h3>
-            <h6>{{ show.notifData.time }}</h6>
-          </div>
-        </template>
+          </template>
+          <template v-else>
+            <div class="cardheader">
+              <i
+                @click="
+                  show.showNotificationDetailOne = !show.showNotificationDetailOne
+                "
+                class="pi pi-arrow-left"
+                style="
+                  font-size: 16px;
+                  font-weight: 900;
+                  color: #f7f7f7;
+                  margin-right: 20px;
+                "
+              ></i>
+              <div>
+                <h4>{{ show.notifData.battery }}</h4>
+                <h6>{{ show.notifData.parc }}</h6>
+              </div>
+            </div>
+
+            <div class="icon" @click="show.showNotificationDetailFunc()">
+              <i
+                class="pi pi-times"
+                style="font-size: 16px; font-weight: 900; color: #fb7a58"
+              ></i>
+            </div>
+          </template>
+        </div>
+
+        <div class="bodyNotif">
+          <template v-if="!show.showNotificationDetailOne">
+            <div
+              v-for="notif in dataNotif"
+              :key="notif.id"
+              class="cardNotif"
+              :class="notif.read ? 'read' : 'notread'"
+            >
+              <div class="CardIcon">
+                <div class="icon">
+                  <i
+                    class="pi pi-bolt"
+                    style="font-size: 12px; color: #2d4051"
+                  ></i>
+                </div>
+                <div class="numberNotif">
+                  <h6>2</h6>
+                </div>
+              </div>
+              <div class="textNotif">
+                <div>
+                  <h4>{{ notif.battery }}</h4>
+                  <h6>{{ notif.parc }}</h6>
+                </div>
+                <h5>{{ notif.time }}</h5>
+              </div>
+              <div
+                class="icon1"
+                @click="show.showNotificationDetailOneFunc(notif)"
+              >
+                <i
+                  class="pi pi-ellipsis-v"
+                  style="font-size: 14px; color: #2d4051"
+                ></i>
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="cardNotifDetail">
+              <h3>{{ show.notifData.message }}</h3>
+              <h6>{{ show.notifData.time }}</h6>
+            </div>
+          </template>
+        </div>
       </div>
     </div>
   </Transition>
@@ -123,6 +125,20 @@ const dataNotif = [
 </script>
 
 <style scoped>
+.showModal {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(92, 90, 90, 0.927);
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(43, 38, 38, 0.801);
+  justify-content: center;
+  align-items: center;
+}
 .cardNotifDetail {
   width: 100%;
   /* height: 50%; */
@@ -184,15 +200,15 @@ const dataNotif = [
   /* display: flex;
   justify-content: space-between; */
   /* align-items: center; */
-  bottom: 5vh;
-  right: 5vh;
+  top: 0vh;
+  right: 0vh;
   z-index: 100;
   background-color: rgb(255, 255, 255);
   width: 30%;
-  height: 50vh;
+  height: 100vh;
   border-radius: 5px;
   /* padding: 10px; */
-  box-shadow: 0px 2px 10px rgb(222, 222, 222);
+  /* box-shadow: 0px 2px 10px rgb(222, 222, 222); */
 }
 .header {
   border-radius: 5px 5px 0 0px;
@@ -232,9 +248,8 @@ const dataNotif = [
   justify-content: center;
   align-items: center;
 }
-.CardIcon{
+.CardIcon {
   display: flex;
-
 }
 
 .numberNotif {
@@ -249,7 +264,7 @@ const dataNotif = [
   justify-content: center;
 }
 
-.numberNotif h6{
+.numberNotif h6 {
   font-size: 10px;
   font-weight: 600;
 }
@@ -260,5 +275,15 @@ const dataNotif = [
   margin-top: 10px;
   padding: 10px;
   overflow-y: scroll;
+}
+
+/* Transition classes */
+.sheet-enter-active,
+.sheet-leave-active {
+  transition: transform 0.5s ease-in-out;
+}
+.sheet-enter,
+.sheet-leave-to {
+  transform: translateX(100%);
 }
 </style>

@@ -38,15 +38,12 @@ const addMaintenance = () => {
 <template>
   <Transition>
     <div class="showModal" v-if="show.showAddMaintenance">
-     
       <div class="formModal">
         <div class="title">
-          <h3>
-          Planifier une maintenance
-        </h3>
-        <div class="closeForm" @click="show.showAddMaintenanceFunc()">
-        <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
-      </div>
+          <h3>Planifier une maintenance</h3>
+          <div class="closeForm" @click="show.showAddMaintenanceFunc()">
+            <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
+          </div>
         </div>
         <div class="formulaire">
           <div class="itemContainer">
@@ -54,7 +51,7 @@ const addMaintenance = () => {
             <input
               type="text"
               placeholder="Détails de la maintenance"
-              v-model="  details "
+              v-model="details"
               class="input"
             />
           </div>
@@ -84,7 +81,6 @@ const addMaintenance = () => {
           </div>
         </div>
       </div>
-     
     </div>
   </Transition>
 </template>
@@ -139,7 +135,7 @@ span {
   padding: 20px;
 }
 
-.title{
+.title {
   /* background-color: red; */
   display: flex;
   justify-content: space-between;
