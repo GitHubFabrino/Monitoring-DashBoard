@@ -415,6 +415,7 @@ onMounted(() => {
 .titre h3 {
   font-weight: 600;
   width: 60%;
+  color: #2d4051;
 }
 .titre {
   display: flex;
@@ -486,6 +487,7 @@ onMounted(() => {
   font-weight: 600;
   border-bottom: 2px solid rgb(255, 255, 255);
   padding: 5px 10px;
+  color: #2d4051;
 }
 .containerEmptyParc {
   display: flex;

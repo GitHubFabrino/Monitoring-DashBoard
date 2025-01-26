@@ -311,6 +311,7 @@ function formatDateTime(dateString) {
 .titre h3 {
   font-weight: 600;
   width: 60%;
+  color: #2d4051;
 }
 .titre {
   display: flex;

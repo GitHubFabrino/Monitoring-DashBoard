@@ -56,11 +56,17 @@
                   style="font-size: 12px; color: #2d4051"
                 ></i>
               </div>
-              <h4>
-                {{ maintenance.details || "Détails indisponibles" }}
-                {{ maintenance.batterie?.nom || "Batterie inconnue" }}
-                {{ useParc.parcSuperviser?.nom_parc || "Parc non spécifié" }}
-              </h4>
+              <div class="desc">
+                <h4 class="detail">
+                  {{ maintenance.details || "Détails indisponibles" }}
+                </h4>
+                <h4 class="bat">
+                  {{ maintenance.batterie?.nom || "Batterie inconnue" }}
+                </h4>
+                <h4 class="parc">
+                  {{ useParc.parcSuperviser?.nom_parc || "Parc non spécifié" }}
+                </h4>
+              </div>
             </div>
 
             <div class="date">
@@ -135,10 +141,7 @@
 
       <div class="historique" v-if="show.showHistoriqueCale">
         <div v-for="item in filteredMaintenances" :key="item.id">
-          <div
-            class="item"
-            v-if="item.marque === 'oui'"
-          >
+          <div class="item" v-if="item.marque === 'oui'">
             <div class="check">
               <i
                 class="pi pi-check"
@@ -153,12 +156,20 @@
                   style="font-size: 12px; color: #2d4051"
                 ></i>
               </div>
-              <h4>
-                {{ item.details }}
-                {{ item.batterie.nom }}
-                {{ useParc.parcSuperviser.nom_parc }}
-              </h4>
+              <div class="desc">
+                <h4 class="detail">
+                  {{ item.details || "Détails indisponibles" }}
+                </h4>
+                <h4 class="bat">
+                  {{ item.batterie?.nom || "Batterie inconnue" }}
+                </h4>
+                <h4 class="parc">
+                  {{ useParc.parcSuperviser?.nom_parc || "Parc non spécifié" }}
+                </h4>
+              </div>
             </div>
+
+
             <div class="date">
               <h5>{{ formatDateTime(item.created_at) }}</h5>
             </div>
@@ -357,6 +368,7 @@ const addMaintenance = () => {
 .titre h3 {
   font-weight: 600;
   width: 60%;
+  color: #2d4051;
 }
 .titre {
   display: flex;
@@ -372,13 +384,13 @@ const addMaintenance = () => {
   display: flex;
   align-items: center;
 }
-.recent{
+.recent {
   /* background-color: rebeccapurple; */
   height: 52vh;
   overflow-y: scroll;
 }
 
-.historique{
+.historique {
   /* background-color: rebeccapurple; */
   height: 52vh;
   overflow-y: scroll;
@@ -409,6 +421,7 @@ const addMaintenance = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 }
 .blue {
   background-color: #247bc8d2;
@@ -432,6 +445,7 @@ const addMaintenance = () => {
   font-weight: 600;
   border-bottom: 2px solid rgb(255, 255, 255);
   padding: 5px 10px;
+  color: #2d4051;
 }
 
 .select {
@@ -449,6 +463,7 @@ const addMaintenance = () => {
 }
 .date h5 {
   font-weight: 500;
+  font-size: 12px;
 }
 .action {
   display: flex;
@@ -487,6 +502,24 @@ const addMaintenance = () => {
   display: flex;
   align-items: center;
   width: 60%;
+}
+.desc {
+  font-size: 12px;
+}
+.detail{
+display: block;
+font-size: 14px;
+padding: 10px;
+
+}
+.parc{
+font-size: 12px;
+color: #2d4051;
+font-weight: 600;
+}
+.bat{
+  color: #5f7485;
+font-weight: 600;
 }
 .text h4 {
   font-weight: 500;
