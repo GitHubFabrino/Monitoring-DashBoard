@@ -176,7 +176,7 @@ export default {
 </script> -->
 
 <template>
-  <div ref="chart" :style="{ width: chartWidth, height: chartHeight }"></div>
+  <div ref="chart" :style="{ width: chartWidth, height: chartHeight }" class="alig"></div>
 </template>
 
 <script>
@@ -355,3 +355,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.alig{
+  display: flex;
+  align-items: center;
+  margin:  0 auto;
+  justify-content: center;
+}
+</style>

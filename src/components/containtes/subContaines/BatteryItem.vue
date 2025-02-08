@@ -18,7 +18,7 @@
               :batteryId="batteryIdBat"
             />
           </div>
-          <h4 class="charger">En Charge</h4>
+          <h4 class="charger">SOC</h4>
         </div>
         <div class="progression">
           <div class="prog">
@@ -50,7 +50,6 @@
 import { defineProps } from "vue";
 import Progression from "@/components/containtes/chart/Progression.vue";
 import TemperatureBar from "@/components/containtes/TemperatureBar.vue";
-import BatterieDetail from "@/components/containtes/modals/BatterieDetail.vue";
 import { useShow } from "@/stores/show";
 import RealTimeCurrentTensionChart from "@/components/containtes/chart/RealTimeCurrentTensionChart.vue";
 import { colors } from "@/service/color";
@@ -227,5 +226,10 @@ console.log("curent ", props);
 .btn h4 {
   font-weight: 600;
   color: #f6f8fa;
+  cursor: pointer;
+}
+
+.btn:hover{
+  background-color: #136983;
 }
 </style>

@@ -290,10 +290,12 @@ const show = useShow();
   background-color: #e9f0f6;
   padding: 10px;
   border-left: 3px solid #328ca8;
+  cursor: pointer;
 }
 .menuTitle h4 {
   color: #328ca8;
   font-weight: 600;
+  cursor: pointer;
 }
 .menuItem {
   background-color: rgba(209, 211, 248, 0.209);
@@ -307,6 +309,7 @@ const show = useShow();
   padding-left: 20px;
   color: #2d4051;
   font-weight: 600;
+  cursor: pointer;             
 }
 .color {
   color: #328ca8 !important;

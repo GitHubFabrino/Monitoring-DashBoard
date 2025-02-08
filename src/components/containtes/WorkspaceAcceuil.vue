@@ -262,7 +262,6 @@
     </div>
     <div v-if="isbat" class="container1">
       <template v-if="dataReceived.length > 0 && dataReceived.length <= 3">
-    
         <BatteryItem
           v-for="(item, index) in dataReceived"
           :key="index"
@@ -542,7 +541,7 @@ async function connect() {
     getLEctureBat(id);
   });
 
-  console.log('complete' , complet.value);
+  console.log("complete", complet.value);
 
   const client = mqtt.connect("ws://192.168.1.116:9001");
 
@@ -583,6 +582,22 @@ async function connect() {
       if (dataReceived.value.length > 0) {
         isbat.value = true; // Les données sont disponibles
         showSpinner.value = false; // Arrêter le spinner
+
+        dataReceived.value.map((e) => {
+          console.log("yes", e);
+            const lectureData = {
+            tension: e.tension,
+            courant:  e.courant,
+            temperature:  e.temperature,
+            soc:  e.soc,
+            dod:  e.dod,
+            batterie_id: e.batterie_id,
+          };
+          lecture.createLectureNew(lectureData)
+          
+
+
+        });
       }
 
       // Mise à jour des températures (converties en nombres)

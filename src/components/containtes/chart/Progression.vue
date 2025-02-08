@@ -154,7 +154,7 @@ canvas {
   top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 24px;
+  font-size: 15px;
   font-weight: bold;
   /* color: black; */
 }

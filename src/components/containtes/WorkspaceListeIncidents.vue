@@ -7,7 +7,7 @@
           type="search"
           v-model="search"
           placeholder="Recherche"
-          class="searchInput"
+          class="searchInput focus:outline-none"
         />
         <i class="pi pi-search" style="font-size: 18px; color: #2d4051"></i>
       </div>
@@ -488,6 +488,7 @@ onMounted(() => {
   border-bottom: 2px solid rgb(255, 255, 255);
   padding: 5px 10px;
   color: #2d4051;
+  cursor: pointer;
 }
 .containerEmptyParc {
   display: flex;

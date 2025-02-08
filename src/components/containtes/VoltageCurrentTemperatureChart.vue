@@ -607,6 +607,12 @@ option {
   width: 100%;
   /* background-color: #328ca8; */
 }
+
+.opt1 h4:hover{
+  width: 100%;
+  background-color: #5bccee1b;
+  cursor: pointer;
+}
 .option h4 {
   font-weight: 600;
   border-bottom: 2px solid #ebedee00;

@@ -284,6 +284,38 @@ export const useLectureStore = defineStore("LectureStore", () => {
 
 
 
+  function createLectureNew(lectureData) {
+    // show.showSpinner = true;
+    show.showAlert=true
+    axios
+      .post(`${URL}/api/lecture`, lectureData, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        if (response.status === 201) {
+         console.log('save lecture');
+        } else {
+          show.showAlertType = "danger";
+          show.showAlertMessage =
+            "Erreur lors de la création de la lecture. ❌";
+        }
+      })
+      .catch((error) => {
+        show.showAlertType = "warning";
+        show.showAlertMessage = "Erreur lors de la création de la lecture. ⚠️";
+        console.error("Error creating lecture:", error);
+      })
+      .finally(() => {
+        show.showSpinner = false;
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
+      });
+  }
+
+
 
 
 
@@ -386,6 +418,7 @@ export const useLectureStore = defineStore("LectureStore", () => {
     isModifier,
     fetchLectures,
     fetchLecture,
+    createLectureNew,
     createLecture,
     updateLecture,
     getLectureByParcId,
