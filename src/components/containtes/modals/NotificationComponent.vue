@@ -5,6 +5,7 @@
         <div class="header">
           <template v-if="!show.showNotificationDetailOne">
             <h2>Notifications</h2>
+            <h4>{{ show.competerAlerteBatterieUnRead  }}</h4>
             <div class="icon" @click="show.showNotificationDetailFunc()">
               <i
                 class="pi pi-times"
@@ -30,6 +31,7 @@
               <div>
                 <h4>{{ show.notifData.battery }}</h4>
                 <h6>{{ show.notifData.parc }}</h6>
+           
               </div>
             </div>
 
@@ -137,6 +139,7 @@ import { useShow } from "@/stores/show";
 import { useAlerteBatterieStore } from "@/stores/alerteBatterie";
 import { colors } from "@/service/color";
 import { useBatterie } from "@/stores/batterieStore";
+import { onMounted } from "vue";
 
 const show = useShow();
 const alerteBatterieStore = useAlerteBatterieStore();
@@ -221,6 +224,11 @@ const dataNotif = [
     read: false,
   },
 ];
+
+
+onMounted(()=>{
+  console.log('yu are here');
+})
 </script>
 
 <style scoped>
@@ -404,7 +412,7 @@ const dataNotif = [
   flex-direction: column;
   justify-content: center;
   font-weight: 600;
-  color: #5d656c7a;
+  color: #5d656c7a ;
   
 }
 </style>

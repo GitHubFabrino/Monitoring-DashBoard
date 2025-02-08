@@ -255,7 +255,7 @@ import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
 import { parcStore } from "@/stores/parcStore";
 import { useMqttAlerteStore } from "@/stores/mqttAlertStore";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 const show = useShow();
 const user = useUser();
 const useParc = parcStore();
@@ -316,9 +316,45 @@ function fermer(parc) {
   useParc.parcSuperviser = parc;
 }
 
+// Définir la variable à surveiller
+const parcNom = computed(() => useParc?.parcSuperviser || parcSuperviserLocal);
+
+// Utiliser un watcher pour surveiller les changements de cette variable
+watch(parcNom, (newValue, oldValue) => {
+  console.log(`La variable a changé de ${oldValue} à ${newValue}`);
+  console.log(newValue);
+  alerteBatterieStore.getAlerteByParcId(newValue.id, newValue)
+
+});
+
 onMounted(() => {
   console.log("Store monté, initialisation MQTT...");
   mqttAlerteStore.initializeMqtt();
+
+  if (useParc?.parcSuperviser?.nom_parc || parcSuperviserLocal?.nom_parc) {
+    if (useParc?.parcSuperviser) {
+      console.log('misy ayyy 1', useParc?.parcSuperviser);
+    } else if (parcSuperviserLocal.value) {
+      console.log('misy ayyy 2',parcSuperviserLocal.value);
+    } else{
+      console.log('tsisiii');
+    }
+    // alerteBatterieStore.getAlerteByParcId()
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 </script>
 

@@ -372,6 +372,18 @@ const filteredItems = computed(() => {
 function voir(item) {
   alerteBatterieStore.voirAlerteData = item;
   show.showVoirAlerteData = true;
+  let data = {
+    valeur_alerte: item.valeur_alerte,
+    valeur_seuil: item.valeur_seuil,
+    message: item.message,
+    read: 1,
+    type: item.type,
+    graviter: item.graviter,
+    contact_id: item.contact_id,
+    batterie_id: item.batterie_id,
+  };
+  console.log("data", data);
+  alerteBatterieStore.updateAlerte(item.id, data);
 }
 
 function checked(item) {

@@ -94,7 +94,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
       });
   };
 
-  const getAlerteByParcId = (idParc) => {
+  const getAlerteByParcId = (idParc, parc) => {
     loading.value = true;
     axios
       .get(`${URL}/api/alerte-batteries/parc/${idParc}`)
@@ -102,7 +102,62 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
         if (response.status === 200) {
           console.log("getAlerteByParcId", response.data);
           allAllerteDataByParc.value = response.data;
-      
+          const parcSuperviserLocal = ref(
+            JSON.parse(localStorage.getItem("parcSuperviser"))
+          );
+
+          console.log("alerte eeee : ", response.data.length);
+
+          if (parc) {
+            alertes.value = [];
+            response.data.map((data) => {
+              if (data.read !== 1) {
+                let formaAlerte = {
+                  Valert: data.valeur_alerte,
+                  Vseuil: data.valeur_seuil,
+                  gravite: data.graviter,
+                  idbat: data.batterie_id,
+                  read: data.read,
+                  sms: data.message,
+                  type: data.type,
+                  parc: parc.nom_parc,
+                  nomBat: data.batterie.nom,
+                  time: data.created_at,
+                  id: data.id,
+                };
+
+                alertes.value.push(formaAlerte);
+              }
+            });
+          } else if (parcSuperviserLocal) {
+            alertes.value = [];
+            response.data.map((data) => {
+              if (data.read !== 1) {
+                let formaAlerte = {
+                  Valert: data.valeur_alerte,
+                  Vseuil: data.valeur_seuil,
+                  gravite: data.graviter,
+                  idbat: data.batterie_id,
+                  read: data.read,
+                  sms: data.message,
+                  type: data.type,
+                  parc: parcSuperviserLocal.nom_parc,
+                  nomBat: data.batterie.nom,
+                  time: data.created_at,
+                  id: data.id,
+                };
+
+                alertes.value.push(formaAlerte);
+              }
+            });
+          }
+
+          console.log("parc ee", parc);
+
+          console.log("a la fin", alertes.value.length);
+          show.competerAlerteBatterieUnRead = alertes.value.length;
+          console.log("a la fin 2", alertes.value);
+
           show.showAlert = true;
           show.showAlertType = "success";
           show.showAlertMessage = "Alertes chargées avec succès";
@@ -239,10 +294,10 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
         parc: batdata.parc.nom_parc,
         nomBat: batdata.nom,
         time: response.data.created_at,
-        id:response.data.id
+        id: response.data.id,
       };
 
-      console.log('alerte' , formaAlerte);
+      console.log("alerte", formaAlerte);
       alertes.value.push(formaAlerte);
       console.log("alertes", alertes.value);
       show.showAlert = true;
@@ -280,7 +335,15 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
         show.showAlertType = "success";
         show.showAlertMessage = "Alerte mise à jour avec succès";
         let parcid = useParc.parcSuperviser.id;
-        getAlerteByParcId(parcid);
+        const parcSuperviserLocal = ref(
+          JSON.parse(localStorage.getItem("parcSuperviser"))
+        );
+
+        console.log("update ee", parcSuperviserLocal.value);
+
+        getAlerteByParcId(parcid, parcSuperviserLocal.value);
+        show.competerAlerteBatterieUnRead =
+          show.competerAlerteBatterieUnRead - 1;
       })
       .catch((err) => {
         error.value = err;
