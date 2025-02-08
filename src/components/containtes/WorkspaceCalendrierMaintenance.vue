@@ -364,11 +364,14 @@ const addMaintenance = () => {
   box-shadow: 0px 0px 5px rgb(189, 189, 189);
   border-radius: 5px;
   padding: 20px;
+
 }
 .titre h3 {
   font-weight: 600;
   width: 60%;
   color: #2d4051;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
 }
 .titre {
   display: flex;
@@ -510,19 +513,27 @@ const addMaintenance = () => {
 display: block;
 font-size: 14px;
 padding: 10px;
-
+font-family: 'Nunito', sans-serif;
+  font-weight: 600;
 }
 .parc{
 font-size: 12px;
 color: #2d4051;
 font-weight: 600;
+font-family: 'Nunito', sans-serif;
+  font-weight: 600;
 }
 .bat{
   color: #5f7485;
 font-weight: 600;
+font-family: 'Nunito', sans-serif;
+  font-weight: 600;
 }
 .text h4 {
   font-weight: 500;
   padding-left: 10px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  color: #44525e;
 }
 </style>

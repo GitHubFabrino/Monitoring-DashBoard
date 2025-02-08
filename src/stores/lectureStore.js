@@ -127,8 +127,7 @@ export const useLectureStore = defineStore("LectureStore", () => {
       });
   }
 
-
-  function fetchAllLecture(id) {
+  async function fetchAllLecture(id) {
     show.showSpinner = true;
     return axios
       .get(`${URL}/api/lecture/${id}/batterie`, {
@@ -283,6 +282,23 @@ export const useLectureStore = defineStore("LectureStore", () => {
       });
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   function selecteData(idBat) {
     // Réinitialisation des tableaux pour éviter l'accumulation de données
     voltageData.value = [];

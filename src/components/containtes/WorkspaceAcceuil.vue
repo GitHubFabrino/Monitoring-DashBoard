@@ -215,7 +215,7 @@
           </g>
         </svg>
         <h1>Associer le dispositif à la plateforme</h1>
-        <input type="text" name="" id="" class="serie" placeholder="Entrer le code">
+        <!-- <input type="text" name="" id="" class="serie" placeholder="Entrer le code"> -->
 
         <div class="btn" @click="associer()">
           <h4>Associer</h4>
@@ -262,6 +262,7 @@
     </div>
     <div v-if="isbat" class="container1">
       <template v-if="dataReceived.length > 0 && dataReceived.length <= 3">
+    
         <BatteryItem
           v-for="(item, index) in dataReceived"
           :key="index"
@@ -273,7 +274,7 @@
           :parc="
             useParc?.parcSuperviser?.nom_parc || parcSuperviserLocal?.nom_parc
           "
-          :batteryIdBat="index + 1"
+          :batteryIdBat="item.batterie_id"
         />
       </template>
       <template v-else>
@@ -310,6 +311,7 @@ import { parcStore } from "@/stores/parcStore";
 import axios from "axios";
 import { useMqttParametreBatterieStore } from "@/stores/mqttParametreStore";
 import "@fortawesome/fontawesome-free/css/all.css";
+import { useLectureStore } from "@/stores/lectureStore";
 
 const show = useShow();
 const user = useUser();
@@ -328,6 +330,7 @@ const voirCreatBatterie = ref(false);
 const voirCourbe = ref(false);
 
 const showparc = ref(true);
+const allIdBat = ref([]);
 const showAssocier = ref(false);
 
 const isBatExist = ref(false);
@@ -348,7 +351,6 @@ function recupererValeurs(chaine) {
   return chaine.split("-").map(Number);
 }
 
-
 function associer() {
   showSpinner.value = true;
   showAssocier.value = false;
@@ -364,55 +366,52 @@ function associer() {
   let d = [];
   let s = [];
 
-  console.log('batterie all' , batterie.allBatteryData);
+  console.log("batterie all", batterie.allBatteryData);
 
   batterie.allBatteryData.forEach((element, index) => {
-  if (index >= 3) return; // Limiter à 3 éléments maximum
+    if (index >= 3) return;
 
-  let contacta = "";
+    let contacta = "";
 
-  // Récupération du contact de type "phone"
-  element.parc.contacts.forEach((contact) => {
-    if (contact.type === "phone") {
-      contacta = contact.id;
-    }
+    element.parc.contacts.forEach((contact) => {
+      if (contact.type === "phone") {
+        contacta = contact.id;
+      }
+    });
+
+    let tension = recupererValeurs(element.utilisation_cyclique).map(
+      parseFloat
+    ); // Convertir en float
+    console.log(tension);
+
+    const courant = parseFloat(element.courant) || 0; // Gestion des valeurs non numériques
+    const temperature = parseFloat(element.temperature) || 0; // Gestion des valeurs non numériques
+    const dodMax = parseFloat(element.dod_max) || 0;
+
+    i.push(element.id); // ID reste en chaîne
+    c.push(contacta); // Contact reste en chaîne
+    cma.push(courant);
+    cmi.push(courant);
+    tema.push(temperature + 10); // Ajouter 10 à la température
+    temi.push(temperature);
+    tma.push(tension[1] || 0); // Tension max (par défaut 0 si invalide)
+    tmi.push(tension[0] || 0); // Tension min (par défaut 0 si invalide)
+    d.push(dodMax); // DoD max
+    s.push(90); // Ajout d'une valeur fixe de 90
   });
 
-  // Récupération des valeurs de tension
-  let tension = recupererValeurs(element.utilisation_cyclique).map(parseFloat); // Convertir en float
-  console.log(tension);
+  // console.log('i', i);
+  // console.log('c', c);
+  // console.log('cma', cma);
+  // console.log('cmi', cmi);
+  // console.log('tema', tema);
+  // console.log('temi', temi);
+  // console.log('tma', tma);
+  // console.log('tmi', tmi);
+  // console.log('d', d);
+  // console.log('s', s);
 
-  // Conversion des champs en float
-  const courant = parseFloat(element.courant) || 0; // Gestion des valeurs non numériques
-  const temperature = parseFloat(element.temperature) || 0; // Gestion des valeurs non numériques
-  const dodMax = parseFloat(element.dod_max) || 0;
-
-  // Ajout des valeurs dans les tableaux
-  i.push(element.id);               // ID reste en chaîne
-  c.push(contacta);                 // Contact reste en chaîne
-  cma.push(courant);
-  cmi.push(courant);
-  tema.push(temperature + 10);      // Ajouter 10 à la température
-  temi.push(temperature);
-  tma.push(tension[1] || 0);        // Tension max (par défaut 0 si invalide)
-  tmi.push(tension[0] || 0);        // Tension min (par défaut 0 si invalide)
-  d.push(dodMax);                   // DoD max
-  s.push(90);                       // Ajout d'une valeur fixe de 90
-});
-
-  
-// console.log('i', i);
-// console.log('c', c);
-// console.log('cma', cma);
-// console.log('cmi', cmi);
-// console.log('tema', tema);
-// console.log('temi', temi);
-// console.log('tma', tma);
-// console.log('tmi', tmi);
-// console.log('d', d);
-// console.log('s', s);
-
-
+  allIdBat.value = i;
 
   localStorage.setItem("idAssocier", JSON.stringify(i));
   localStorage.setItem("datassocier", JSON.stringify(batterie.allBatteryData));
@@ -509,12 +508,46 @@ onMounted(async () => {
     isGetParc.value = false;
   }
 });
-function connect() {
+
+const lecture = useLectureStore();
+let all = [];
+let lastTen = [];
+
+let complet = ref([]);
+
+async function getLEctureBat(idBat) {
+  console.log("ici");
+  try {
+    let data = await lecture.fetchAllLecture(idBat);
+    console.log("batterie data", data);
+    let reformule;
+    data.map((lecture) => {
+      const reformule = {
+        batterie_id: lecture.batterie_id,
+        tension: lecture.tension,
+        courant: lecture.courant,
+        temperature: lecture.temperature,
+        soc: lecture.soc,
+        dod: lecture.dod,
+        horodatage: lecture.created_at,
+      };
+      all.push(reformule);
+    });
+    lastTen = all.slice(-10);
+    complet.value.push(lastTen);
+  } catch (error) {}
+}
+async function connect() {
+  allIdBat.value.map((id) => {
+    getLEctureBat(id);
+  });
+
+  console.log('complete' , complet.value);
+
   const client = mqtt.connect("ws://192.168.1.116:9001");
 
-  let isConnected = false; // Indique si la connexion est établie
+  let isConnected = false;
 
-  // Définir un timeout pour gérer une connexion qui échoue après 5 secondes
   const connectionTimeout = setTimeout(() => {
     if (!isConnected) {
       console.error("Connexion au broker MQTT échouée après 5 secondes.");
@@ -545,7 +578,7 @@ function connect() {
 
       // Mise à jour des données reçues
       dataReceived.value = parsedMessage;
-      console.log("Données reçues :", dataReceived.value);
+      console.log("Données reçues :", dataReceived.value[0].batterie_id);
 
       if (dataReceived.value.length > 0) {
         isbat.value = true; // Les données sont disponibles
@@ -571,7 +604,6 @@ function connect() {
     client.end();
   });
 }
-
 
 onMounted(() => {
   try {
@@ -821,7 +853,7 @@ input[type="file"] {
 
   align-items: center;
 }
-.serie{
+.serie {
   margin-top: 10px;
   padding: 10px;
   border-radius: 10px;

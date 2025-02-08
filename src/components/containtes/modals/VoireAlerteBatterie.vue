@@ -56,6 +56,12 @@ function formatDateTime(dateString) {
       <div class="formModal">
         <div class="titre">
           <h2>Alerte</h2>
+          <div
+        class="closeForm"
+        @click="show.showVoirAlerteData = !show.showVoirAlerteData"
+      >
+        <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
+      </div>
         </div>
         <div class="name">
           <h5>{{ alerteBatterieStore.voirAlerteData.batterie.nom }}</h5>
@@ -74,21 +80,18 @@ function formatDateTime(dateString) {
           </h6>
         </div>
       </div>
-      <div
-        class="closeForm"
-        @click="show.showVoirAlerteData = !show.showVoirAlerteData"
-      >
-        <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
-      </div>
+    
     </div>
   </Transition>
 </template>
 
 <style scoped>
 .titre {
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   border-bottom: 2px solid rgb(213, 212, 212);
-  background-color: #2d405113;
+  /* background-color: #2d405113; */
+  display: flex;
+  justify-content: space-between;
 }
 .titre h2 {
   color: #b0b1b2;
@@ -128,9 +131,9 @@ span {
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  position: absolute;
+  /* position: absolute;
   right: 33vw;
-  top: 25vh;
+  top: 25vh; */
   align-items: center;
   display: flex;
   justify-content: center;

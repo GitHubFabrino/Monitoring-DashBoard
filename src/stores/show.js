@@ -188,6 +188,8 @@ export const useShow = defineStore("Show", () => {
   const showBatt = ref(false);
   const showBatterieItemId = ref();
   function showBattDetails(itemName, itemId) {
+
+    console.log('id batt detail', itemId);
     showBatterieItem.value = itemName;
     showBatterieItemId.value = itemId;
     showBatt.value = !showBatt.value;

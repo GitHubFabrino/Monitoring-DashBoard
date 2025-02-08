@@ -84,7 +84,7 @@ console.log("curent ", props);
 }
 .card1 {
   width: 33%;
-  height: 35vw;
+  height: 37vw;
   background-color: rgb(253, 253, 253);
   /* border: 1px solid red; */
   border-radius: 5px;

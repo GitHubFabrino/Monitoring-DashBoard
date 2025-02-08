@@ -1,49 +1,49 @@
-<template>
+<!-- <template>
   <div ref="chart" :style="{ width: chartWidth, height: chartHeight }"></div>
 </template>
 
 <script>
-import { ref, onMounted, defineExpose } from 'vue';
-import * as echarts from 'echarts';
-import mqtt from 'mqtt';
+import { ref, onMounted, defineExpose } from "vue";
+import * as echarts from "echarts";
+import mqtt from "mqtt";
 import { useLectureStore } from "@/stores/lectureStore";
 
 export default {
-  name: 'RealTimeChart',
+  name: "RealTimeChart",
   props: {
     batteryId: {
       type: Number,
-      required: true
+      required: true,
     },
     topic: {
       type: String,
-      required: true
+      required: true,
     },
     color: {
       type: String,
-      required: true
+      required: true,
     },
     showTime: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showTitle: {
       type: Boolean,
-      default: true
+      default: true,
     },
     type: {
       type: String,
       required: true,
-      validator: value => ['tension', 'courant'].includes(value)
+      validator: (value) => ["tension", "courant"].includes(value),
     },
     chartWidth: {
       type: String,
-      default: '100%'
+      default: "100%",
     },
     chartHeight: {
       type: String,
-      default: '400px'
-    }
+      default: "400px",
+    },
   },
   setup(props, { expose }) {
     const chart = ref(null);
@@ -62,9 +62,9 @@ export default {
           const lastTenData = dataAll.slice(-10); // Dernières 10 valeurs
 
           // Ajouter au tableau réactif `data`
-          data.value = lastTenData.map(e => [
+          data.value = lastTenData.map((e) => [
             new Date(e.created_at).getTime(),
-            props.type === 'courant' ? e.courant : e.tension
+            props.type === "courant" ? e.courant : e.tension,
           ]);
         }
       } catch (error) {
@@ -79,31 +79,33 @@ export default {
       const option = {
         title: {
           text: props.showTitle
-            ? `Batterie ${props.batteryId} - ${props.type.charAt(0).toUpperCase() + props.type.slice(1)}`
-            : ''
+            ? `Batterie ${props.batteryId} - ${
+                props.type.charAt(0).toUpperCase() + props.type.slice(1)
+              }`
+            : "",
         },
-        tooltip: { trigger: 'axis' },
+        tooltip: { trigger: "axis" },
         xAxis: {
-          type: 'time',
+          type: "time",
           boundaryGap: false,
-          axisLabel: { show: props.showTime }
+          axisLabel: { show: props.showTime },
         },
         yAxis: {
-          type: 'value',
+          type: "value",
           name: props.type.charAt(0).toUpperCase() + props.type.slice(1),
-          axisLine: { lineStyle: { color: props.color } }
+          axisLine: { lineStyle: { color: props.color } },
         },
         series: [
           {
             name: props.type.charAt(0).toUpperCase() + props.type.slice(1),
-            type: 'line',
+            type: "line",
             smooth: true,
             showSymbol: false,
             data: data.value,
             itemStyle: { color: props.color },
-            lineStyle: { color: props.color }
-          }
-        ]
+            lineStyle: { color: props.color },
+          },
+        ],
       };
 
       chartInstance.setOption(option);
@@ -111,36 +113,44 @@ export default {
 
     // Mise à jour des données en temps réel via MQTT
     const initMQTT = () => {
-      const client = mqtt.connect('ws://localhost:9001');
+      const client = mqtt.connect("ws://localhost:9001");
 
-      client.on('connect', () => {
-        client.subscribe(props.topic, err => {
+      client.on("connect", () => {
+        client.subscribe(props.topic, (err) => {
           if (!err) {
             console.log(`Abonné au topic ${props.topic}`);
           }
         });
       });
 
-      client.on('message', (topic, message) => {
+      client.on("message", (topic, message) => {
         const batteriesData = JSON.parse(message.toString());
         const now = new Date().getTime();
+        if (batteriesData) {
+          console.log("marina");
 
-        const value = props.type === 'courant'
-          ? batteriesData[props.batteryId - 1].courant
-          : batteriesData[props.batteryId - 1].tension;
+          batteriesData.map((bat) => {
+            if (bat.batterie_id == props.batteryId) {
+              const value =
+                props.type === "courant"
+                  ? bat.courant
+                  : bat.tension;
 
-        data.value.push([now, value]);
+              data.value.push([now, value]);
 
-        if (data.value.length > MAX_DATA_POINTS) {
-          data.value.shift(); // Retirer les anciennes données
+              if (data.value.length > MAX_DATA_POINTS) {
+                data.value.shift(); // Retirer les anciennes données
+              }
+            }
+          });
         }
 
         chartInstance.setOption({
           series: [
             {
-              data: data.value
-            }
-          ]
+              data: data.value,
+            },
+          ],
         });
       });
     };
@@ -157,10 +167,191 @@ export default {
         if (chartInstance) {
           chartInstance.resize();
         }
-      }
+      },
     });
 
     return { chart };
-  }
+  },
+};
+</script> -->
+
+<template>
+  <div ref="chart" :style="{ width: chartWidth, height: chartHeight }"></div>
+</template>
+
+<script>
+import { ref, onMounted, nextTick, watch, defineExpose } from "vue";
+import * as echarts from "echarts";
+import mqtt from "mqtt";
+import { useLectureStore } from "@/stores/lectureStore";
+
+export default {
+  name: "RealTimeChart",
+  props: {
+    batteryId: {
+      type: Number,
+      required: true,
+    },
+    topic: {
+      type: String,
+      required: true,
+    },
+    color: {
+      type: String,
+      required: true,
+    },
+    showTime: {
+      type: Boolean,
+      default: true,
+    },
+    showTitle: {
+      type: Boolean,
+      default: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      validator: (value) => ["tension", "courant"].includes(value),
+    },
+    chartWidth: {
+      type: String,
+      default: "100%",
+    },
+    chartHeight: {
+      type: String,
+      default: "400px",
+    },
+  },
+  setup(props, { expose }) {
+    const chart = ref(null);
+    let chartInstance = null;
+    const data = ref([]);
+    const MAX_DATA_POINTS = 10;
+
+    const lectureStore = useLectureStore();
+    let allId = JSON.parse(localStorage.getItem("idAssocier"));
+
+    const loadInitialData = async () => {
+      try {
+        if (allId.includes(props.batteryId)) {
+          const dataAll = await lectureStore.fetchAllLecture(props.batteryId);
+          const lastTenData = dataAll.slice(-10);
+          data.value = lastTenData.map((e) => [
+            new Date(e.created_at).getTime(),
+            props.type === "courant" ? e.courant : e.tension,
+          ]);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des données :", error);
+      }
+    };
+
+    const initChart = () => {
+      if (chart.value) {
+        chartInstance = echarts.init(chart.value);
+
+        const option = {
+          title: {
+            text: props.showTitle
+              ? `Batterie ${props.batteryId} - ${
+                  props.type.charAt(0).toUpperCase() + props.type.slice(1)
+                }`
+              : "",
+          },
+          tooltip: { trigger: "axis" },
+          xAxis: {
+            type: "time",
+            boundaryGap: false,
+            axisLabel: { show: props.showTime },
+          },
+          yAxis: {
+            type: "value",
+            name: props.type.charAt(0).toUpperCase() + props.type.slice(1),
+            axisLine: { lineStyle: { color: props.color } },
+          },
+          series: [
+            {
+              name: props.type.charAt(0).toUpperCase() + props.type.slice(1),
+              type: "line",
+              smooth: true,
+              showSymbol: false,
+              data: data.value,
+              itemStyle: { color: props.color },
+              lineStyle: { color: props.color },
+            },
+          ],
+        };
+
+        chartInstance.setOption(option);
+      }
+    };
+
+    const initMQTT = () => {
+      const client = mqtt.connect("ws://localhost:9001");
+
+      client.on("connect", () => {
+        client.subscribe(props.topic, (err) => {
+          if (!err) {
+            console.log(`Abonné au topic ${props.topic}`);
+          }
+        });
+      });
+
+      client.on("message", (topic, message) => {
+        const batteriesData = JSON.parse(message.toString());
+        const now = new Date().getTime();
+        if (batteriesData) {
+          batteriesData.map((bat) => {
+            if (bat.batterie_id == props.batteryId) {
+              const value =
+                props.type === "courant"
+                  ? bat.courant
+                  : bat.tension;
+
+              data.value.push([now, value]);
+
+              if (data.value.length > MAX_DATA_POINTS) {
+                data.value.shift();
+              }
+            }
+          });
+        }
+
+        chartInstance.setOption({
+          series: [
+            {
+              data: data.value,
+            },
+          ],
+        });
+      });
+    };
+
+    onMounted(async () => {
+      await loadInitialData();
+      await nextTick(); // Assurez-vous que le DOM est prêt
+      initChart();
+      initMQTT();
+    });
+
+    watch(
+      () => [props.chartWidth, props.chartHeight],
+      () => {
+        if (chartInstance) {
+          chartInstance.resize();
+        }
+      }
+    );
+
+    expose({
+      resize() {
+        if (chartInstance) {
+          chartInstance.resize();
+        }
+      },
+    });
+
+    return { chart };
+  },
 };
 </script>

@@ -3,13 +3,25 @@
     <div class="showModal" v-if="show.showBatt">
       <div class="formModal">
         <div class="titre">
-          <div class="icon">
+          <div class="title">
+            <div class="icon">
             <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
           </div>
           <h3>Batterie {{ show.showBatterieItem }}</h3>
+          </div>
+          <div class="closeForm" @click="show.closeBattDetails">
+            <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
+          </div>
         </div>
-        <div class="container">
-          <div class="containerOne">
+        <div
+          class="container"
+          v-for="item in mqttStore.dataReceived"
+          :key="item.id"
+        >
+          <div
+            class="containerOne"
+            v-if="item.batterie_id == show.showBatterieItemId"
+          >
             <div class="item">
               <div class="cont">
                 <h4>CHARGE</h4>
@@ -17,7 +29,12 @@
               </div>
               <div class="progression">
                 <div class="prog">
-                  <Progression :progress.sync="progress" :color="color1" :unites="'%'" :batteryId="show.showBatterieItemId" />
+                  <Progression
+                
+                    :color="color1"
+                    :unites="'%'"
+                    :batteryId="show.showBatterieItemId"
+                  />
                 </div>
               </div>
             </div>
@@ -28,7 +45,7 @@
               </div>
               <div class="progression">
                 <div class="prog">
-                  <h1>⚡ {{ parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].tension).toFixed(1) }}</h1>
+                  <h1>⚡ {{ parseFloat(item.tension).toFixed(1) }}</h1>
                 </div>
               </div>
             </div>
@@ -39,24 +56,39 @@
               </div>
               <div class="progression">
                 <div class="prog">
-                  <h1>🔌 {{ parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].courant).toFixed(1) }}</h1>
+                  <h1>🔌 {{ parseFloat(item.courant).toFixed(1) }}</h1>
                 </div>
               </div>
             </div>
-            <div class="item" >
+            <div class="item">
               <div class="cont">
                 <h4>TEMPERATURE</h4>
-                <h5 :style="{ backgroundColor: classifyTemperatureColor(parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].temperature).toFixed(1)) }">{{ classifyTemperatureText(parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].temperature).toFixed(1)) }}</h5>
+                <h5
+                  :style="{
+                    backgroundColor: classifyTemperatureColor(
+                      parseFloat(item.temperature).toFixed(1)
+                    ),
+                  }"
+                >
+                  {{
+                    classifyTemperatureText(
+                      parseFloat(item.temperature).toFixed(1)
+                    )
+                  }}
+                </h5>
               </div>
-              
+
               <div class="progression">
                 <div class="prog">
-                  <h1>🌡️{{ parseFloat(mqttStore.dataReceived[show.showBatterieItemId - 1].temperature).toFixed(1) }}</h1>
+                  <h1>🌡️{{ parseFloat(item.temperature).toFixed(1) }}</h1>
                 </div>
               </div>
             </div>
           </div>
-          <div class="containerTwo">
+          <div
+            class="containerTwo"
+            v-if="item.batterie_id == show.showBatterieItemId"
+          >
             <div class="option">
               <h4
                 @click="show.setShowGraph('Tension')"
@@ -85,24 +117,48 @@
             </div>
             <div class="graph" v-show="show.showTension">
               <div class="containerG">
-                <RealTimeChart ref="tensionChart" :chartWidth="'550px'" :batteryId="show.showBatterieItemId" topic="batteries" :color="colors.tensionColor" :showTime="true" :showTitle="false" type="tension" />
+                <RealTimeChart
+                  ref="tensionChart"
+                  :chartWidth="'550px'"
+                  :batteryId="show.showBatterieItemId"
+                  topic="batteries"
+                  :color="colors.tensionColor"
+                  :showTime="true"
+                  :showTitle="false"
+                  type="tension"
+                />
               </div>
             </div>
             <div class="graph" v-show="show.showCourant">
               <div class="containerG">
-                <RealTimeChart ref="courantChart" :chartWidth="'550px'" :batteryId="show.showBatterieItemId" topic="batteries" :color="colors.courantColor" :showTime="true" :showTitle="false" type="courant" />
+                <RealTimeChart
+                  ref="courantChart"
+                  :chartWidth="'550px'"
+                  :batteryId="show.showBatterieItemId"
+                  topic="batteries"
+                  :color="colors.courantColor"
+                  :showTime="true"
+                  :showTitle="false"
+                  type="courant"
+                />
               </div>
             </div>
             <div class="graph" v-show="show.showTensionCourant">
               <div class="containerG">
-                <RealTimeCurrentTensionChart :chartWidth="'550px'" ref="tensionCourantChart" :batteryId="show.showBatterieItemId" topic="batteries" :colorTension="colors.tensionColor" :colorCourant="colors.courantColor" :showTime="true" :showTitle="false" />
+                <RealTimeCurrentTensionChart
+                  :chartWidth="'550px'"
+                  ref="tensionCourantChart"
+                  :batteryId="show.showBatterieItemId"
+                  topic="batteries"
+                  :colorTension="colors.tensionColor"
+                  :colorCourant="colors.courantColor"
+                  :showTime="true"
+                  :showTitle="false"
+                />
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="closeForm" @click="show.closeBattDetails">
-        <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
       </div>
     </div>
   </Transition>
@@ -123,48 +179,54 @@ const props = defineProps({
   batteryIdBat: Number,
 });
 import { useMqttStore } from "@/stores/mqttStore";
-const mqttStore = useMqttStore()
-// Fonction pour classifier les températures en couleurs 
-const classifyTemperatureColor = (temperature) => { if (temperature < 10) { return colors.tensionColor; // Température Basse 
-} else if (temperature >= 10 && temperature <= 40) { return "#58fb60"; // Température Normale 
-} else if (temperature > 40 && temperature <= 60) { return "orange"; // Température Élevée 
-} else { return "red"; // Température Critique 
-} 
-}; // Fonction pour classifier les températures en texte 
-const classifyTemperatureText = (temperature) => { 
+const mqttStore = useMqttStore();
+// Fonction pour classifier les températures en couleurs
+const classifyTemperatureColor = (temperature) => {
   if (temperature < 10) {
-     return "Basse"; } 
-     else if (temperature >= 10 && temperature <= 40) { 
-      return "Normale"; } 
-      else if (temperature > 40 && temperature <= 60) { 
-        return "Élevée"; } 
-        else { 
-          return "Critique"; 
-        } 
-      };
+    return colors.tensionColor; // Température Basse
+  } else if (temperature >= 10 && temperature <= 40) {
+    return "#58fb60"; // Température Normale
+  } else if (temperature > 40 && temperature <= 60) {
+    return "orange"; // Température Élevée
+  } else {
+    return "red"; // Température Critique
+  }
+}; // Fonction pour classifier les températures en texte
+const classifyTemperatureText = (temperature) => {
+  if (temperature < 10) {
+    return "Basse";
+  } else if (temperature >= 10 && temperature <= 40) {
+    return "Normale";
+  } else if (temperature > 40 && temperature <= 60) {
+    return "Élevée";
+  } else {
+    return "Critique";
+  }
+};
 
 // Watch for changes in the showGraph value and resize the chart accordingly
-watch(() => show.showGraph, async () => {
-  await nextTick();
-  if (show.showTension) {
-    this.$refs.tensionChart.chartInstance.resize();
-  } else if (show.showCourant) {
-    this.$refs.courantChart.chartInstance.resize();
-  } else if (show.showTensionCourant) {
-    this.$refs.tensionCourantChart.chartInstance.resize();
+watch(
+  () => show.showGraph,
+  async () => {
+    await nextTick();
+    if (show.showTension) {
+      this.$refs.tensionChart.chartInstance.resize();
+    } else if (show.showCourant) {
+      this.$refs.courantChart.chartInstance.resize();
+    } else if (show.showTensionCourant) {
+      this.$refs.tensionCourantChart.chartInstance.resize();
+    }
   }
-});
+);
 </script>
 
 <style scoped>
 .closeForm {
-  background-color: rgb(231, 230, 230);
+  background-color: #fb7b5891;
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  position: absolute;
-  right: 180px;
-  top: 20px;
+
   align-items: center;
   display: flex;
   justify-content: center;
@@ -185,6 +247,7 @@ watch(() => show.showGraph, async () => {
 
 .formModal {
   width: 70%;
+  /* height: 550px; */
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
@@ -205,6 +268,12 @@ watch(() => show.showGraph, async () => {
   background-color: #dddddd78;
   display: flex;
   align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title{
+  display: flex;
 }
 .titre h3 {
   font-weight: 600;
@@ -270,7 +339,7 @@ watch(() => show.showGraph, async () => {
   box-shadow: 0px 2px 5px rgb(189, 189, 189);
 }
 
-.prog h1{
+.prog h1 {
   display: block;
   align-self: center;
   margin: auto 0;
@@ -327,7 +396,7 @@ watch(() => show.showGraph, async () => {
 }
 .containerG {
   width: 550px;
-  height: '90%';
+  height: "90%";
   margin: 0 auto;
   /* background-color: red; */
 }

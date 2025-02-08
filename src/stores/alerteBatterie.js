@@ -241,6 +241,8 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
         time: response.data.created_at,
         id:response.data.id
       };
+
+      console.log('alerte' , formaAlerte);
       alertes.value.push(formaAlerte);
       console.log("alertes", alertes.value);
       show.showAlert = true;

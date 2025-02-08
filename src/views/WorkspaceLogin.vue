@@ -57,8 +57,8 @@ import { useUser } from "@/stores/user";
 const show = useShow();
 const user = useUser();
 
-const email = ref('pierret1@gmail.com');
-const mdp = ref('pierret1@gmail.com');
+const email = ref('monitoring@gmail.com');
+const mdp = ref('123456789');
 
 const verify = () => {
   user.email = email.value;
@@ -78,6 +78,7 @@ const verify = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Nunito', sans-serif;
 }
 .container {
   width: 60%;

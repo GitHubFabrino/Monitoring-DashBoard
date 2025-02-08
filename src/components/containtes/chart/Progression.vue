@@ -82,13 +82,12 @@ export default {
           },
         },
       });
-
     };
 
     // Créer le graphique lorsque le composant est monté
     onMounted(() => {
       createChart();
-      
+
       // Connexion au broker MQTT
       const client = mqtt.connect("ws://192.168.1.116:9001");
 
@@ -106,16 +105,16 @@ export default {
       client.on("message", (topic, message) => {
         try {
           const parsedMessage = JSON.parse(message.toString());
-
           if (parsedMessage.length > 0) {
-            progress.value = parseFloat(parsedMessage[props.batteryId - 1].soc).toFixed(0);
-
-            // Recréer le graphique avec la nouvelle valeur de progression
-            createChart();
+            parsedMessage.map((e) => {
+              if (e.batterie_id == props.batteryId) {
+                progress.value = parseFloat(e.soc).toFixed(0);
+                createChart();
+              }
+            });
           } else {
             console.warn("Le message reçu est vide ou mal formé");
           }
-
         } catch (error) {
           console.error("Erreur lors du traitement du message MQTT :", error);
         }
