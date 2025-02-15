@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="titre">
-      <h3>Visualisation des données</h3>
+    <div class="flex justify-between items-center p-[10px] border-b border-gray-300">
+      <h3 class="font-semibold w-[60%] text-[var(--primary-color)]">Visualisation des données</h3>
     </div>
     <div class="contenu">
       <!-- <div class="entete">

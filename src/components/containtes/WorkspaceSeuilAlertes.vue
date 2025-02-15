@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <div class="titre">
-      <h3>Seuil d'alerte des batteries</h3>
+    <div class="flex justify-between items-center p-[10px] border-b border-gray-300"
+    >
+      <h3 class="font-semibold w-[60%] text-[var(--primary-color)]">Seuil d'alerte des batteries</h3>
     </div>
     <div class="contenu">
       <template v-if="batterie.allBatteryData.length !== 0">

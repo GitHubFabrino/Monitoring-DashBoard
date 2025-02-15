@@ -4,9 +4,11 @@
       <div
         v-if="isGetParc"
         v-for="parcItem in useParc.parcsData"
+
         :key="parcItem.id"
         class="cardItem1 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
       >
+      
         <div class="cardFile">
           <img
             v-if="parcItem.file_id"

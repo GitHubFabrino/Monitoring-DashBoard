@@ -10,6 +10,7 @@ import '@fontsource/oswald'; // Importer la police Oswald
 import '@fontsource/montserrat-alternates'; // Importer la police Montserrat Alternates
 import '@fontsource/montserrat'; // Importer la police Montserrat
 import '@fontsource/nunito'; // Importer la police Nunito
+import '@/assets/main.css';
 
 import App from "./App.vue";
 // import router from "./router";

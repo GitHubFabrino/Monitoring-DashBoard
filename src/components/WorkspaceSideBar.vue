@@ -230,23 +230,46 @@
             Visualisation des données
           </h5>
         </div>
-        <!-- <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Compression des données' }"
-          @click="show.setActiveItem('Compression des données')"
+      </div>
+    </div>
+
+    <div class="menu">
+      <div
+        class="menuTitle"
+        :class="{ active: show.activeMenu === 'Performance' }"
+        @click="show.setActiveMenu('Performance')"
+      >
+        <h4
+          :class="{ activeText: show.activeMenu === 'Performance' }"
         >
-          <i class="pi pi-server" style="font-size: 18px; color: #2d4051"></i>
+          Performance des batteries
+        </h4>
+      </div>
+      <div v-if="show.showPerformance">
+        <div
+          class="menuItem"
+          :class="{ bg: show.activeMenuItem === 'Estimation' }"
+          @click="show.setActiveItem('Estimation')"
+        >
+          <i
+            class="pi pi-database"
+            style="font-size: 18px; color: #2d4051"
+            :class="{
+              color: show.activeMenuItem === 'Estimation',
+            }"
+          ></i>
 
           <h5
             :class="{
-              color: show.activeMenuItem === 'Compression des données',
+              color: show.activeMenuItem === 'Estimation',
             }"
           >
-            Compression des données
+            Estimation 
           </h5>
-        </div> -->
+        </div>
       </div>
     </div>
+
 
  </div>
 </template>
@@ -259,7 +282,7 @@ const show = useShow();
 
 <style scoped>
 .sideBar {
-  width: 20%;
+  width: 20% !important;
   background-color: #f6f8fa;
   padding: 0px 20px 20px 20px;
   border-right: 1px solid rgba(110, 110, 110, 0.235);

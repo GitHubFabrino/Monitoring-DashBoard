@@ -1,9 +1,9 @@
 <template>
-  <div class="container1">
+  <div class="flex overflow-hidden w-[200%] h-screen bg-[#f4e6e6]">
     <WorkspaceSideBar />
-    <div class="cont">
+    <div class="w-[80%] bg-[#2f333e]">
       <WorkspaceNavigation />
-      <div class="containte">
+      <div class="w-full bg-[#e9f0f6] h-full ">
         <WorkspaceContainte />
       </div>
     </div>
@@ -17,23 +17,6 @@ import WorkspaceContainte from "@/components/WorkspaceContainte.vue";
 </script>
 
 <style scoped>
-.container1 {
-  display: flex;
-  overflow: hidden;
-  width: 200%;
-  height: 100vh;
-  background-color: rgb(244, 230, 230) !important;
-}
-.cont {
-  flex-grow: 1;
-  background-color: #2f333e;
-}
-.containte {
-  flex-grow: 1;
-  background-color: #e9f0f6;
-  height: 100%;
-  padding: 20px;
-}
 </style>
 
 

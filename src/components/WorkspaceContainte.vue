@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div class="nav">
+  <div class="w-[100%] pt-5">
+    <div class="nav1">
       <h4>
       {{ show.activeMenu }} /
         <span>{{ show.activeMenuItem }}</span>
       </h4>
     </div>
-    <div class="card">
+    <div class="card1">
       <WorkspaceAcceuil v-if="show.showAcceuil" />
       <WorkspaceCreationParc v-if="show.showCreationParc" />
       <WorkspaceCalendrierMaintenance v-if="show.showCalendrierM" />
@@ -19,6 +19,7 @@
       <WorkspaceCompressionDonnes v-if="show.showConpressionD" />
       <WorkspaceRapprotMensuel v-if="show.showRapportMensuel" />
       <WorkspaceRecommendation v-if="show.showRecommendation" />
+      <WorkspaceEstimation v-if="show.showEstimation" />
     </div>
   </div>
 </template>
@@ -38,12 +39,13 @@ import WorkspaceRapprotMensuel from "@/components/containtes/WorkspaceRapprotMen
 import WorkspaceRecommendation from "@/components/containtes/WorkspaceRecommendation.vue";
 import WorkspaceSeuilAlertes from "@/components/containtes/WorkspaceSeuilAlertes.vue";
 import WorkspaceVisualisationDonnes from "@/components/containtes/WorkspaceVisualisationDonnes.vue";
+import WorkspaceEstimation from "@/components/containtes/WorkspaceEstimation.vue";
 
 const show = useShow();
 </script>
 
 <style scoped>
-.card {
+.card1 {
   /* background-color: #f6f8fa; */
   width: 96%;
   height: 76vh;
@@ -51,7 +53,7 @@ const show = useShow();
   align-content: center;
 }
 
-.nav {
+.nav1 {
   width: 100%;
   margin-bottom: 20px;
   padding-left: 20px;

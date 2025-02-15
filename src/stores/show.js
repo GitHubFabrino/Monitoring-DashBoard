@@ -24,7 +24,7 @@ export const useShow = defineStore("Show", () => {
   const showAlertBatterie = ref(false);
   const showAlertBatType = ref("");
   const showAlertBatterieMessage = ref("");
-  const competerAlerteBatterieUnRead  = ref(0)
+  const competerAlerteBatterieUnRead = ref(0);
 
   const showEditParc = ref(false);
   function showEditParcFunc() {
@@ -86,6 +86,7 @@ export const useShow = defineStore("Show", () => {
   const showIncident = ref(false);
   const showHistorique = ref(false);
   const showStatistique = ref(false);
+  const showPerformance = ref(false);
 
   function setActiveMenu(menuName) {
     activeMenu.value = menuName;
@@ -109,6 +110,10 @@ export const useShow = defineStore("Show", () => {
     menuName === "Statistiques et rapports"
       ? (showStatistique.value = true)
       : (showStatistique.value = false);
+
+    menuName === "Performance"
+      ? (showPerformance.value = true)
+      : (showPerformance.value = false);
   }
 
   const activeMenuItem = ref("");
@@ -124,6 +129,7 @@ export const useShow = defineStore("Show", () => {
   const showConpressionD = ref(false);
   const showRapportMensuel = ref(false);
   const showRecommendation = ref(false);
+  const showEstimation = ref(false);
   function setActiveItem(itemName) {
     activeMenuItem.value = itemName;
     itemName === "Acceuil"
@@ -172,6 +178,9 @@ export const useShow = defineStore("Show", () => {
     itemName === "Recommandations d'optimisation"
       ? (showRecommendation.value = true)
       : (showRecommendation.value = false);
+    itemName === "Estimation"
+      ? (showEstimation.value = true)
+      : (showEstimation.value = false);
   }
 
   const showBatterieItem = ref("");
@@ -188,8 +197,7 @@ export const useShow = defineStore("Show", () => {
   const showBatt = ref(false);
   const showBatterieItemId = ref();
   function showBattDetails(itemName, itemId) {
-
-    console.log('id batt detail', itemId);
+    console.log("id batt detail", itemId);
     showBatterieItem.value = itemName;
     showBatterieItemId.value = itemId;
     showBatt.value = !showBatt.value;
@@ -391,6 +399,7 @@ export const useShow = defineStore("Show", () => {
     showAnnee,
     showSeletHorodatage,
     showEmail,
+    showEstimation,
     showNotification,
     showSpinner,
     showAlert,
@@ -408,6 +417,7 @@ export const useShow = defineStore("Show", () => {
     showParcDetailData,
     showParcDetail,
     showDeleteParc,
+    showPerformance,
     showParcNameDelete,
     showParcNameDeleteId,
     showEditParc,
