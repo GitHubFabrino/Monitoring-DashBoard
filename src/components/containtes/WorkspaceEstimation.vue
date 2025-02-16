@@ -1,3 +1,4 @@
+
 <template>
   <div class="bg-[#f6f8fa] w-full h-[76vh] shadow-md shadow-gray-400 rounded-md p-5 overflow-hidden">
     <div class="flex justify-between items-center p-[10px] border-b border-gray-300">
@@ -10,7 +11,6 @@
     </div>
     <div v-else>
       <div v-if="cards.length > 0" v-show="showCards" class="flex justify-around">
-    
         <CardBat
           v-for="(card, index) in batterie.allBatteryData"
           :key="index"
@@ -37,10 +37,20 @@
               <div class="relative size-[70%]">
                 <svg class="size-full -rotate-90" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2"></circle>
-                  <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-blue-600" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="65" stroke-linecap="round"></circle>
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r="16"
+                    fill="none"
+                    class="stroke-current"
+                    :class="progressColor"
+                    stroke-width="2"
+                    :stroke-dasharray="`${progressValue}, 100`"
+                    stroke-linecap="round"
+                  ></circle>
                 </svg>
                 <div class="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
-                  <span class="text-center text-2xl font-bold text-blue-600">35%</span>
+                  <span class="text-center text-2xl font-bold" :class="progressColor">{{ progressValue }}%</span>
                 </div>
               </div>
             </div>
@@ -71,7 +81,7 @@
             <div class="block overflow-hidden md:w-52 h-full flex justify-center items-center">
               <div class="relative size-[70%]">
                 <div class="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
-                  <span class="text-center text-2xl font-bold text-blue-600">1523</span>
+                  <span class="text-center text-2xl font-bold text-blue-600 animated-number">{{ formattedNumber }}</span>
                 </div>
               </div>
             </div>
@@ -99,7 +109,7 @@
             </div>
           </div>
         </div>
-        <div class="w-[40px] h-[40px] flex justify-center items-center" @click="toggle( batterie.allBatteryData[0])">
+        <div class="w-[40px] h-[40px] flex justify-center items-center" @click="toggle(batterie.allBatteryData[0])">
           <a class="inline-block rounded-full border border-indigo-600 bg-indigo-600 p-1 text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden" href="#">
             <svg class="h-4 w-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -113,7 +123,7 @@
 
 <script setup>
 import "primeicons/primeicons.css";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useShow } from "@/stores/show";
 import { useBatterie } from "@/stores/batterieStore";
 import { parcStore } from "@/stores/parcStore";
@@ -134,18 +144,70 @@ const cards = ref([
 const showCards = ref(true);
 const selectCard = ref({});
 const loading = ref(true);
+const progressValue = ref(0);
+const targetNumber = ref(0);
+const currentNumber = ref(0);
+let numberInterval;
+
+const formattedNumber = computed(() => {
+  return new Intl.NumberFormat().format(currentNumber.value);
+});
+
+const progressColor = computed(() => {
+  if (progressValue.value < 50) {
+    return 'text-red-600';
+  } else if (progressValue.value < 80) {
+    return 'text-yellow-500';
+  } else {
+    return 'text-green-600';
+  }
+});
 
 const toggle = (card) => {
   selectCard.value = card;
   showCards.value = !showCards.value;
 };
 
+const startProgressAnimation = () => {
+  progressInterval = setInterval(() => {
+    progressValue.value += 1;
+    if (progressValue.value >= 100) {
+      progressValue.value = 0;
+    }
+  }, 50); 
+};
+
+const startNumberAnimation = () => {
+  numberInterval = setInterval(() => {
+    if (currentNumber.value < targetNumber.value) {
+      currentNumber.value += 1;
+    } else {
+      clearInterval(numberInterval);
+    }
+  }, 10); 
+};
+
 onMounted(() => {
-  selectCard.value = batterie.allBatteryData[0]
-  // Simuler un délai de chargement
+  selectCard.value = batterie.allBatteryData[0];
   setTimeout(() => {
     loading.value = false;
+    startProgressAnimation();
+  
   }, 2000);
+});
+
+onMounted(() => {
+  selectCard.value = batterie.allBatteryData[0];
+  targetNumber.value = 2543
+  setTimeout(() => {
+    loading.value = false;
+    startNumberAnimation();
+  }, 2000);
+});
+
+onUnmounted(() => {
+  clearInterval(progressInterval); 
+  clearInterval(numberInterval);
 });
 </script>
 
@@ -156,5 +218,10 @@ onMounted(() => {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0;
+}
+
+.animated-number {
+  transition: opacity 0.5s, transform 0.5s;
+  display: inline-block;
 }
 </style>
