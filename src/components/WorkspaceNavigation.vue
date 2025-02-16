@@ -331,17 +331,17 @@ onMounted(() => {
   console.log("Store monté, initialisation MQTT...");
   mqttAlerteStore.initializeMqtt();
 
-  if (useParc?.parcSuperviser?.nom_parc || parcSuperviserLocal?.nom_parc) {
-    if (useParc?.parcSuperviser) {
-      console.log('misy ayyy 1', useParc?.parcSuperviser);
-    } else if (parcSuperviserLocal.value) {
-      console.log('misy ayyy 2',parcSuperviserLocal.value);
-    } else{
-      console.log('tsisiii');
-    }
-    // alerteBatterieStore.getAlerteByParcId()
+  // if (useParc?.parcSuperviser?.nom_parc || parcSuperviserLocal?.nom_parc) {
+  //   if (useParc?.parcSuperviser) {
+  //     console.log('misy ayyy 1', useParc?.parcSuperviser);
+  //   } else if (parcSuperviserLocal.value) {
+  //     console.log('misy ayyy 2',parcSuperviserLocal.value);
+  //   } else{
+  //     console.log('tsisiii');
+  //   }
+  //   // alerteBatterieStore.getAlerteByParcId()
     
-  }
+  // }
 
 
 

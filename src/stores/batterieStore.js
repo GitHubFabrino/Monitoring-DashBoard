@@ -71,7 +71,7 @@ export const useBatterie = defineStore("Batterie", () => {
     let enveuille = `${utilisationVeillemin.value}-${utilisationVeillemax.value}`;
     let cyclique = `${utilisationCycliquemin.value}-${utilisationCycliquemax.value}`;
 
-    console.log("enveuille", enveuille);
+  
 
     let parcid = useParc.parcSuperviser.id;
     const batterieData = {
@@ -262,7 +262,7 @@ export const useBatterie = defineStore("Batterie", () => {
           const batteries = response.data;
           allBatteryData.value = response.data;
 
-          console.log("icicicicic", allBatteryData.value);
+        
 
           localStorage.setItem("allBatteryData", JSON.stringify(response.data));
         } else {

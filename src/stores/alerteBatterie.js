@@ -54,7 +54,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
     axios
       .get(`${URL}/api/alerte-batteries/batterie/${idBat}`)
       .then((response) => {
-        console.log("response alerte : ", response.data);
+       
         if (response.status === 200) {
           allAllerteDataByBatterie.value = response.data;
 
@@ -100,13 +100,13 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
       .get(`${URL}/api/alerte-batteries/parc/${idParc}`)
       .then((response) => {
         if (response.status === 200) {
-          console.log("getAlerteByParcId", response.data);
+         
           allAllerteDataByParc.value = response.data;
           const parcSuperviserLocal = ref(
             JSON.parse(localStorage.getItem("parcSuperviser"))
           );
 
-          console.log("alerte eeee : ", response.data.length);
+        
 
           if (parc) {
             alertes.value = [];
@@ -152,11 +152,11 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
             });
           }
 
-          console.log("parc ee", parc);
+         
 
-          console.log("a la fin", alertes.value.length);
+          
           show.competerAlerteBatterieUnRead = alertes.value.length;
-          console.log("a la fin 2", alertes.value);
+        
 
           show.showAlert = true;
           show.showAlertType = "success";
@@ -278,10 +278,10 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
         `${URL}/api/alerte-batteries`,
         newAlerte
       );
-      console.log("response alerte", response.data);
+     
 
       let batdata = await batterie.getBatteriesById(response.data.batterie_id);
-      console.log("batdata", batdata);
+     
 
       let formaAlerte = {
         Valert: response.data.valeur_alerte,
@@ -297,9 +297,9 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
         id: response.data.id,
       };
 
-      console.log("alerte", formaAlerte);
+  
       alertes.value.push(formaAlerte);
-      console.log("alertes", alertes.value);
+     
       show.showAlert = true;
       show.showAlertType = "success";
       show.showAlertMessage = "une nouvelle alerte";
@@ -339,7 +339,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
           JSON.parse(localStorage.getItem("parcSuperviser"))
         );
 
-        console.log("update ee", parcSuperviserLocal.value);
+        
 
         getAlerteByParcId(parcid, parcSuperviserLocal.value);
         show.competerAlerteBatterieUnRead =

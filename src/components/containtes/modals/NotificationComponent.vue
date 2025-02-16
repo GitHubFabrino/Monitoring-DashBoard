@@ -226,9 +226,6 @@ const dataNotif = [
 ];
 
 
-onMounted(()=>{
-  console.log('yu are here');
-})
 </script>
 
 <style scoped>
