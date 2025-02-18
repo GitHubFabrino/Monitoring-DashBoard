@@ -20,6 +20,7 @@
       <WorkspaceRapprotMensuel v-if="show.showRapportMensuel" />
       <WorkspaceRecommendation v-if="show.showRecommendation" />
       <WorkspaceEstimation v-if="show.showEstimation" />
+      <WorkspaceEstimationDetails v-if="show.showEstimationDetails" />
     </div>
   </div>
 </template>
@@ -40,6 +41,8 @@ import WorkspaceRecommendation from "@/components/containtes/WorkspaceRecommenda
 import WorkspaceSeuilAlertes from "@/components/containtes/WorkspaceSeuilAlertes.vue";
 import WorkspaceVisualisationDonnes from "@/components/containtes/WorkspaceVisualisationDonnes.vue";
 import WorkspaceEstimation from "@/components/containtes/WorkspaceEstimation.vue";
+import WorkspaceEstimationDetails from "@/components/containtes/WorkspaceEstimationDetails.vue";
+
 
 const show = useShow();
 </script>

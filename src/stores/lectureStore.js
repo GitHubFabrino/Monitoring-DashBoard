@@ -20,6 +20,7 @@ export const useLectureStore = defineStore("LectureStore", () => {
   const batterieId = ref("");
 
   const allLectureData = ref([]);
+  const allLectureDataPredict = ref([]);
   const oneLectureData = ref({});
   const isModifier = ref(false);
 
@@ -362,10 +363,47 @@ export const useLectureStore = defineStore("LectureStore", () => {
   
   }
 
+
+  function getAllDataPredictByParc(idparc) {
+    show.showSpinner = true;
+    axios
+      .get(`${URL}/api/lecture/predictData/parc/${idparc}`, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log('eeeeeszzzzzzzz' , response.data);
+        if (response.status === 200) {
+          console.log('ato');
+          allLectureDataPredict.value = response.data;
+          show.showAlertType = "success";
+          show.showAlertMessage = "Chargement avec succès! ✅";
+        } else {
+          show.showAlertType = "danger";
+          show.showAlertMessage =
+            "Erreur lors de la récupération des lectures. ❌";
+        }
+      })
+      .catch((error) => {
+        show.showAlertType = "warning";
+        show.showAlertMessage =
+          "Erreur lors de la récupération des lectures. ⚠️";
+        console.error("Error fetching lectures:", error);
+      })
+      .finally(() => {
+        show.showSpinner = false;
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
+      });
+  }
+
   // Charger les lectures au montage du composant
   onMounted(async () => {
     let parcid = useParc.parcSuperviser.id;
     getLectureByParcId(parcid);
+    getAllDataPredictByParc(parcid)
 
     // Surveille les données et met à jour lorsque disponibles
     watch(
@@ -414,6 +452,7 @@ export const useLectureStore = defineStore("LectureStore", () => {
     dod,
     batterieId,
     allLectureData,
+    allLectureDataPredict,
     oneLectureData,
     isModifier,
     fetchLectures,
@@ -424,5 +463,6 @@ export const useLectureStore = defineStore("LectureStore", () => {
     getLectureByParcId,
     fetchAllLecture,
     deleteLecture,
+    getAllDataPredictByParc
   };
 });

@@ -258,6 +258,7 @@ import { useMqttAlerteStore } from "@/stores/mqttAlertStore";
 import { ref, computed, onMounted, watch } from "vue";
 const show = useShow();
 const user = useUser();
+
 const useParc = parcStore();
 const mqttAlerteStore = useMqttAlerteStore();
 

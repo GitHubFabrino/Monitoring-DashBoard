@@ -130,6 +130,8 @@ export const useShow = defineStore("Show", () => {
   const showRapportMensuel = ref(false);
   const showRecommendation = ref(false);
   const showEstimation = ref(false);
+  const showEstimationDetails = ref(false);
+  const selectCard = ref({});
   function setActiveItem(itemName) {
     activeMenuItem.value = itemName;
     itemName === "Acceuil"
@@ -397,9 +399,11 @@ export const useShow = defineStore("Show", () => {
     showSemaine,
     showMois,
     showAnnee,
+    selectCard,
     showSeletHorodatage,
     showEmail,
     showEstimation,
+    showEstimationDetails,
     showNotification,
     showSpinner,
     showAlert,
