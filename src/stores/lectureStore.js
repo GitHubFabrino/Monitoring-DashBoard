@@ -373,7 +373,7 @@ export const useLectureStore = defineStore("LectureStore", () => {
       .then((response) => {
         console.log('eeeeeszzzzzzzz' , response.data);
         if (response.status === 200) {
-          console.log('ato');
+          console.log('ato',  response.data);
           allLectureDataPredict.value = response.data;
           show.showAlertType = "success";
           show.showAlertMessage = "Chargement avec succès! ✅";

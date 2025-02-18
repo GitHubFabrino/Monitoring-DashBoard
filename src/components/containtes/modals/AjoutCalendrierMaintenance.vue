@@ -37,8 +37,9 @@ const addMaintenance = () => {
 
 <template>
   <Transition>
-    <div class="showModal" v-if="show.showAddMaintenance">
-      <div class="formModal">
+    <div @click="show.showAddMaintenanceFunc()"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50" v-if="show.showAddMaintenance">
+      <div class="formModal" @click.stop>
         <div class="title">
           <h3>Planifier une maintenance</h3>
           <div class="closeForm" @click="show.showAddMaintenanceFunc()">

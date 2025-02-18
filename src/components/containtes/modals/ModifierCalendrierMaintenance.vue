@@ -38,8 +38,15 @@ const addMaintenance = () => {
 
 <template>
   <Transition>
-    <div class="showModal" v-if="maintenanceStore.ismodifierMaintenance">
-      <div class="formModal">
+    <div
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
+      @click="
+        maintenanceStore.ismodifierMaintenance =
+          !maintenanceStore.ismodifierMaintenance
+      "
+      v-if="maintenanceStore.ismodifierMaintenance"
+    >
+      <div class="formModal" @click.stop>
         <div class="title">
           <h3>Modifier</h3>
           <div
@@ -119,7 +126,7 @@ span {
   display: flex;
   justify-content: center;
 }
-.title{
+.title {
   display: flex;
   justify-content: space-between;
   align-items: center;

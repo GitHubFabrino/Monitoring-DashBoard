@@ -1,7 +1,7 @@
 <template>
   <Transition name="sheet" mode="out-in">
-    <div class="showModal" v-if="show.showNotificationDetail">
-      <div class="cardItem">
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50" v-if="show.showNotificationDetail" @click="show.showNotificationDetailFunc()">
+      <div class="cardItem" @click.stop>
         <div class="header">
           <template v-if="!show.showNotificationDetailOne">
             <h2>Notifications</h2>

@@ -19,12 +19,18 @@
           :nomBatterie="card.batterie_Info.nom +` `+ card.batterie_Info.technologie"
           :capacite="card.batterie_Info.capacite_nominal"
           :tension="card.batterie_Info.tension_nominale"
+
+
+          :image="card.batterie_Info.file"
+          :id="card.batterie_Info.id"
+          
           @click="toggle(card)"
         />
       </div>
       <div v-else class="flex justify-center items-center h-full">
         <p class="text-gray-500">Aucune donnée de batterie disponible.</p>
       </div>
+   
    
     </div>
   </div>
@@ -46,14 +52,16 @@ const show = useShow();
 const lectureStore = useLectureStore();
 
 
-const showCards = ref(true);
 
 const loading = ref(true);
 const toggle = (card) => {
   show.selectCard = card;
-  showCards.value = !showCards.value;
-  show.showEstimation = !show.showEstimation
-  show.showEstimationDetails = !show.showEstimationDetails
+  show.showEstimation = false
+  show.showEstimationDetails = true
+
+  if(!show.showPrediction){
+    show.showPrediction = true
+  }
 };
 
 
@@ -74,6 +82,71 @@ watchEffect(()=>{
     loading.value= false
   }
 })
+
+
+const selectCard = ref({});
+// const loading = ref(true);
+const progressValue = ref(0);
+const targetNumber = ref(0);
+const currentNumber = ref(0);
+let progressInterval;
+let numberInterval;
+
+const formattedNumber = computed(() => {
+  return new Intl.NumberFormat().format(currentNumber.value);
+});
+
+const progressColor = computed(() => {
+  if (progressValue.value < 50) {
+    return "text-red-600";
+  } else if (progressValue.value < 80) {
+    return "text-yellow-500";
+  } else {
+    return "text-green-600";
+  }
+});
+
+
+const startProgressAnimation = () => {
+  progressInterval = setInterval(() => {
+    progressValue.value += 1;
+    if (progressValue.value >= 100) {
+      progressValue.value = 0;
+    }
+  }, 50);
+};
+
+const startNumberAnimation = () => {
+  numberInterval = setInterval(() => {
+    if (currentNumber.value < targetNumber.value) {
+      currentNumber.value += 1;
+    } else {
+      clearInterval(numberInterval);
+    }
+  }, 10);
+};
+
+onMounted(() => {
+  show.selectCard.value = batterie.allBatteryData[0];
+  setTimeout(() => {
+    loading.value = false;
+    startProgressAnimation();
+  }, 2000);
+});
+
+onMounted(() => {
+  show.selectCard.value = batterie.allBatteryData[0];
+  targetNumber.value = 2543;
+  setTimeout(() => {
+    loading.value = false;
+    startNumberAnimation();
+  }, 2000);
+});
+
+onUnmounted(() => {
+  clearInterval(progressInterval);
+  clearInterval(numberInterval);
+});
 </script>
 
 <style>

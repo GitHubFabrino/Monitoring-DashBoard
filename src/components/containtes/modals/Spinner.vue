@@ -1,5 +1,5 @@
 <template>
-  <div class="showModal">
+  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50">
       <div class="spinner-6"></div>
     </div>
 </template>

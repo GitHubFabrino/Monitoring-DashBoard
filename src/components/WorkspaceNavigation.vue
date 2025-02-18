@@ -97,7 +97,7 @@
       </div>
     </div>
 
-    <div class="profil">
+    <div class="profil" >
       <div class="notif">
         <div class="notification show" @click="show.showNotificationDetailFunc()">
           <span>{{ show.competerAlerteBatterieUnRead }}</span>

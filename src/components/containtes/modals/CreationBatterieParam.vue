@@ -34,8 +34,9 @@ function close() {
 
 <template>
   <Transition>
-    <div class="showModal" v-if="show.showCreationParamBatt">
-      <div class="formModal">
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
+     v-if="show.showCreationParamBatt" @click="close()">
+      <div class="formModal" @click.stop >
         <div class="titre">
           <h3>
             {{

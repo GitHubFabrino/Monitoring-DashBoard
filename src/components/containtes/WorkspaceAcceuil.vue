@@ -4,17 +4,15 @@
       <div
         v-if="isGetParc"
         v-for="parcItem in useParc.parcsData"
-
         :key="parcItem.id"
         class="cardItem1 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
       >
-      
         <div class="cardFile">
           <img
             v-if="parcItem.file_id"
             :src="parcItem.file_url"
             alt=""
-            class="card-image"
+            class="card-image object-cover"
           />
           <div class="file-input-container" v-else>
             <input
@@ -41,6 +39,32 @@
           </p>
           <a
             @click="handleParcItemClick(parcItem)"
+            class="group relative inline-flex items-center overflow-hidden rounded-sm bg-indigo-600 px-8 py-3 text-white focus:ring-3 colorBg focus:outline-hidden"
+            href="#"
+          >
+            <span class="absolute -end-full transition-all group-hover:end-4">
+              <svg
+                class="size-5 rtl:rotate-180"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </span>
+
+            <span class="text-sm font-medium transition-all group-hover:me-4">
+              Suppervisé
+            </span>
+          </a>
+          <!-- <a
+            @click="handleParcItemClick(parcItem)"
             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none colorBg"
           >
             Suppervisé
@@ -59,7 +83,7 @@
                 d="M1 5h12m0 0L9 1m4 4L9 9"
               />
             </svg>
-          </a>
+          </a> -->
         </div>
       </div>
 
@@ -259,7 +283,10 @@
         </div>
       </div>
     </div>
-    <div class="showModal" v-if="showSpinner">
+    <div
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
+      v-if="showSpinner"
+    >
       <div class="spinner-6"></div>
     </div>
     <div v-if="isbat" class="container1">
@@ -587,18 +614,15 @@ async function connect() {
 
         dataReceived.value.map((e) => {
           console.log("yes", e);
-            const lectureData = {
+          const lectureData = {
             tension: e.tension,
-            courant:  e.courant,
-            temperature:  e.temperature,
-            soc:  e.soc,
-            dod:  e.dod,
+            courant: e.courant,
+            temperature: e.temperature,
+            soc: e.soc,
+            dod: e.dod,
             batterie_id: e.batterie_id,
           };
-          lecture.createLectureNew(lectureData)
-          
-
-
+          lecture.createLectureNew(lectureData);
         });
       }
 

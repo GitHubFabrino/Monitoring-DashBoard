@@ -25,6 +25,7 @@ export const useShow = defineStore("Show", () => {
   const showAlertBatType = ref("");
   const showAlertBatterieMessage = ref("");
   const competerAlerteBatterieUnRead = ref(0);
+  const showPrediction = ref(true);
 
   const showEditParc = ref(false);
   function showEditParcFunc() {
@@ -399,7 +400,7 @@ export const useShow = defineStore("Show", () => {
     showSemaine,
     showMois,
     showAnnee,
-    selectCard,
+    selectCard,showPrediction,
     showSeletHorodatage,
     showEmail,
     showEstimation,

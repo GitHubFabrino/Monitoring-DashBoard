@@ -18,8 +18,10 @@ function Enregistrer() {
 
 <template>
   <Transition>
-    <div class="showModal" v-if="show.showNewParc">
-      <div class="formModal">
+    <div 
+    @click="show.showNewParcFunc()"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50" v-if="show.showNewParc">
+      <div class="formModal" @click.stop>
         <div class="profilContainer">
           <div class="containerDesc">
             <h1>Création d'un parc</h1>

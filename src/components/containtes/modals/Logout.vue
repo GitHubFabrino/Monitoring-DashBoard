@@ -14,8 +14,9 @@ function logoutFunc() {
 
 <template>
   <Transition>
-    <div class="showModal" v-if="show.showLogout">
-      <div class="formModal">
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50" 
+    v-if="show.showLogout" @click="show.showLogoutFunc()">
+      <div class="formModal" @click.stop>
         <div class="profilContainer">
           <div class="containerProfil">
             <div class="descriptionProfil">
