@@ -1,7 +1,7 @@
 <template>
   <Transition name="sheet" mode="out-in">
     <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50" v-if="show.showNotificationDetail" @click="show.showNotificationDetailFunc()">
-      <div class="cardItem" @click.stop>
+      <div class="cardItem bg-blue-500" @click.stop>
         <div class="header">
           <template v-if="!show.showNotificationDetailOne">
             <h2>Notifications</h2>
@@ -44,9 +44,9 @@
           </template>
         </div>
 
-        <div class="bodyNotif">
+        <div class="bodyNotif ">
           <template v-if="!show.showNotificationDetailOne">
-            <div v-if="alerteBatterieStore.alertes.length === 0" class="notification">
+            <div v-if="alerteBatterieStore.alertes.length === 0" class="notification ">
               <div class="notifItem">
                 <svg
                 width="84px"
@@ -90,7 +90,7 @@
               </div>
             </div>
             <div
-              v-for="notif in alerteBatterieStore.alertes"
+              v-for="notif in paginatedItemsRecent"
               :key="notif.id"
               class="cardNotif"
               :class="notif.read ? 'read' : 'notread'"
@@ -116,6 +116,12 @@
                 ></i>
               </div>
             </div>
+
+        <Pagination
+          :currentPageRead.sync="currentPageRecent"
+          :totalPagesRead="totalPagesRecent"
+          @update:currentPageRead="currentPageRecent = $event"
+        />
           </template>
           <template v-else>
             <div class="cardNotifDetail">
@@ -139,8 +145,8 @@ import { useShow } from "@/stores/show";
 import { useAlerteBatterieStore } from "@/stores/alerteBatterie";
 import { colors } from "@/service/color";
 import { useBatterie } from "@/stores/batterieStore";
-import { onMounted } from "vue";
-
+import { ref, onMounted, watch, computed, watchEffect } from "vue";
+import Pagination from "@/components/containtes/useComposantes/Pagination.vue";
 const show = useShow();
 const alerteBatterieStore = useAlerteBatterieStore();
 const batterie = useBatterie();
@@ -198,34 +204,29 @@ async function voir(notif) {
   removeAlert(notif.id);
 }
 
-const dataNotif = [
-  {
-    id: "1",
-    battery: "Batterie 01",
-    parc: "Parc 01",
-    time: "6h",
-    message: "Température élevée",
-    read: false,
-  },
-  {
-    id: "2",
-    battery: "Batterie 02",
-    parc: "Parc 02",
-    time: "4h",
-    message: "Niveau de charge bas",
-    read: true,
-  },
-  {
-    id: "3",
-    battery: "Batterie 03",
-    parc: "Parc 03",
-    time: "3h",
-    message: "Maintenance requise",
-    read: false,
-  },
-];
 
+const itemsPerPageRecent = 10; // Nombre d'éléments par page
+const currentPageRecent = ref(1); // Page actuelle
 
+const paginatedItemsRecent = computed(() => {
+  const start = (currentPageRecent.value - 1) * itemsPerPageRecent;
+  const end = start + itemsPerPageRecent;
+  return alerteBatterieStore.alertes.slice(start, end);
+});
+
+const totalPagesRecent = computed(() => {
+  return Math.ceil(alerteBatterieStore.alertes.length / itemsPerPageRecent);
+});
+
+// const filteredItemsRecent = computed(() => {
+//   return paginatedItemsRecent.value
+//     .filter((item) =>
+//       item.maintenance.details
+//         .toLowerCase()
+//         .includes(search.value.toLowerCase())
+//     )
+//     .sort((a, b) => b.id - a.id);
+// });
 </script>
 
 <style scoped>
@@ -301,15 +302,13 @@ const dataNotif = [
 }
 .cardItem {
   position: absolute;
-  /* display: flex;
-  justify-content: space-between; */
-  /* align-items: center; */
+
   top: 0vh;
   right: 0vh;
   z-index: 100;
   background-color: rgb(255, 255, 255);
   width: 30%;
-  height: 100vh;
+  /* height: 100vh; */
   border-radius: 5px;
   /* padding: 10px; */
   /* box-shadow: 0px 2px 10px rgb(222, 222, 222); */

@@ -75,7 +75,7 @@
               </div>
            
               <div class="text">
-                <h4 class="label">Date installation</h4>
+                <h4 class="label">Date d'installation</h4>
                 <h4 class="value">{{formatDateTime(batterie.date_installation)  }} </h4>
               </div>
             </div>
@@ -356,10 +356,12 @@ function formatDateTime(dateString) {
 
 .item {
   background-color: #8be2fc33;
+
   width: 30%;
   padding: 10px;
   margin-top: 5px;
   border-radius: 5px;
+  height: 400px;
 }
 .item h4 {
   padding: 5px;

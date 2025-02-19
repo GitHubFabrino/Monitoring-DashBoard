@@ -133,59 +133,91 @@ export const useShow = defineStore("Show", () => {
   const showEstimation = ref(false);
   const showEstimationDetails = ref(false);
   const selectCard = ref({});
+  // function setActiveItem(itemName) {
+  //   showEstimationDetails.value=false
+  //   activeMenuItem.value = itemName;
+  //   itemName === "Acceuil"
+  //     ? (showAcceuil.value = true)
+  //     : (showAcceuil.value = false);
+
+  //   itemName === "Création de parc"
+  //     ? (showCreationParc.value = true)
+  //     : (showCreationParc.value = false);
+
+  //   itemName === "Calendrier de maintenance"
+  //     ? (showCalendrierM.value = true)
+  //     : (showCalendrierM.value = false);
+
+  //   itemName === "Rapports de performance"
+  //     ? (showRapportP.value = true)
+  //     : (showRapportP.value = false);
+
+  //   itemName === "Plages de fonctionnement"
+  //     ? (showPlageFonc.value = true)
+  //     : (showPlageFonc.value = false);
+
+  //   itemName === "Seuils d'alerte"
+  //     ? (showSeuilA.value = true)
+  //     : (showSeuilA.value = false);
+
+  //   itemName === "Liste des incidents récents"
+  //     ? (showListeIncidents.value = true)
+  //     : (showListeIncidents.value = false);
+
+  //   itemName === "Historique des incidents"
+  //     ? (showHistoIncidents.value = true)
+  //     : (showHistoIncidents.value = false);
+
+  //   itemName === "Visualisation des données"
+  //     ? (showVisualisationD.value = true)
+  //     : (showVisualisationD.value = false);
+
+  //   itemName === "Compression des données"
+  //     ? (showConpressionD.value = true)
+  //     : (showConpressionD.value = false);
+  //   itemName === "Rapport mensuel de performance"
+  //     ? (showRapportMensuel.value = true)
+  //     : (showRapportMensuel.value = false);
+
+  //   itemName === "Recommandations d'optimisation"
+  //     ? (showRecommendation.value = true)
+  //     : (showRecommendation.value = false);
+  //   itemName === "Estimation"
+  //     ? (showEstimation.value = true)
+  //     : (showEstimation.value = false);
+  // }
   function setActiveItem(itemName) {
+ 
     activeMenuItem.value = itemName;
-    itemName === "Acceuil"
-      ? (showAcceuil.value = true)
-      : (showAcceuil.value = false);
-
-    itemName === "Création de parc"
-      ? (showCreationParc.value = true)
-      : (showCreationParc.value = false);
-
-    itemName === "Calendrier de maintenance"
-      ? (showCalendrierM.value = true)
-      : (showCalendrierM.value = false);
-
-    itemName === "Rapports de performance"
-      ? (showRapportP.value = true)
-      : (showRapportP.value = false);
-
-    itemName === "Plages de fonctionnement"
-      ? (showPlageFonc.value = true)
-      : (showPlageFonc.value = false);
-
-    itemName === "Seuils d'alerte"
-      ? (showSeuilA.value = true)
-      : (showSeuilA.value = false);
-
-    itemName === "Liste des incidents récents"
-      ? (showListeIncidents.value = true)
-      : (showListeIncidents.value = false);
-
-    itemName === "Historique des incidents"
-      ? (showHistoIncidents.value = true)
-      : (showHistoIncidents.value = false);
-
-    itemName === "Visualisation des données"
-      ? (showVisualisationD.value = true)
-      : (showVisualisationD.value = false);
-
-    itemName === "Compression des données"
-      ? (showConpressionD.value = true)
-      : (showConpressionD.value = false);
-    itemName === "Rapport mensuel de performance"
-      ? (showRapportMensuel.value = true)
-      : (showRapportMensuel.value = false);
-
-    itemName === "Recommandations d'optimisation"
-      ? (showRecommendation.value = true)
-      : (showRecommendation.value = false);
-    itemName === "Estimation"
-      ? (showEstimation.value = true)
-      : (showEstimation.value = false);
+  
+    const itemMap = {
+      "Acceuil": showAcceuil,
+      "Création de parc": showCreationParc,
+      "Calendrier de maintenance": showCalendrierM,
+      "Rapports de performance": showRapportP,
+      "Plages de fonctionnement": showPlageFonc,
+      "Seuils d'alerte": showSeuilA,
+      "Liste des incidents récents": showListeIncidents,
+      "Historique des incidents": showHistoIncidents,
+      "Visualisation des données": showVisualisationD,
+      "Compression des données": showConpressionD,
+      "Rapport mensuel de performance": showRapportMensuel,
+      "Recommandations d'optimisation": showRecommendation,
+      "Estimation": showEstimation,
+      "Estimation detail": showEstimationDetails,
+    };
+  
+    // Réinitialiser toutes les valeurs à false
+    for (const key in itemMap) {
+      itemMap[key].value = false;
+    }
+  
+    // Activer l'élément sélectionné
+    if (itemMap[itemName]) {
+      itemMap[itemName].value = true;
+    }
   }
-
+  
   const showBatterieItem = ref("");
   const showBatt1 = ref(false);
   const showBatt2 = ref(false);

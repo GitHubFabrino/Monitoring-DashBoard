@@ -853,7 +853,7 @@
 
           <div
             @mouseover="showHiddenDiv"
-            class="absolute overflow-hidden bg-white shadow sm:rounded-lg h-[80%] bg-[#328da836] w-[90%] flex items-center justify-center apparaitre transition-opacity duration-500 ease-in-out top-1/2 transform -translate-y-1/2"
+            class="absolute overflow-hidden  shadow sm:rounded-lg h-[80%] bg-[#328da836] w-[90%] flex items-center justify-center apparaitre transition-opacity duration-500 ease-in-out top-1/2 transform -translate-y-1/2"
             :class="{ 'opacity-100': isHovered, 'opacity-0': !isHovered }"
           >
             <a
