@@ -1,6 +1,6 @@
 <script setup>
 import "primeicons/primeicons.css";
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted ,watchEffect} from "vue";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
 
@@ -30,17 +30,89 @@ function Enregistrer() {
   user.isEditing = !user.isEditing;
   user.updateProfile(user.userInfo.id);
 }
+
+import axios from "axios";
+const image = ref(user.userInfo.file || {});
+console.log(user.userInfo.file);
+
+// watchEffect(() =>{
+//   image.value = ref(user.userInfo.file || {});
+// })
+
+const onFileChange = async (event, idBat) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  // ${"titre":"send.jpg","file_name…reated_at":"2025-02-18T16:28:14.000000Z","id":22}
+  try {
+    const response = await axios.post(
+      `http://localhost:8000/api/files/user/upload/${idBat}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    // image.file_name = response.data.url
+    // image.id= response.data.id
+    image.value = {
+      file_name: response.data.url,
+      id: response.data.id,
+    };
+
+    let datalocal = JSON.parse(localStorage.getItem('user')) || {};
+    datalocal.user = { ...datalocal.user, file: image.value };
+    localStorage.setItem('user', JSON.stringify(datalocal));
+    
+
+
+
+
+
+  } catch (error) {
+    console.error("Erreur lors de l'upload de l'image :", error);
+  }
+};
 </script>
 
 <template>
   <Transition>
-    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
-     v-if="show.showProfilDetail" @click="show.showProfilDetailFunc()">
+    <div
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
+      v-if="show.showProfilDetail"
+      @click="show.showProfilDetailFunc()"
+    >
       <div class="formModal" @click.stop>
         <div class="profilContainer">
           <div class="containerProfil" v-if="!user.isEditing">
             <div class="imageProfil">
-              <img src="/admin.png" alt="" srcset="" class="image" />
+              <!-- <img src="/admin.png" alt="" srcset="" class="image" /> -->
+              <img
+                @click.stop
+                alt=""
+                v-if="image?.id"
+                :src="image?.file_name"
+                class="h-56 w-full rounded-md object-cover image"
+              />
+
+              <div class="file-input-container !absolute w-8 h-8 bg-red-500 mt-0">
+                <input
+                  type="file"
+                  @change="(event) => onFileChange(event, user.userInfo.id)"
+                  id="file-upload"
+                  class="absolute inset-0 w-full h-[350px] opacity-0 cursor-pointer hover:bg-black-500"
+                />
+                <label
+                  for="file-upload"
+                  class="file-input-label flex items-center justify-center w-full h-full bg-[#e1dada] rounded-full cursor-pointer text-xl text-gray-500 !hover:bg-red-500"
+                >
+                  <i class="pi pi-camera cursor-pointer"></i>
+                </label>
+              </div>
             </div>
             <div class="descriptionProfil">
               <h3>{{ user.userName || user.userInfo.name }}</h3>
@@ -48,6 +120,7 @@ function Enregistrer() {
             </div>
           </div>
           <div class="containerDesc">
+            <!-- {{ user }} -->
             <div class="itemContainer" v-if="user.isEditing">
               <h5>Nom</h5>
               <input
@@ -182,7 +255,7 @@ function Enregistrer() {
   border-radius: 100%;
   margin-right: 50px;
 }
-.descriptionProfil h3{
+.descriptionProfil h3 {
   display: block;
   font-weight: 600;
   width: 100%;

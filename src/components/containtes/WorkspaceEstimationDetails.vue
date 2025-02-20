@@ -857,7 +857,7 @@
             :class="{ 'opacity-100': isHovered, 'opacity-0': !isHovered }"
           >
             <a
-              class="inline-block rounded-sm border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden"
+              class="inline-block rounded-sm border border-[#fb7a58] bg-[#fb7a58] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#fb7a58] focus:ring-3 focus:outline-hidden"
               href="#"
               @click="prediction()"
             >

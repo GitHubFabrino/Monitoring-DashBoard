@@ -112,7 +112,23 @@
       </div>
 
       <div class="photo" @click="show.showDescFunc()">
-        <img class="photo" src="/admin.png" alt="" width="100%" height="100%" />
+        <!-- <img class="photo" src="/admin.png" alt="" width="100%" height="100%" /> -->
+        <img
+                class="photo"
+                
+                alt=""
+                width="100%"
+                height="100%"
+                v-if="user.userInfo.file.id"
+                :src="user.userInfo.file.file_name"
+              />
+              <img v-else
+                class="photo"
+                src="/admin.png"
+                alt=""
+                width="100%"
+                height="100%"
+              />
       </div>
 
       <div
@@ -124,10 +140,20 @@
           <div class="sectionItem">
             <h4 class="textSection">Compte</h4>
           </div>
-
+          
           <div class="container">
             <div class="imageProfil">
+            
               <img
+                class="photo"
+                
+                alt=""
+                width="100%"
+                height="100%"
+                v-if="user.userInfo.file.id"
+                :src="user.userInfo.file.file_name"
+              />
+              <img v-else
                 class="photo"
                 src="/admin.png"
                 alt=""
@@ -419,7 +445,7 @@ onMounted(() => {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: chartreuse;
+  background-color: rgb(200, 204, 196);
   text-align: center;
   margin-right: 10px;
 }
