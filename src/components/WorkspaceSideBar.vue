@@ -2,64 +2,61 @@
   <div class="sideBar">
     <div class="logo">
       <div class="imageLogo">
-        <img
-          src="/icon.png"
-          alt="logo"
-          width="100%"
-          height="100%"
-        />
+        <img src="/icon.png" alt="logo" width="100%" height="100%" />
       </div>
       <h4>BATMONITOR</h4>
     </div>
-    <div class="menu">
-      <div
-        class="menuTitle"
-        :class="{ active: show.activeMenu === 'Gestion du parc' }"
-        @click="show.setActiveMenu('Gestion du parc')"
-      >
-        <h4 :class="{ activeText: show.activeMenu === 'Gestion du parc' }">
-          Gestion du parc
-        </h4>
-      </div>
 
-      <div v-if="show.showParc">
+    <div class="h-[80vh]">
+      <div class="menu">
         <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Création de parc' }"
-          @click="show.setActiveItem('Création de parc')"
+          class="menuTitle"
+          :class="{ active: show.activeMenu === 'Gestion du parc' }"
+          @click="show.setActiveMenu('Gestion du parc')"
         >
-          <i
-            class="pi pi-building-columns"
-            style="font-size: 18px; color: #2d4051"
-            :class="{ color: show.activeMenuItem === 'Création de parc' }"
-          ></i>
-
-          <h5 :class="{ color: show.activeMenuItem === 'Création de parc' }">
-            Création de parc
-          </h5>
+          <h4 :class="{ activeText: show.activeMenu === 'Gestion du parc' }">
+            Gestion du parc
+          </h4>
         </div>
-        <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Calendrier de maintenance' }"
-          @click="show.setActiveItem('Calendrier de maintenance')"
-        >
-          <i
-            class="pi pi-calendar"
-            style="font-size: 18px; color: #2d4051"
-            :class="{
-              color: show.activeMenuItem === 'Calendrier de maintenance',
-            }"
-          ></i>
 
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Calendrier de maintenance',
-            }"
+        <div v-if="show.showParc">
+          <div
+            class="menuItem"
+            :class="{ bg: show.activeMenuItem === 'Création de parc' }"
+            @click="show.setActiveItem('Création de parc')"
           >
-            Calendrier de maintenance
-          </h5>
-        </div>
-        <!-- <div
+            <i
+              class="pi pi-building-columns"
+              style="font-size: 18px; color: #2d4051"
+              :class="{ color: show.activeMenuItem === 'Création de parc' }"
+            ></i>
+
+            <h5 :class="{ color: show.activeMenuItem === 'Création de parc' }">
+              Création de parc
+            </h5>
+          </div>
+          <div
+            class="menuItem"
+            :class="{ bg: show.activeMenuItem === 'Calendrier de maintenance' }"
+            @click="show.setActiveItem('Calendrier de maintenance')"
+          >
+            <i
+              class="pi pi-calendar"
+              style="font-size: 18px; color: #2d4051"
+              :class="{
+                color: show.activeMenuItem === 'Calendrier de maintenance',
+              }"
+            ></i>
+
+            <h5
+              :class="{
+                color: show.activeMenuItem === 'Calendrier de maintenance',
+              }"
+            >
+              Calendrier de maintenance
+            </h5>
+          </div>
+          <!-- <div
           class="menuItem"
           :class="{ bg: show.activeMenuItem === 'Rapports de performance' }"
           @click="show.setActiveItem('Rapports de performance')"
@@ -80,99 +77,101 @@
             Rapports de performance
           </h5>
         </div> -->
-      </div>
-    </div>
-
-    <div class="menu">
-      <div
-        class="menuTitle"
-        :class="{ active: show.activeMenu === 'Paramètres de la batterie' }"
-        @click="show.setActiveMenu('Paramètres de la batterie')"
-      >
-        <h4
-          :class="{
-            activeText: show.activeMenu === 'Paramètres de la batterie',
-          }"
-        >
-          Paramètres de la batterie
-        </h4>
+        </div>
       </div>
 
-      <div v-if="show.showBatterie">
+      <div class="menu">
         <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Plages de fonctionnement' }"
-          @click="show.setActiveItem('Plages de fonctionnement')"
+          class="menuTitle"
+          :class="{ active: show.activeMenu === 'Paramètres de la batterie' }"
+          @click="show.setActiveMenu('Paramètres de la batterie')"
         >
-          <i
-            class="pi pi-sliders-h"
-            style="font-size: 18px; color: #2d4051"
+          <h4
             :class="{
-              color: show.activeMenuItem === 'Plages de fonctionnement',
-            }"
-          ></i>
-
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Plages de fonctionnement',
+              activeText: show.activeMenu === 'Paramètres de la batterie',
             }"
           >
-            Plages de fonctionnement
-          </h5>
+            Paramètres de la batterie
+          </h4>
         </div>
-        <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Seuils d\'alerte' }"
-          @click="show.setActiveItem('Seuils d\'alerte')"
-        >
-          <i
-            class="pi pi-sliders-v"
-            style="font-size: 18px; color: #2d4051"
-            :class="{ color: show.activeMenuItem === 'Seuils d\'alerte' }"
-          ></i>
 
-          <h5 :class="{ color: show.activeMenuItem === 'Seuils d\'alerte' }">
-            Seuils d'alerte
-          </h5>
-        </div>
-      </div>
-    </div>
-
-    <div class="menu">
-      <div
-        class="menuTitle"
-        :class="{ active: show.activeMenu === 'Gestion des incidents' }"
-        @click="show.setActiveMenu('Gestion des incidents')"
-      >
-        <h4
-          :class="{ activeText: show.activeMenu === 'Gestion des incidents' }"
-        >
-          Gestion des incidents
-        </h4>
-      </div>
-      <div v-if="show.showIncident">
-        <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Liste des incidents récents' }"
-          @click="show.setActiveItem('Liste des incidents récents')"
-        >
-          <i
-            class="pi pi-list"
-            style="font-size: 18px; color: #2d4051"
-            :class="{
-              color: show.activeMenuItem === 'Liste des incidents récents',
-            }"
-          ></i>
-
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Liste des incidents récents',
-            }"
+        <div v-if="show.showBatterie">
+          <div
+            class="menuItem"
+            :class="{ bg: show.activeMenuItem === 'Plages de fonctionnement' }"
+            @click="show.setActiveItem('Plages de fonctionnement')"
           >
-            Liste des incidents récents et Historiques
-          </h5>
+            <i
+              class="pi pi-sliders-h"
+              style="font-size: 18px; color: #2d4051"
+              :class="{
+                color: show.activeMenuItem === 'Plages de fonctionnement',
+              }"
+            ></i>
+
+            <h5
+              :class="{
+                color: show.activeMenuItem === 'Plages de fonctionnement',
+              }"
+            >
+              Plages de fonctionnement
+            </h5>
+          </div>
+          <div
+            class="menuItem"
+            :class="{ bg: show.activeMenuItem === 'Seuils d\'alerte' }"
+            @click="show.setActiveItem('Seuils d\'alerte')"
+          >
+            <i
+              class="pi pi-sliders-v"
+              style="font-size: 18px; color: #2d4051"
+              :class="{ color: show.activeMenuItem === 'Seuils d\'alerte' }"
+            ></i>
+
+            <h5 :class="{ color: show.activeMenuItem === 'Seuils d\'alerte' }">
+              Seuils d'alerte
+            </h5>
+          </div>
         </div>
-        <!-- <div
+      </div>
+
+      <div class="menu">
+        <div
+          class="menuTitle"
+          :class="{ active: show.activeMenu === 'Gestion des incidents' }"
+          @click="show.setActiveMenu('Gestion des incidents')"
+        >
+          <h4
+            :class="{ activeText: show.activeMenu === 'Gestion des incidents' }"
+          >
+            Gestion des incidents
+          </h4>
+        </div>
+        <div v-if="show.showIncident">
+          <div
+            class="menuItem"
+            :class="{
+              bg: show.activeMenuItem === 'Liste des incidents récents',
+            }"
+            @click="show.setActiveItem('Liste des incidents récents')"
+          >
+            <i
+              class="pi pi-list"
+              style="font-size: 18px; color: #2d4051"
+              :class="{
+                color: show.activeMenuItem === 'Liste des incidents récents',
+              }"
+            ></i>
+
+            <h5
+              :class="{
+                color: show.activeMenuItem === 'Liste des incidents récents',
+              }"
+            >
+              Liste des incidents récents et Historiques
+            </h5>
+          </div>
+          <!-- <div
           class="menuItem"
           :class="{ bg: show.activeMenuItem === 'Historique des incidents' }"
           @click="show.setActiveItem('Historique des incidents')"
@@ -193,85 +192,89 @@
             Historique des incidents
           </h5>
         </div> -->
+        </div>
       </div>
-    </div>
 
-    <div class="menu">
-      <div
-        class="menuTitle"
-        :class="{ active: show.activeMenu === 'Historique des données' }"
-        @click="show.setActiveMenu('Historique des données')"
-      >
-        <h4
-          :class="{ activeText: show.activeMenu === 'Historique des données' }"
-        >
-          Historique des données
-        </h4>
-      </div>
-      <div v-if="show.showHistorique">
+      <div class="menu">
         <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Visualisation des données' }"
-          @click="show.setActiveItem('Visualisation des données')"
+          class="menuTitle"
+          :class="{ active: show.activeMenu === 'Historique des données' }"
+          @click="show.setActiveMenu('Historique des données')"
         >
-          <i
-            class="pi pi-database"
-            style="font-size: 18px; color: #2d4051"
+          <h4
             :class="{
-              color: show.activeMenuItem === 'Visualisation des données',
-            }"
-          ></i>
-
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Visualisation des données',
+              activeText: show.activeMenu === 'Historique des données',
             }"
           >
-            Visualisation des données
-          </h5>
+            Historique des données
+          </h4>
+        </div>
+        <div v-if="show.showHistorique">
+          <div
+            class="menuItem"
+            :class="{ bg: show.activeMenuItem === 'Visualisation des données' }"
+            @click="show.setActiveItem('Visualisation des données')"
+          >
+            <i
+              class="pi pi-database"
+              style="font-size: 18px; color: #2d4051"
+              :class="{
+                color: show.activeMenuItem === 'Visualisation des données',
+              }"
+            ></i>
+
+            <h5
+              :class="{
+                color: show.activeMenuItem === 'Visualisation des données',
+              }"
+            >
+              Visualisation des données
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div
+          class="menuTitle"
+          :class="{ active: show.activeMenu === 'Performance' }"
+          @click="show.setActiveMenu('Performance')"
+        >
+          <h4 :class="{ activeText: show.activeMenu === 'Performance' }">
+            Performance des batteries
+          </h4>
+        </div>
+        <div v-if="show.showPerformance">
+          <div
+            class="menuItem"
+            :class="{ bg: show.activeMenuItem === 'Estimation' }"
+            @click="show.setActiveItem('Estimation')"
+          >
+            <i
+              class="pi pi-database"
+              style="font-size: 18px; color: #2d4051"
+              :class="{
+                color: show.activeMenuItem === 'Estimation',
+              }"
+            ></i>
+
+            <h5
+              :class="{
+                color: show.activeMenuItem === 'Estimation',
+              }"
+            >
+              Estimation
+            </h5>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="menu">
-      <div
-        class="menuTitle"
-        :class="{ active: show.activeMenu === 'Performance' }"
-        @click="show.setActiveMenu('Performance')"
-      >
-        <h4
-          :class="{ activeText: show.activeMenu === 'Performance' }"
-        >
-          Performance des batteries
-        </h4>
-      </div>
-      <div v-if="show.showPerformance">
-        <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Estimation' }"
-          @click="show.setActiveItem('Estimation')"
-        >
-          <i
-            class="pi pi-database"
-            style="font-size: 18px; color: #2d4051"
-            :class="{
-              color: show.activeMenuItem === 'Estimation',
-            }"
-          ></i>
-
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Estimation',
-            }"
-          >
-            Estimation 
-          </h5>
-        </div>
-      </div>
+    <div class="option" @click="show.showLogoutFunc()">
+      <i class="pi pi-sign-out" style="font-size: 14px; color: #2d4051"></i>
+      <h5 class="item">Déconnection</h5>
     </div>
-
-
- </div>
+  </div>
 </template>
 
 <script setup>
@@ -281,6 +284,20 @@ const show = useShow();
 </script>
 
 <style scoped>
+.option {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  padding: 10px 10px;
+  margin: 0px auto;
+  border-top: 1px solid #56636e5e;
+  width: 90%;
+}
+.item {
+  color: #2d4051;
+  padding: 4px 20px;
+  font-weight: 600;
+}
 .sideBar {
   width: 20% !important;
   background-color: #f6f8fa;
@@ -332,7 +349,7 @@ const show = useShow();
   padding-left: 20px;
   color: #2d4051;
   font-weight: 600;
-  cursor: pointer;             
+  cursor: pointer;
 }
 .color {
   color: #328ca8 !important;
