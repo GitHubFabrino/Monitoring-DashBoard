@@ -1,12 +1,12 @@
 <template>
-  <div class="w-[100%] pt-5">
-    <div class="nav1">
+  <div class="w-[100%] pt-3">
+    <div class="w-full mb-2 pl-5 text-[#2d4051]">
       <h4>
       {{ show.activeMenu }} /
         <span>{{ show.activeMenuItem }}</span>
       </h4>
     </div>
-    <div class="card1">
+    <div class=" h-[520px] w-full mx-auto flex justify-center items-center px-5">
       <WorkspaceAcceuil v-if="show.showAcceuil" />
       <WorkspaceCreationParc v-if="show.showCreationParc" />
       <WorkspaceCalendrierMaintenance v-if="show.showCalendrierM" />
@@ -58,7 +58,7 @@ const show = useShow();
 
 .nav1 {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding-left: 20px;
   color: #2d4051;
 }

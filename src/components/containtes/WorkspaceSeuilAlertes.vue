@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+    <div class="w-full h-full shadow-sm rounded-sm p-10 bg-[#f6f8fa]">
     <div class="flex justify-between items-center p-[10px] border-b border-gray-300"
     >
       <h3 class="font-semibold w-[60%] text-[var(--primary-color)]">Seuil d'alerte des batteries</h3>
@@ -49,9 +49,9 @@
       </template>
 
       <template v-else>
-        <div class="containerEmptyParc">
+        <div class=" p-10 h-[60%] w-full  ">
           <div class="w-full flex items-center flex-wrap justify-center gap-10">
-            <div class="grid gap-4 w-60">
+            <div class="grid gap-4 w-70">
               <svg
                 class="mx-auto"
                 xmlns="http://www.w3.org/2000/svg"

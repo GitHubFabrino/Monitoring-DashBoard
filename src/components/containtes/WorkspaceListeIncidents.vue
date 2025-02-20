@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="bg-[#f6f8fa] w-full h-[76vh] shadow-[0px_0px_5px_rgb(189,189,189)] rounded-md p-5"
-  >
+  <div class="w-full h-full shadow-sm rounded-sm p-10 bg-[#f6f8fa]">
     <div class="titre">
       <h3>Liste des incidents</h3>
       <div class="search">

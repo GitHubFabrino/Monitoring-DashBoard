@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="w-full h-full shadow-sm rounded-sm p-10 bg-[#f6f8fa]">
     <div class="titre">
       <h3>Calendrier de maintenance</h3>
 
@@ -37,7 +37,7 @@
       </div>
 
       <div class="h-[52vh]" v-if="show.showRecents">
-        <div class="h-[300px] overflow-scroll">
+        <div class="h-[300px] overflow-scroll" v-if="filteredItemsRecent.length !== 0">
           <div v-for="maintenance in filteredItemsRecent" :key="maintenance.id">
             <div class="item">
               <div class="check">
@@ -103,15 +103,14 @@
               </div>
             </div>
           </div>
+          <Pagination
+            :currentPageRead.sync="currentPageRecent"
+            :totalPagesRead="totalPagesRecent"
+            @update:currentPageRead="currentPageRecent = $event"
+          />
         </div>
 
-        <Pagination
-          :currentPageRead.sync="currentPageRecent"
-          :totalPagesRead="totalPagesRecent"
-          @update:currentPageRead="currentPageRecent = $event"
-        />
-
-        <div v-if="filteredItemsRecent.length == 0">
+        <div v-else class="flex justify-center items-center">
           <CardNoData message="Aucune maintenance trouvée" />
         </div>
       </div>
@@ -331,14 +330,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.container {
-  background-color: #f6f8fa;
-  width: 100%;
-  height: 76vh;
-  box-shadow: 0px 0px 5px rgb(189, 189, 189);
-  border-radius: 5px;
-  padding: 20px;
-}
 .titre h3 {
   font-weight: 600;
   width: 60%;

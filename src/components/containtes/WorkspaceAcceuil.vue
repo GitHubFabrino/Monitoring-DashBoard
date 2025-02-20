@@ -1,20 +1,22 @@
 <template>
-  <div class="container1">
+  <div  class=" w-full h-full shadow-sm rounded-sm p-10">
     <div v-if="showparc" class="container3">
       <div
         v-if="isGetParc"
         v-for="parcItem in useParc.parcsData"
         :key="parcItem.id"
-        class="cardItem1 bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
+        class="cardItem1  border border-gray-200 shadow "
       >
         <div class="cardFile">
           <img
             v-if="parcItem.file_id"
             :src="parcItem.file_url"
             alt=""
-            class="card-image object-cover"
+            class="card-image object-containe"
           />
-          <div class="file-input-container" v-else>
+          
+         <div class="absolute">
+          <div class="file-input-container " >
             <input
               type="file"
               @change="(event) => onFileChange(event, parcItem.id)"
@@ -24,67 +26,47 @@
               <i class="pi pi-camera"></i>
             </label>
           </div>
+         </div>
+         
         </div>
-
         <div class="p-5">
-          <a href="#">
-            <h5
-              class="text-xl font-bold tracking-tight text-gray-900 mycolortext"
-            >
-              {{ parcItem.nom_parc }}
-            </h5>
-          </a>
-          <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">
-            {{ parcItem.description }}
-          </p>
-          <a
-            @click="handleParcItemClick(parcItem)"
-            class="group relative inline-flex items-center overflow-hidden rounded-sm bg-indigo-600 px-8 py-3 text-white focus:ring-3 colorBg focus:outline-hidden"
-            href="#"
-          >
-            <span class="absolute -end-full transition-all group-hover:end-4">
-              <svg
-                class="size-5 rtl:rotate-180"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          <h5
+                class="text-xl font-bold tracking-tight text-gray-900 mycolortext"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </span>
-
-            <span class="text-sm font-medium transition-all group-hover:me-4">
-              Suppervisé
-            </span>
-          </a>
-          <!-- <a
-            @click="handleParcItemClick(parcItem)"
-            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none colorBg"
-          >
-            Suppervisé
-            <svg
-              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
+                {{ parcItem.nom_parc }}
+              </h5>
+            <div class="h-[80px]">
+              <p class="mb-2 font-normal text-gray-700 dark:text-gray-400 h-">
+              {{ parcItem.description }}
+            </p>
+            </div>
+            <a
+              @click="handleParcItemClick(parcItem)"
+              class="group relative inline-flex items-center overflow-hidden rounded-sm bg-indigo-600 px-8 py-3 text-white focus:ring-3 colorBg focus:outline-hidden"
+              href="#"
             >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-          </a> -->
-        </div>
+              <span class="absolute -end-full transition-all group-hover:end-4">
+                <svg
+                  class="size-5 rtl:rotate-180"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </span>
+
+              <span class="text-sm font-medium transition-all group-hover:me-4">
+                Suppervisé
+              </span>
+            </a>
+          </div>
       </div>
 
       <div class="containerEmptyParc" v-if="!isGetParc">
@@ -755,14 +737,7 @@ onMounted(() => {
   object-fit: cover; /* Cette propriété permet de conserver le ratio de l'image tout en la remplissant */
 }
 
-.cardFile {
-  width: 100%;
-  height: 40vh;
-  background-color: #b2b0b030;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .containerAcceuil {
   display: flex;
   justify-content: space-around;
@@ -813,20 +788,26 @@ input[type="file"] {
 }
 
 .cardItem1 {
-  flex: 1 1 250px;
+
   margin: 10px;
-  background-color: #ffffff;
+  background-color: #f4f4f4;
   border: 1px solid #ccc;
-  /* text-align: center; */
-  /* padding: 20px; */
   box-sizing: border-box;
   border-radius: 5px;
-  max-width: 270px; /* Largeur maximale */
-  min-width: 250px; /* Largeur minimale */
-  min-height: 300px;
-  /* max-height: 49vh; */
-}
+  width: 300px;
+  height: 450px; 
 
+
+
+}
+.cardFile {
+  width: 100%;
+  height: 250px;
+  background-color: #b2b0b030;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .btn {
   background-color: #fb7a58;
   padding: 10px;

@@ -1,6 +1,7 @@
 
 <template>
-  <div class="bg-[#f6f8fa] w-full h-[76vh] shadow-md shadow-gray-400 rounded-md p-5 overflow-hidden">
+  <div class="bg-[#f6f8fa] w-full h-full shadow-md shadow-gray-400 rounded-md p-5 overflow-hidden">
+    
     <div class="flex justify-between items-center p-[10px] border-b border-gray-300">
       <h3 class="font-semibold w-[60%] text-[var(--primary-color)]">
         Estimation des performances

@@ -45,10 +45,10 @@
     <div class="dropdown absolute inline-flex position">
       <div
         id="dropdown-with-radiobutton"
-        class="dropdown-menu rounded-xl shadow-lg bg-white absolute w-60 p-6"
+        class="dropdown-menu rounded-xl shadow-lg bg-white absolute w-60 p-2"
         v-if="dropdownOpen"
       >
-        <div class="relative mb-4">
+        <div class="relative mb-2">
           <div
             class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none"
           >
@@ -71,13 +71,13 @@
           <input
             type="text"
             id="input-group-search"
-            class="block w-full py-2 px-4 pl-10 text-sm text-gray-900 placeholder-gray-500 border border-gray-300 rounded-full focus:outline-none"
+            class="block w-full py-2 px-2 pl-10 text-sm text-gray-900 placeholder-gray-500 border border-gray-300 rounded-xl focus:outline-none"
             placeholder="Recherche.."
             v-model="searchQuery"
             @input="filterParcs"
           />
         </div>
-        <ul class="space-y-4">
+        <ul class="space-y-1">
           <li
             v-for="parcItem in filteredParcs"
             :key="parcItem.id"
@@ -87,7 +87,7 @@
             <div class="items-center">
               <label
                 for="radio-group-1"
-                class="items-center cursor-pointer text-gray-600 text-sm font-medium p-2 parcs"
+                class="items-center cursor-pointer text-gray-600 text-sm font-medium parcs"
               >
                 {{ parcItem.nom_parc }}
               </label>
@@ -97,38 +97,35 @@
       </div>
     </div>
 
-    <div class="profil" >
+    <div class="profil">
       <div class="notif">
-        <div class="notification show" @click="show.showNotificationDetailFunc()">
+        <div
+          class="notification show"
+          @click="show.showNotificationDetailFunc()"
+        >
           <span>{{ show.competerAlerteBatterieUnRead }}</span>
           <i class="pi pi-bell" style="font-size: 18px; color: #fff"></i>
           <h5 class="text">Notification</h5>
         </div>
-        <!-- <div class="Mail show" @click="show.showEmailFunc()">
-          <span>4</span>
-          <i class="pi pi-envelope" style="font-size: 18px; color: #fff"></i>
-          <h5 class="text">Mail</h5>
-        </div> -->
       </div>
 
       <div class="photo" @click="show.showDescFunc()">
-        <!-- <img class="photo" src="/admin.png" alt="" width="100%" height="100%" /> -->
         <img
-                class="photo"
-                
-                alt=""
-                width="100%"
-                height="100%"
-                v-if="user.userInfo.file.id"
-                :src="user.userInfo.file.file_name"
-              />
-              <img v-else
-                class="photo"
-                src="/admin.png"
-                alt=""
-                width="100%"
-                height="100%"
-              />
+          class="photo"
+          alt=""
+          width="100%"
+          height="100%"
+          v-if="user.userInfo.file.id"
+          :src="user.userInfo.file.file_name"
+        />
+        <img
+          v-else
+          class="photo"
+          src="/admin.png"
+          alt=""
+          width="100%"
+          height="100%"
+        />
       </div>
 
       <div
@@ -140,20 +137,19 @@
           <div class="sectionItem">
             <h4 class="textSection">Compte</h4>
           </div>
-          
+
           <div class="container">
             <div class="imageProfil">
-            
               <img
                 class="photo"
-                
                 alt=""
                 width="100%"
                 height="100%"
                 v-if="user.userInfo.file.id"
                 :src="user.userInfo.file.file_name"
               />
-              <img v-else
+              <img
+                v-else
                 class="photo"
                 src="/admin.png"
                 alt=""
@@ -162,8 +158,9 @@
               />
             </div>
             <div class="info">
-              <h4>{{ user.userName || user.userInfo.name }}</h4>
-              <h5>{{ user.userEmail || user.userInfo.eamil }}</h5>
+              <h4>{{ user.userInfo.name }}</h4>
+              <!-- <h5>{{  user.userInfo.eamil }}</h5> -->
+              {{ user.userInfo.email }}
             </div>
           </div>
 
@@ -195,11 +192,9 @@
         <div
           class="itemNotif"
           @click="show.showNotificationDetail = !show.showNotificationDetail"
-       
-        
         >
-        <!-- :key="item.id" -->
-        <!-- v-for="item in alerteBatterieStore.allAllerteDataByParc" -->
+          <!-- :key="item.id" -->
+          <!-- v-for="item in alerteBatterieStore.allAllerteDataByParc" -->
           <div class="icon">
             <i class="pi pi-bolt" style="font-size: 12px; color: #2d4051"></i>
           </div>
@@ -275,7 +270,6 @@
 </template>
 
 <script setup>
-
 import "primeicons/primeicons.css";
 import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
@@ -350,8 +344,7 @@ const parcNom = computed(() => useParc?.parcSuperviser || parcSuperviserLocal);
 watch(parcNom, (newValue, oldValue) => {
   console.log(`La variable a changé de ${oldValue} à ${newValue}`);
   console.log(newValue);
-  alerteBatterieStore.getAlerteByParcId(newValue.id, newValue)
-
+  alerteBatterieStore.getAlerteByParcId(newValue.id, newValue);
 });
 
 onMounted(() => {
@@ -367,27 +360,14 @@ onMounted(() => {
   //     console.log('tsisiii');
   //   }
   //   // alerteBatterieStore.getAlerteByParcId()
-    
+
   // }
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
 </script>
 
 <style scoped>
 .navBar {
-  height: 10vh;
+  height: 60px;
   background-color: #2d4051;
   display: flex;
   justify-content: space-between;
@@ -415,7 +395,7 @@ onMounted(() => {
   width: 20%;
   text-align: right;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .position {
@@ -442,8 +422,8 @@ onMounted(() => {
   align-items: center;
 }
 .photo {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: rgb(200, 204, 196);
   text-align: center;

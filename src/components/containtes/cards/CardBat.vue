@@ -3,35 +3,52 @@
     href="#"
     class="block rounded-lg p-4 shadow-gray-400 shadow-blue-200 bg-[#e0e0e048] w-[30%] hover:bg-blue-100 mt-5 h-[350px]"
   >
-    <img @click.stop
-      alt=""
-      v-if="image?.id"
-      :src="image?.file_name"
-      class="h-56 w-full rounded-md object-cover"
-    />
+    <div v-if="image?.id" @click.stop>
+      <div class="absolute p-2">
+        <div class="file-input-container relative w-8 h-8">
+          <input
+            type="file"
+            @change="(event) => onFileChange(event, id)"
+            id="file-upload"
+            class="absolute inset-0 w-full h-[350px] opacity-0 cursor-pointer"
+          />
+          <label
+            for="file-upload"
+            class="file-input-label flex items-center justify-center w-full h-full bg-[#e1dada] rounded-full cursor-pointer text-xl text-gray-500 hover:bg-red-500 transition-colors duration-300"
+          >
+            <i class="pi pi-camera cursor-pointer"></i>
+          </label>
+        </div>
+      </div>
+      <img
+        alt=""
+        :src="image?.file_name"
+        class="h-56 w-full rounded-md object-cover"
+      />
+    </div>
     <!-- class="cardFile flex items-center justify-center w-full h-[350px] bg-[#b2b0b030]" -->
-    <div v-else @click.stop
-      class="cardFile flex items-center justify-center w-full !h-[220px] "
-      
+    <div
+      v-else
+      @click.stop
+      class="cardFile flex items-center justify-center w-full !h-[220px]"
     >
-      <div class="file-input-container relative w-12 h-12 ">
+      <div class="file-input-container relative w-12 h-12">
         <input
           type="file"
-          @change="(event) => onFileChange(event,id)"
+          @change="(event) => onFileChange(event, id)"
           id="file-upload"
           class="absolute inset-0 w-full h-[350px] opacity-0 cursor-pointer hover:bg-black-500"
         />
         <label
           for="file-upload"
-          class=" file-input-label flex items-center justify-center w-full h-full bg-[#e1dada]
-           rounded-full cursor-pointer text-xl text-gray-500  !hover:bg-red-500 "
+          class="file-input-label flex items-center justify-center w-full h-full bg-[#e1dada] rounded-full cursor-pointer text-xl text-gray-500 !hover:bg-red-500"
         >
           <i class="pi pi-camera cursor-pointer"></i>
         </label>
       </div>
     </div>
 
-    <div class="mt-2 h-[100px] ">
+    <div class="mt-2 h-[100px]">
       <dl>
         <div>
           <dd class="text-sm text-gray-500">{{ parc }}</dd>
@@ -94,7 +111,7 @@
 </template>
 
 <script setup>
-import { ref , watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 const props = defineProps({
   parc: {
     type: String,
@@ -149,7 +166,6 @@ const onFileChange = async (event, idBat) => {
       file_name: response.data.url,
       id: response.data.id,
     };
-    
   } catch (error) {
     console.error("Erreur lors de l'upload de l'image :", error);
   }

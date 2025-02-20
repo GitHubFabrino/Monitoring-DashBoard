@@ -1,7 +1,8 @@
 <template>
   <template v-if="useParc.parcsData.length !== 0">
-    <div class="container">
-      <div class="desc" v-if="show.showParcDetail">
+    <div class="flex justify-between w-full h-full">
+
+      <div class="w-[60%] p-3 bg-[#f6f8fa] shadow-md rounded-xl" v-if="show.showParcDetail">
         <div class="title">
           <div>
             <h2>
@@ -10,7 +11,7 @@
                 show.showParcDetailData.value.nom_parc
               }}
             </h2>
-            <h5>
+            <h5 class="text-[#c6c6c6]  text-sm">
               Création :
               {{
                 formatDateAndTime(show.showParcDetailData.created_at) ||
@@ -224,18 +225,20 @@
         </div>
       </div>
 
-      <div class="list">
+      <div class="bg-[#f6f8fa] w-[35%] h-full shadow-md rounded-xl p-3">
+
+
         <div class="titre">
           <div>
             <h4>Liste des Parcs</h4>
-            <h5>
+            <h5 class="text-sm">
               Nombre : <span>{{ useParc.parcsData.length }}</span>
             </h5>
           </div>
           <div class="btnAdd" @click="show.showNewParcFunc()">
             <i
               class="pi pi-plus-circle"
-              style="font-size: 20px; color: #fff"
+              style="font-size: 15px; color: #fff"
             ></i>
           </div>
         </div>
@@ -472,18 +475,7 @@ function Enregistrer() {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  justify-content: space-between;
-}
-.desc {
-  background-color: #f6f8fa;
-  width: 60%;
-  /* height: 76vh; */
-  box-shadow: 0px 0px 5px rgb(189, 189, 189);
-  border-radius: 5px;
-  padding: 20px;
-}
+
 .flex1 {
   display: flex;
   justify-content: space-between;
@@ -537,18 +529,11 @@ span {
   width: 90%;
 }
 
-.list {
-  background-color: #f6f8fa;
-  width: 35%;
-  height: 76vh;
-  box-shadow: 0px 0px 5px rgb(189, 189, 189);
-  border-radius: 5px;
-}
 
 .titre {
   background-color: #2d4051;
 
-  margin: 20px 10px;
+  /* margin: 20px 10px; */
   border-radius: 5px;
   padding: 10px;
 
@@ -573,8 +558,8 @@ span {
 }
 .btnAdd {
   background-color: rgb(105, 249, 105);
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   /* padding: 5px 10px; */
   border-radius: 100%;
   display: flex;

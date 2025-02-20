@@ -90,16 +90,7 @@ const onFileChange = async (event, idBat) => {
         <div class="profilContainer">
           <div class="containerProfil" v-if="!user.isEditing">
             <div class="imageProfil">
-              <!-- <img src="/admin.png" alt="" srcset="" class="image" /> -->
-              <img
-                @click.stop
-                alt=""
-                v-if="image?.id"
-                :src="image?.file_name"
-                class="h-56 w-full rounded-md object-cover image"
-              />
-
-              <div class="file-input-container !absolute w-8 h-8 bg-red-500 mt-0">
+              <div class="file-input-container !absolute w-8 h-8  mt-0 cursor-pointer ">
                 <input
                   type="file"
                   @change="(event) => onFileChange(event, user.userInfo.id)"
@@ -108,11 +99,20 @@ const onFileChange = async (event, idBat) => {
                 />
                 <label
                   for="file-upload"
-                  class="file-input-label flex items-center justify-center w-full h-full bg-[#e1dada] rounded-full cursor-pointer text-xl text-gray-500 !hover:bg-red-500"
+                  class="file-input-label flex items-center justify-center w-full h-full bg-[#e1dada] cursor-pointer rounded-full cursor-pointer text-xl text-gray-500 !hover:bg-red-500"
                 >
                   <i class="pi pi-camera cursor-pointer"></i>
                 </label>
               </div>
+              <img
+                @click.stop
+                alt=""
+                v-if="image?.id"
+                :src="image?.file_name"
+                class="h-56 w-full rounded-md object-cover image"
+              />
+
+             
             </div>
             <div class="descriptionProfil">
               <h3>{{ user.userName || user.userInfo.name }}</h3>
@@ -120,7 +120,7 @@ const onFileChange = async (event, idBat) => {
             </div>
           </div>
           <div class="containerDesc">
-            <!-- {{ user }} -->
+         
             <div class="itemContainer" v-if="user.isEditing">
               <h5>Nom</h5>
               <input
@@ -228,7 +228,10 @@ const onFileChange = async (event, idBat) => {
   border-radius: 10px;
   padding: 20px;
 }
-
+.deplace{
+  position: relative;
+  top: 0;
+}
 .modifierImage {
   position: absolute;
   top: 200px;

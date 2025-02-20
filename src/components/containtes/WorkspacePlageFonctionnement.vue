@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div class="w-full h-full shadow-sm rounded-sm p-10 bg-[#f6f8fa]">
+
     <div class="titre">
       <h3>Plage de fonctionnement des batteries</h3>
       <div class="btn" @click="show.showCreationParamBattFunc()">
@@ -84,9 +85,10 @@
       </template>
 
       <template v-else>
-        <div class="containerEmptyParc">
+
+        <div class=" p-10 h-[60%] w-full  ">
           <div class="w-full flex items-center flex-wrap justify-center gap-10">
-            <div class="grid gap-4 w-60">
+            <div class="grid gap-4 w-70">
               <svg
                 class="mx-auto"
                 xmlns="http://www.w3.org/2000/svg"
@@ -282,22 +284,8 @@ function formatDateTime(dateString) {
 </script>
 
 <style scoped>
-.container {
-  background-color: #f6f8fa;
-  width: 100%;
-  height: 76vh;
-  box-shadow: 0px 0px 5px rgb(189, 189, 189);
-  border-radius: 5px;
-  padding: 10px 20px;
-}
-.containerEmptyParc {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 50vh;
-  margin: auto 0;
-  /* background-color: #fb7a58; */
-}
+
+
 
 .containerEmptyParc h2{
   color: rgb(59, 61, 63)!important;;

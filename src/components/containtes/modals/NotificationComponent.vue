@@ -172,13 +172,13 @@ function formatDateTime(dateString) {
     "octobre",
     "novembre",
     "décembre",
-  ]; // Récupérer le jour, le mois et l'année
+  ]; 
   const jour = date.getDate();
   const moisNom = mois[date.getMonth()];
   const annee = date.getFullYear();
 
   const heures = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0"); // Construire la chaîne de date et heure formatée
+  const minutes = date.getMinutes().toString().padStart(2, "0"); 
   return `${jour} ${moisNom} ${annee} à ${heures}h${minutes}`;
 }
 
@@ -210,8 +210,8 @@ async function voir(notif) {
   removeAlert(notif.id);
 }
 
-const itemsPerPageRecent = 8; // Nombre d'éléments par page
-const currentPageRecent = ref(1); // Page actuelle
+const itemsPerPageRecent = 8; 
+const currentPageRecent = ref(1); 
 
 const paginatedItemsRecent = computed(() => {
   const start = (currentPageRecent.value - 1) * itemsPerPageRecent;
@@ -223,15 +223,6 @@ const totalPagesRecent = computed(() => {
   return Math.ceil(alerteBatterieStore.alertes.length / itemsPerPageRecent);
 });
 
-// const filteredItemsRecent = computed(() => {
-//   return paginatedItemsRecent.value
-//     .filter((item) =>
-//       item.maintenance.details
-//         .toLowerCase()
-//         .includes(search.value.toLowerCase())
-//     )
-//     .sort((a, b) => b.id - a.id);
-// });
 </script>
 
 <style scoped>
@@ -251,7 +242,6 @@ const totalPagesRecent = computed(() => {
 }
 .cardNotifDetail {
   width: 100%;
-  /* height: 50%; */
   background-color: rgb(228, 228, 228);
   border-radius: 5px;
   padding: 10px;
@@ -275,7 +265,6 @@ const totalPagesRecent = computed(() => {
   width: 70%;
   justify-content: space-between;
   align-items: center;
-  /* background-color: yellow; */
 }
 
 .textNotif h4,
@@ -290,7 +279,6 @@ const totalPagesRecent = computed(() => {
 .cardNotif {
   width: 100%;
   height: 50px;
-  /* background-color: aqua; */
   display: flex;
   background-color: #dad8d890;
   justify-content: space-between;
@@ -307,16 +295,12 @@ const totalPagesRecent = computed(() => {
 }
 .cardItem {
   position: absolute;
-
   top: 0vh;
   right: 0vh;
   z-index: 100;
   background-color: rgb(255, 255, 255);
   width: 30%;
-  /* height: 100vh; */
   border-radius: 5px;
-  /* padding: 10px; */
-  /* box-shadow: 0px 2px 10px rgb(222, 222, 222); */
 }
 .header {
   border-radius: 5px 5px 0 0px;
@@ -325,7 +309,7 @@ const totalPagesRecent = computed(() => {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  height: 80px;
+  height: 60px;
 }
 .header h2 {
   color: aliceblue;
@@ -344,7 +328,6 @@ const totalPagesRecent = computed(() => {
 .cardheader {
   display: flex;
   align-items: center;
-  /* background-color: aqua; */
   width: 80%;
 }
 .icon {
