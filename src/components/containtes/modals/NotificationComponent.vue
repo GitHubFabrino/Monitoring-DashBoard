@@ -210,7 +210,7 @@ async function voir(notif) {
   removeAlert(notif.id);
 }
 
-const itemsPerPageRecent = 10; // Nombre d'éléments par page
+const itemsPerPageRecent = 8; // Nombre d'éléments par page
 const currentPageRecent = ref(1); // Page actuelle
 
 const paginatedItemsRecent = computed(() => {
