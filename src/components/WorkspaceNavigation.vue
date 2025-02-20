@@ -335,6 +335,8 @@ function fermer(parc) {
   dropdownOpen.value = false;
   useParc.parcSuperviserFunc(parc);
   useParc.parcSuperviser = parc;
+  window.location.reload();
+
 }
 
 // Définir la variable à surveiller
@@ -486,8 +488,8 @@ onMounted(() => {
 
 .imageProfil {
   background-color: aqua;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
 }
 .info {

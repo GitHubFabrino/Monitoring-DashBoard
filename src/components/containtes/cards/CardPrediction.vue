@@ -104,7 +104,7 @@
     batterie: Object,
   });
   
-  const progressValue = ref(0);
+  const progressValue = ref(50);
   const targetNumber = ref(0);
   const currentNumber = ref(0);
   let numberInterval;

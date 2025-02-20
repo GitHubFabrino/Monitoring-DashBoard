@@ -1,6 +1,6 @@
 <template>
     <div class="w-[50%]  h-[50%] flex items-center flex-wrap justify-center m-auto">
-      <div class="grid gap-4 w-7s0">
+      <div class="grid gap-4 w-70">
         <svg
           class="mx-auto"
           xmlns="http://www.w3.org/2000/svg"

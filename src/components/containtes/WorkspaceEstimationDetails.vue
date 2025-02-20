@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#f6f8fa] w-full h-[76vh] shadow-md shadow-gray-400 rounded-md p-5 overflow-hidden"
+    class="bg-[#f6f8fa] w-full h-full shadow-md shadow-gray-400 rounded-md p-5 overflow-hidden"
   >
     <div
       class="flex justify-between items-center p-[10px] border-b border-gray-300"
@@ -924,7 +924,7 @@
                   Indique combien de capacité une batterie a conservée par
                   rapport à son état initial.
                 </p>
-                <span
+                <span v-if="Math.round(lectureStore.newPredict.predictions.SOH) > 80"
                   class="inline-flex items-center justify-center rounded-full border border-emerald-500 px-2.5 py-0.5 text-emerald-700"
                 >
                   <svg
@@ -941,9 +941,9 @@
                       d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <p class="text-sm whitespace-nowrap">Paid</p>
+                  <p class="text-sm whitespace-nowrap">Bon</p>
                 </span>
-                <span
+                <span v-if=" 60 >Math.round(lectureStore.newPredict.predictions.SOH) > 80"
                   class="inline-flex items-center justify-center rounded-full border border-amber-500 px-2.5 py-0.5 text-amber-700"
                 >
                   <svg
@@ -960,9 +960,9 @@
                       d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"
                     />
                   </svg>
-                  <p class="text-sm whitespace-nowrap">Refunded</p>
+                  <p class="text-sm whitespace-nowrap">Prudence</p>
                 </span>
-                <span
+                <span v-if=" 60 >Math.round(lectureStore.newPredict.predictions.SOH)"
                   class="inline-flex items-center justify-center rounded-full border border-red-500 px-2.5 py-0.5 text-red-700"
                 >
                   <svg
@@ -979,7 +979,7 @@
                       d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
                     />
                   </svg>
-                  <p class="text-sm whitespace-nowrap">Failed</p>
+                  <p class="text-sm whitespace-nowrap">Mauvaise</p>
                 </span>
               </div>
             </div>
@@ -996,7 +996,10 @@
                   >
                     <span
                       class="text-center text-2xl font-bold text-blue-600 animated-number"
-                      >{{ formattedNumber }}</span
+                      >{{ formattedNumber }}</span>
+                    <span
+                      class="text-center text-sm font-bold text-blue-600 animated-number"
+                      >Cycles</span 
                     >
                   </div>
                 </div>
@@ -1013,63 +1016,7 @@
                   Estime le temps restant avant que la batterie ne soit
                   inutilisable.
                 </p>
-                <span
-                  class="inline-flex items-center justify-center rounded-full border border-emerald-500 px-2.5 py-0.5 text-emerald-700"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="-ms-1 me-1.5 size-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <p class="text-sm whitespace-nowrap">Paid</p>
-                </span>
-                <span
-                  class="inline-flex items-center justify-center rounded-full border border-amber-500 px-2.5 py-0.5 text-amber-700"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="-ms-1 me-1.5 size-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M8.25 9.75h4.875a2.625 2.625 0 010 5.25H12M8.25 9.75L10.5 7.5M8.25 9.75L10.5 12m9-7.243V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"
-                    />
-                  </svg>
-                  <p class="text-sm whitespace-nowrap">Refunded</p>
-                </span>
-                <span
-                  class="inline-flex items-center justify-center rounded-full border border-red-500 px-2.5 py-0.5 text-red-700"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="-ms-1 me-1.5 size-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-                    />
-                  </svg>
-                  <p class="text-sm whitespace-nowrap">Failed</p>
-                </span>
+               
               </div>
             </div>
           </div>
@@ -1079,8 +1026,133 @@
     </div>
   </div>
 </template>
-
 <script setup>
+import "primeicons/primeicons.css";
+import { ref, onMounted, onUnmounted, computed } from "vue";
+import { useShow } from "@/stores/show";
+import { useBatterie } from "@/stores/batterieStore";
+import { parcStore } from "@/stores/parcStore";
+import { useLectureStore } from "@/stores/lectureStore";
+import CardBat from "@/components/containtes/cards/CardBat.vue";
+import Spinner from "@/components/containtes/modals/Spinner.vue";
+
+const lectureStore = useLectureStore();
+const isHovered = ref(false);
+const showHiddenDiv = () => {
+  isHovered.value = true;
+};
+const hideHiddenDiv = () => {
+  isHovered.value = false;
+};
+const batterie = useBatterie();
+const show = useShow();
+
+function prediction() {
+  show.showPrediction = !show.showPrediction;
+}
+
+const selectCard = ref({});
+const loading = ref(true);
+const progressValue = ref(Math.round(lectureStore.newPredict.predictions.SOH));
+const targetNumber = ref(progressValue.value); // Utilisez la valeur de progressValue comme cible
+const targetNumber2 = ref(Math.round(lectureStore.newPredict.predictions.RUL)); // Utilisez la valeur de progressValue comme cible
+
+const currentNumber = ref(0);
+let progressInterval;
+let numberInterval;
+
+const formatTime = (seconds) => {
+  const years = Math.floor(seconds / (365 * 24 * 3600));
+  const months = Math.floor((seconds % (365 * 24 * 3600)) / (30 * 24 * 3600));
+  const days = Math.floor((seconds % (30 * 24 * 3600)) / (24 * 3600));
+  const hours = Math.floor((seconds % (24 * 3600)) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  let timeString = "";
+
+  if (years > 0) {
+    timeString += `${years}A`;
+  }
+  if (months > 0 || years > 0) {
+    timeString += `${months}M`;
+  }
+  if (days > 0 || months > 0 || years > 0) {
+    timeString += `${days}J`;
+  }
+  if (hours > 0) {
+    if (days > 0 || months > 0 || years > 0) {
+      timeString += ``;
+    }
+    timeString += `${hours}h`;
+  }
+  if (minutes > 0 && hours < 24) {
+    timeString += `${minutes}min`;
+  }
+  if (remainingSeconds > 0 && minutes < 60) {
+    timeString += `${remainingSeconds}s`;
+  }
+
+  return timeString;
+};
+
+const formattedNumber = computed(() => {
+  return new Intl.NumberFormat().format(currentNumber.value);
+});
+
+const progressColor = computed(() => {
+  if (progressValue.value < 50) {
+    return "text-red-600";
+  } else if (progressValue.value < 80) {
+    return "text-yellow-500";
+  } else {
+    return "text-green-600";
+  }
+});
+
+const toggle = () => {
+  show.showEstimation = !show.showEstimation;
+  show.showEstimationDetails = !show.showEstimationDetails;
+  show.showPrediction = !show.showPrediction;
+};
+
+const startProgressAnimation = () => {
+  progressInterval = setInterval(() => {
+    if (progressValue.value < targetNumber.value) {
+      progressValue.value += 1;
+    } else {
+      clearInterval(progressInterval);
+    }
+  }, 50);
+};
+
+const startNumberAnimation = () => {
+  numberInterval = setInterval(() => {
+    if (currentNumber.value < targetNumber2.value) {
+      currentNumber.value += 1;
+    } else {
+      clearInterval(numberInterval);
+    }
+  }, 10);
+};
+
+onMounted(() => {
+  console.log('zaza', show.selectCard.cycle_summary);
+  show.selectCard.value = batterie.allBatteryData[0];
+  setTimeout(() => {
+    loading.value = false;
+    startProgressAnimation();
+    startNumberAnimation();
+  }, 2000);
+});
+
+onUnmounted(() => {
+  clearInterval(progressInterval);
+  clearInterval(numberInterval);
+});
+</script>
+
+<!-- <script setup>
 import "primeicons/primeicons.css";
 import { ref, onMounted, onUnmounted, computed, watchEffect } from "vue";
 import { useShow } from "@/stores/show";
@@ -1089,7 +1161,7 @@ import { parcStore } from "@/stores/parcStore";
 import { useLectureStore } from "@/stores/lectureStore";
 import CardBat from "@/components/containtes/cards/CardBat.vue";
 import Spinner from "@/components/containtes/modals/Spinner.vue";
-
+const lectureStore =useLectureStore()
 const isHovered = ref(false);
 
 const showHiddenDiv = () => {
@@ -1110,7 +1182,7 @@ function prediction() {
 
 const selectCard = ref({});
 const loading = ref(true);
-const progressValue = ref(0);
+const progressValue = ref(lectureStore.newPredict.predictions.SOH);
 const targetNumber = ref(0);
 const currentNumber = ref(0);
 let progressInterval;
@@ -1190,6 +1262,8 @@ const startNumberAnimation = () => {
 };
 
 onMounted(() => {
+
+  console.log('zaza', show.selectCard.cycle_summary);
   show.selectCard.value = batterie.allBatteryData[0];
   setTimeout(() => {
     loading.value = false;
@@ -1198,6 +1272,7 @@ onMounted(() => {
 });
 
 onMounted(() => {
+  console.log('zaza', show.selectCard.cycle_summary);
   show.selectCard.value = batterie.allBatteryData[0];
   targetNumber.value = 2543;
   setTimeout(() => {
@@ -1216,7 +1291,7 @@ onUnmounted(() => {
 // })
 
 
-</script>
+</script> -->
 
 <style>
 .fade-enter-active,

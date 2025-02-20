@@ -28,7 +28,7 @@ export const useLectureStore = defineStore("LectureStore", () => {
   const currentData = ref([]);
   const temperatureData = ref([]);
   const timeData = ref([]);
-
+  const newPredict= ref()
   function fetchLectures() {
     show.showSpinner = true;
     axios
@@ -316,6 +316,41 @@ export const useLectureStore = defineStore("LectureStore", () => {
       });
   }
 
+  function sendPredict(predictData) {
+    show.showSpinner = true;
+    show.showAlert=true
+    axios
+      .post(`${URL}/api/predict`, predictData, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          show.showSpinner = false;
+          newPredict.value= response.data
+          show.showEstimationDetails = true;
+
+          console.log('valiny',newPredict.value );
+
+        } else {
+          show.showAlertType = "danger";
+          show.showAlertMessage =
+            "Erreur lors de la création de la lecture. ❌";
+        }
+      })
+      .catch((error) => {
+        show.showAlertType = "warning";
+        show.showAlertMessage = "Erreur lors de la création de la lecture. ⚠️";
+        console.error("Error creating lecture:", error);
+      })
+      .finally(() => {
+        show.showSpinner = false;
+        setTimeout(() => {
+          show.showAlert = false;
+          show.showAlertType = "";
+          show.showAlertMessage = "";
+        }, 3000);
+      });
+  }
 
 
 
@@ -451,6 +486,8 @@ export const useLectureStore = defineStore("LectureStore", () => {
     soc,
     dod,
     batterieId,
+    newPredict,
+    sendPredict,
     allLectureData,
     allLectureDataPredict,
     oneLectureData,
