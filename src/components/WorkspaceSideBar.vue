@@ -37,6 +37,27 @@
           </div>
           <div
             class="menuItem"
+            :class="{ bg: show.activeMenuItem === 'Personnels' }"
+            @click="show.setActiveItem('Personnels')"
+          >
+            <i
+              class="pi pi-users"
+              style="font-size: 18px; color: #2d4051"
+              :class="{
+                color: show.activeMenuItem === 'Personnels',
+              }"
+            ></i>
+
+            <h5
+              :class="{
+                color: show.activeMenuItem === 'Personnels',
+              }"
+            >
+            Personnels
+            </h5>
+          </div>
+          <div
+            class="menuItem"
             :class="{ bg: show.activeMenuItem === 'Calendrier de maintenance' }"
             @click="show.setActiveItem('Calendrier de maintenance')"
           >
@@ -56,27 +77,7 @@
               Calendrier de maintenance
             </h5>
           </div>
-          <!-- <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Rapports de performance' }"
-          @click="show.setActiveItem('Rapports de performance')"
-        >
-          <i
-            class="pi pi-bolt"
-            style="font-size: 18px; color: #2d4051"
-            :class="{
-              color: show.activeMenuItem === 'Rapports de performance',
-            }"
-          ></i>
-
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Rapports de performance',
-            }"
-          >
-            Rapports de performance
-          </h5>
-        </div> -->
+          
         </div>
       </div>
 
@@ -168,7 +169,7 @@
                 color: show.activeMenuItem === 'Liste des incidents récents',
               }"
             >
-              Liste des incidents récents et Historiques
+              Liste des incidents
             </h5>
           </div>
           <!-- <div

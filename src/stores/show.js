@@ -148,7 +148,7 @@ export const useShow = defineStore("Show", () => {
   //     ? (showCalendrierM.value = true)
   //     : (showCalendrierM.value = false);
 
-  //   itemName === "Rapports de performance"
+  //   itemName === "Personnels"
   //     ? (showRapportP.value = true)
   //     : (showRapportP.value = false);
 
@@ -194,7 +194,7 @@ export const useShow = defineStore("Show", () => {
       "Acceuil": showAcceuil,
       "Création de parc": showCreationParc,
       "Calendrier de maintenance": showCalendrierM,
-      "Rapports de performance": showRapportP,
+      "Personnels": showRapportP,
       "Plages de fonctionnement": showPlageFonc,
       "Seuils d'alerte": showSeuilA,
       "Liste des incidents récents": showListeIncidents,

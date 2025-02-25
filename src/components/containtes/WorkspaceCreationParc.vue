@@ -11,7 +11,7 @@
                 show.showParcDetailData.value.nom_parc
               }}
             </h2>
-            <h5 class="text-[#c6c6c6]  text-sm">
+            <h5 class="text-[#c6c6c6]  text-sm ">
               Création :
               {{
                 formatDateAndTime(show.showParcDetailData.created_at) ||
@@ -31,7 +31,7 @@
             <i class="pi pi-bookmark" style="font-size: 18px; color: #fff"></i>
           </div>
 
-          <h4>
+          <h4 class="text-[#4d4b4b] text-sm">
             {{
               show.showParcDetailData.description ||
               show.showParcDetailData.value.description
@@ -45,7 +45,7 @@
               style="font-size: 18px; color: #fff"
             ></i>
           </div>
-          <h4>
+          <h4 class="text-[#4d4b4b] text-sm">
             {{
               show.showParcDetailData.adresse ||
               show.showParcDetailData.value.adresse
@@ -56,7 +56,7 @@
           <div class="icon">
             <i class="pi pi-bolt" style="font-size: 18px; color: #fff"></i>
           </div>
-          <h4>
+          <h4 class="text-[#4d4b4b] text-sm">
             Nombre de batterie :
             {{
               show.showParcDetailData.nombre_batteries ||
@@ -74,7 +74,7 @@
             <i class="pi pi-phone" style="font-size: 18px; color: #fff"></i>
           </div>
 
-          <h4>
+          <h4 class="text-[#4d4b4b] text-sm">
             {{
               item.type === "email"
                 ? `Email : ${item.valeur}`
