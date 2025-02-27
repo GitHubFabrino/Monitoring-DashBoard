@@ -619,12 +619,14 @@ span {
   align-items: center;
   margin-right: 10px;
 }
-.blue {
-  background-color: #247bc8d2;
-}
 .orange {
   background-color: #fb7b58d8;
 }
+
+.blue {
+  background-color: #247bc8d2;
+}
+
 .red {
   background-color: rgb(255, 93, 93);
 }

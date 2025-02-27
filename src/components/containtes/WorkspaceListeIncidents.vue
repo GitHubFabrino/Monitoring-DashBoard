@@ -33,7 +33,7 @@
       </div>
       <div class="recent" v-if="show.showRecents">
         <template v-if="filteredItemsNoRead.length > 0">
-          <div class="h-[47vh] overflow-scroll">
+          <div class="h-[320px] overflow-scroll">
             <div v-for="item in filteredItemsNoRead" :key="item.id">
               <div v-if="item.read === 0" class="item">
                 <div
@@ -83,7 +83,7 @@
 
       <div class="historique" v-if="show.showHistoriqueCale">
         <template v-if="filteredItemsRead.length > 0">
-          <div class="h-[47vh] overflow-scroll">
+          <div class="h-[320px] overflow-scroll">
             <div v-for="item in filteredItemsRead" :key="item.id">
               <div class="item" v-if="item.read !== 0">
                 <div

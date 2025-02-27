@@ -20,6 +20,9 @@ import DeleteComponent from "./components/containtes/modals/DeleteComponent.vue"
 import DeleteMaintenance from "./components/containtes/modals/DeleteMaintenance.vue";
 import ModifierCalendrierMaintenance from "./components/containtes/modals/ModifierCalendrierMaintenance.vue";
 import VoireAlerteBatterie from "./components/containtes/modals/VoireAlerteBatterie.vue";
+import NewPersonnelAdd from "./components/containtes/modals/NewPersonnelAdd.vue";
+import UploadImage from "./components/containtes/modals/UploadImage.vue";
+import DeleteComponentPersonnel from "./components/containtes/modals/DeleteComponentPersonnel.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -84,6 +87,17 @@ if (
     <Teleport to="body">
       <AlerteAlerte />
     </Teleport>
+    <Teleport to="body">
+      <NewPersonnelAdd />
+    </Teleport>
+    <Teleport to="body">
+      <UploadImage />
+    </Teleport>
+
+    <Teleport to="body">
+      <DeleteComponentPersonnel />
+    </Teleport>
+     
      
   </div>
 </template>

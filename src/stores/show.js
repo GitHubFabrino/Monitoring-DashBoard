@@ -5,6 +5,8 @@ export const useShow = defineStore("Show", () => {
   const showLogin = ref(true);
   const showLogout = ref(false);
   const showSingUp = ref(false);
+  const personelAddImage = ref(false);
+
   const showDashBoard = ref(false);
   const showDesc = ref(false);
   const showSpinner = ref(false);
@@ -13,6 +15,8 @@ export const useShow = defineStore("Show", () => {
   const showParcDetailData = ref({});
   const showParcDetail = ref(true);
   const showVoirAlerteData = ref(false);
+  const showAddPersonnel = ref(false);
+  const newpersonnelId = ref();
 
   const showDeleteMaintenanceData = ref();
   const showDeleteMaintenance = ref(false);
@@ -20,6 +24,10 @@ export const useShow = defineStore("Show", () => {
   const showDeleteParc = ref(false);
   const showParcNameDelete = ref("");
   const showParcNameDeleteId = ref("");
+
+  const showDelete = ref(false);
+  const showDeleteNamePersonnel = ref("");
+  const showDeleteIdPersonnel = ref("");
 
   const showAlertBatterie = ref(false);
   const showAlertBatType = ref("");
@@ -187,14 +195,13 @@ export const useShow = defineStore("Show", () => {
   //     : (showEstimation.value = false);
   // }
   function setActiveItem(itemName) {
- 
     activeMenuItem.value = itemName;
-  
+
     const itemMap = {
-      "Acceuil": showAcceuil,
+      Acceuil: showAcceuil,
       "Création de parc": showCreationParc,
       "Calendrier de maintenance": showCalendrierM,
-      "Personnels": showRapportP,
+      Personnels: showRapportP,
       "Plages de fonctionnement": showPlageFonc,
       "Seuils d'alerte": showSeuilA,
       "Liste des incidents récents": showListeIncidents,
@@ -203,21 +210,21 @@ export const useShow = defineStore("Show", () => {
       "Compression des données": showConpressionD,
       "Rapport mensuel de performance": showRapportMensuel,
       "Recommandations d'optimisation": showRecommendation,
-      "Estimation": showEstimation,
+      Estimation: showEstimation,
       "Estimation detail": showEstimationDetails,
     };
-  
+
     // Réinitialiser toutes les valeurs à false
     for (const key in itemMap) {
       itemMap[key].value = false;
     }
-  
+
     // Activer l'élément sélectionné
     if (itemMap[itemName]) {
       itemMap[itemName].value = true;
     }
   }
-  
+
   const showBatterieItem = ref("");
   const showBatt1 = ref(false);
   const showBatt2 = ref(false);
@@ -385,6 +392,7 @@ export const useShow = defineStore("Show", () => {
   return {
     showLogin,
     showSingUp,
+    personelAddImage,
     showDashBoard,
     showDesc,
     activeMenu,
@@ -432,7 +440,8 @@ export const useShow = defineStore("Show", () => {
     showSemaine,
     showMois,
     showAnnee,
-    selectCard,showPrediction,
+    selectCard,
+    showPrediction,
     showSeletHorodatage,
     showEmail,
     showEstimation,
@@ -457,10 +466,15 @@ export const useShow = defineStore("Show", () => {
     showPerformance,
     showParcNameDelete,
     showParcNameDeleteId,
+    showDelete,
+    showDeleteNamePersonnel,
+    showDeleteIdPersonnel,
     showEditParc,
     showDeleteMaintenanceData,
     showDeleteMaintenance,
     showVoirAlerteData,
+    showAddPersonnel,
+    newpersonnelId,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,

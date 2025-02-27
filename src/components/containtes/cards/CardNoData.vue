@@ -98,7 +98,7 @@
         </svg>
         <div>
           <h2
-            class="text-center text-black text-lg font-semibold leading-7 pb-1"
+            class="text-center text-[#2d4051] text-lg font-semibold leading-7 pb-1"
           >
             {{message}}
           </h2>

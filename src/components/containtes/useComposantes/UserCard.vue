@@ -1,7 +1,8 @@
 <template>
     <div
       @click="toggle(data)"
-      class="relative rounded-lg border my-2 cursor-pointer border-gray-200 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+      class="relative  w-[90%] rounded-lg border my-2 cursor-pointer border-gray-200
+       shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl"
     >
       <div class="flex items-center gap-4 p-1">
         <img
