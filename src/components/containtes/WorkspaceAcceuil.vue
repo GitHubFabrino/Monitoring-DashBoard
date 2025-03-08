@@ -729,14 +729,6 @@ onMounted(() => {
   color: #2d4051;
 }
 
-.card-image {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px 5px 0px 0px;
-  box-sizing: border-box;
-  object-fit: cover; /* Cette propriété permet de conserver le ratio de l'image tout en la remplissant */
-}
-
 
 .containerAcceuil {
   display: flex;
@@ -749,6 +741,16 @@ onMounted(() => {
   overflow-y: scroll;
   width: 100%;
 }
+
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px 5px 0px 0px;
+  box-sizing: border-box;
+  object-fit: cover; /* Cette propriété permet de conserver le ratio de l'image tout en la remplissant */
+}
+
 input[type="file"] {
   display: block;
   margin-top: 10px;

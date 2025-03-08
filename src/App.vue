@@ -23,6 +23,9 @@ import VoireAlerteBatterie from "./components/containtes/modals/VoireAlerteBatte
 import NewPersonnelAdd from "./components/containtes/modals/NewPersonnelAdd.vue";
 import UploadImage from "./components/containtes/modals/UploadImage.vue";
 import DeleteComponentPersonnel from "./components/containtes/modals/DeleteComponentPersonnel.vue";
+import CardImageVoir from "./components/containtes/modals/CardImageVoir.vue";
+import FaireMaintenance from "./components/containtes/modals/FaireMaintenance.vue";
+import ModifierCalendrierMaintenanceAFaire from "./components/containtes/modals/ModifierCalendrierMaintenanceAFaire.vue";
 
 const show = useShow();
 const cookies = new Cookies();
@@ -97,7 +100,18 @@ if (
     <Teleport to="body">
       <DeleteComponentPersonnel />
     </Teleport>
-     
+
+
+    <Teleport to="body">
+      <CardImageVoir />
+    </Teleport>
+
+    <Teleport to="body">
+      <FaireMaintenance />
+    </Teleport>
+    <Teleport to="body">
+      <ModifierCalendrierMaintenanceAFaire />
+    </Teleport>
      
   </div>
 </template>

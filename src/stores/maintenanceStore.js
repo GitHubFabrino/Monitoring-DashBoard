@@ -17,7 +17,7 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
   const details = ref("");
   const batterie_id = ref("");
   const marque = ref("");
-  const idMataitenanceM = ref('')
+  const idMataitenanceM = ref("");
 
   const detailsM = ref("");
   const batterie_idM = ref("");
@@ -28,7 +28,7 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
   const error = ref(null);
   const batteries = ref([]);
 
-
+  const maintenanceDataModifier = ref({});
 
   const fetchMaintenances = () => {
     show.showSpinner = true;
@@ -80,25 +80,24 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
 
   const createMaintenance = async (maintenanceData) => {
     show.showSpinner = true;
-    let formData = new FormData();
-    formData.append("details", maintenanceData.details);
-    formData.append("batterie_id", maintenanceData.batterie_id);
-    formData.append("marque", maintenanceData.marque);
-    let baatteryArray = [];
     try {
-      const response = await axios.post(`${URL}/api/maintenances`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await axios.post(
+        `${URL}/api/maintenances`,
+        maintenanceData,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
       if (response.status === 201) {
         show.showAddMaintenance = false;
         maintenances.value.push(response.data);
         show.showAlert = true;
         show.showAlertType = "success";
         show.showAlertMessage = "Maintenance ajoutée avec succès";
-        show.showAddMaintenance = false
 
         const parcid = useParc.parcSuperviser.id;
-        batterie.getBatteriesByParcId(parcid);
+        await batterie.getBatteriesByParcId(parcid);
         batteries.value = batterie.allBatteryData;
 
         const maintenancePromises = batteries.value.map((batterie) =>
@@ -106,24 +105,22 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
         );
 
         const responses = await Promise.all(maintenancePromises);
+        const baatteryArray = [];
         responses.forEach((response) => {
           baatteryArray.push(...response.data);
         });
 
         maintenances.value = baatteryArray;
-     
       } else {
         show.showAlert = true;
         show.showAlertType = "danger";
-        show.showAlertMessage = response.data.error;
-        show.showSpinner = false;
+        show.showAlertMessage = response.data.error || "Erreur inconnue";
       }
     } catch (err) {
       show.showAlert = true;
       show.showAlertType = "warning";
       show.showAlertMessage = "Erreur lors de l'ajout de la maintenance";
       console.error(err);
-      show.showSpinner = false;
     } finally {
       setTimeout(() => {
         show.showAlert = false;
@@ -135,16 +132,15 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
   };
 
   const updateMaintenance = (id, maintenanceData) => {
-
     show.showSpinner = true;
     axios
       .put(`${URL}/api/maintenances/${id}`, maintenanceData, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
-
-        console.log('response' , response.data);
+        console.log("response", response.data);
         if (response.status === 200) {
+          show.showDoingMaintenance = false
           const index = maintenances.value.findIndex((m) => m.id === id);
           if (index !== -1) {
             maintenances.value[index] = response.data;
@@ -156,7 +152,7 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
           const parcid = useParc.parcSuperviser.id;
           batterie.getBatteriesByParcId(parcid);
           batteries.value = batterie.allBatteryData;
-          ismodifierMaintenance.value=false
+          ismodifierMaintenance.value = false;
 
           getAll();
         } else {
@@ -204,7 +200,6 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
     });
 
     maintenances.value = baatteryArray;
- 
   };
 
   const deleteMaintenance = (id) => {
@@ -264,6 +259,7 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
     fetchMaintenances,
     fetchMaintenanceById,
     fetchMaintenancesByBatterie,
+    maintenanceDataModifier,
     createMaintenance,
     updateMaintenance,
     deleteMaintenance,

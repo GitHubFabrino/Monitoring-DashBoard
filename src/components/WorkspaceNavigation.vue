@@ -6,7 +6,7 @@
       <!-- <h3 class="liking">Utilisateurs</h3> -->
       <!-- <h3 class="liking">Paramètres</h3> -->
     </div>
-    <div class="parc" @click="toggleDropdown()">
+    <div class="parc" @click="toggleDropdownDrop()" @click.stop>
       <div>
         <h1>
           {{
@@ -47,6 +47,7 @@
         id="dropdown-with-radiobutton"
         class="dropdown-menu rounded-xl shadow-lg bg-white absolute w-60 p-2"
         v-if="dropdownOpen"
+        ref="dropdownDiv"
       >
         <div class="relative mb-2">
           <div
@@ -109,7 +110,7 @@
         </div>
       </div>
 
-      <div class="photo" @click="show.showDescFunc()">
+      <div class="photo">
         <img
           class="photo"
           alt=""
@@ -117,6 +118,8 @@
           height="100%"
           v-if="user.userInfo.file.id"
           :src="user.userInfo.file.file_name"
+          @click="show.showDescFunc()"
+          @click.stop
         />
         <img
           v-else
@@ -125,10 +128,66 @@
           alt=""
           width="100%"
           height="100%"
+          @click="show.showDescFunc()"
+          @click.stop
         />
       </div>
-
       <div
+        class="showProfil"
+        v-if="show.showDesc"
+        @click.self="show.closeProfile()"
+        ref="profileDiv"
+      >
+        <div class="section">
+          <div class="sectionItem">
+            <h4 class="textSection">Compte</h4>
+          </div>
+
+          <div class="container">
+            <div class="imageProfil">
+              <img
+                class="photo"
+                alt=""
+                width="100%"
+                height="100%"
+                v-if="user.userInfo.file.id"
+                :src="user.userInfo.file.file_name"
+              />
+              <img
+                v-else
+                class="photo"
+                src="/admin.png"
+                alt=""
+                width="100%"
+                height="100%"
+              />
+            </div>
+            <div class="info">
+              <h4>{{ user.userInfo.name }}</h4>
+              {{ user.userInfo.email }}
+            </div>
+          </div>
+
+          <div class="items">
+            <div class="option" @click="show.showProfilDetailFunc()">
+              <i
+                class="pi pi-user-edit"
+                style="font-size: 18px; color: #2d4051"
+              ></i>
+              <h5 class="item">Mon Profil</h5>
+            </div>
+
+            <div class="option" @click="show.showLogoutFunc()">
+              <i
+                class="pi pi-sign-out"
+                style="font-size: 14px; color: #2d4051"
+              ></i>
+              <h5 class="item">Déconnection</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div
         class="showProfil"
         v-if="show.showDesc"
         @click.self="show.closeProfile()"
@@ -159,7 +218,6 @@
             </div>
             <div class="info">
               <h4>{{ user.userInfo.name }}</h4>
-              <!-- <h5>{{  user.userInfo.eamil }}</h5> -->
               {{ user.userInfo.email }}
             </div>
           </div>
@@ -182,7 +240,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="notificationContainer" v-if="show.showNotification">
         <div class="titre">
@@ -275,7 +333,7 @@ import { useShow } from "@/stores/show";
 import { useUser } from "@/stores/user";
 import { parcStore } from "@/stores/parcStore";
 import { useMqttAlerteStore } from "@/stores/mqttAlertStore";
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted, watch, onBeforeUnmount } from "vue";
 const show = useShow();
 const user = useUser();
 
@@ -289,6 +347,44 @@ import { useAlerteBatterieStore } from "@/stores/alerteBatterie";
 const batterie = useBatterie();
 
 const alerteBatterieStore = useAlerteBatterieStore();
+
+const profileDiv = ref(null);
+
+const handleClickOutside = (event) => {
+  if (profileDiv.value && !profileDiv.value.contains(event.target)) {
+    show.closeProfile();
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+});
+
+const dropdownOpen = ref(false);
+const dropdownDiv = ref(null);
+
+const toggleDropdownDrop = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
+
+const handleClickOutsideDrop = (event) => {
+  if (dropdownDiv.value && !dropdownDiv.value.contains(event.target)) {
+    dropdownOpen.value = false;
+    console.log("zzzzz",dropdownDiv.value);
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutsideDrop);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutsideDrop);
+});
 
 user.userInfo = JSON.parse(localStorage.getItem("user")).user;
 const parcSuperviserLocal = ref(
@@ -320,7 +416,7 @@ function formatDateTime(dateString) {
   const minutes = date.getMinutes().toString().padStart(2, "0"); // Construire la chaîne de date et heure formatée
   return `${jour} ${moisNom} ${annee} à ${heures}h${minutes}`;
 }
-const dropdownOpen = ref(false);
+
 const searchQuery = ref("");
 const filteredParcs = computed(() =>
   useParc.parcsData.filter((parc) =>
@@ -336,7 +432,6 @@ function fermer(parc) {
   useParc.parcSuperviserFunc(parc);
   useParc.parcSuperviser = parc;
   window.location.reload();
-
 }
 
 // Définir la variable à surveiller

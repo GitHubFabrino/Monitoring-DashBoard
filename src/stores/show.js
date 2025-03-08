@@ -8,6 +8,9 @@ export const useShow = defineStore("Show", () => {
   const personelAddImage = ref(false);
 
   const showDashBoard = ref(false);
+  const showImageMaintenance = ref(false);
+  const showDoingMaintenance = ref(false);
+  const showModifierMaintenanceAFaire = ref(false);
   const showDesc = ref(false);
   const showSpinner = ref(false);
   const showProfilDetail = ref(false);
@@ -17,6 +20,7 @@ export const useShow = defineStore("Show", () => {
   const showVoirAlerteData = ref(false);
   const showAddPersonnel = ref(false);
   const newpersonnelId = ref();
+  const showDoingMaintenanceData = ref();
 
   const showDeleteMaintenanceData = ref();
   const showDeleteMaintenance = ref(false);
@@ -59,9 +63,14 @@ export const useShow = defineStore("Show", () => {
   }
 
   function showProfilDetailFunc() {
-    // closeProfile()
+    // 
     showDesc.value = false;
     showProfilDetail.value = !showProfilDetail.value;
+  }
+
+
+  function closeProfile() {
+    showDesc.value = false
   }
   function showLogoutFunc() {
     showDesc.value = false;
@@ -418,6 +427,9 @@ export const useShow = defineStore("Show", () => {
     showBatt1,
     showBatt2,
     showBatt3,
+    showImageMaintenance,
+    showDoingMaintenance,
+    showModifierMaintenanceAFaire,
     showBatt,
     competerAlerteBatterieUnRead,
     showBatterieItemId,
@@ -430,6 +442,7 @@ export const useShow = defineStore("Show", () => {
     showAddMaintenance,
     showCreationParamBatt,
     showVisBat1,
+    closeProfile,
     showVisBat2,
     showVisBat3,
     showVisBat1Horo,
@@ -475,6 +488,7 @@ export const useShow = defineStore("Show", () => {
     showVoirAlerteData,
     showAddPersonnel,
     newpersonnelId,
+    showDoingMaintenanceData,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,

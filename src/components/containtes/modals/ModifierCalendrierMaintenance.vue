@@ -47,7 +47,151 @@ const addMaintenance = () => {
       v-if="maintenanceStore.ismodifierMaintenance"
     >
       <div class="formModal" @click.stop>
-        <div class="title">
+
+        <div class=" w-full h-[440px]">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center mb-2">
+              <div
+                class="w-[40px] h-[40px] flex justify-center items-center"
+                @click="  maintenanceStore.ismodifierMaintenance =
+          !maintenanceStore.ismodifierMaintenance"
+              >
+                <a
+                  class="inline-block rounded-full border border-indigo-500 bg-indigo-500 p-1 text-white hover:bg-transparent hover:text-indigo-600 focus:ring-3 focus:outline-hidden"
+                  href="#"
+                >
+                  <svg
+                    class="h-4 w-4 rtl:rotate-180"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                    />
+                  </svg>
+                </a>
+              </div>
+
+              <h2 class="text-xl font-bold text-gray-700">Modifier cette maintenance</h2>
+            </div>
+            <div class="block text-gray-700 font-bold mb-2 mr-2 text-sm">
+              Frequence : Hebdomadaire
+            </div>
+          </div>
+          <div class="flex justify-between w-full px-4 text-sm">
+            <div class="w-[45%]">
+              <div class="mb-2">
+                <div class="block text-gray-700 font-bold">Date :</div>
+              </div>
+              <div class="mb-2">
+                <div class="block text-gray-700 font-bold">
+                  Nom du Technicien :
+                </div>
+                <div
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                >
+                  .....................
+                </div>
+              </div>
+              <div class="mb-2">
+                <div class="block text-gray-700 font-bold">Batterie :</div>
+                <div
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                >
+                  Préventive / Corrective
+                </div>
+              </div>
+              <div class="mb-2">
+                <div class="block text-gray-700 font-bold">
+                  Type d'Intervention :
+                </div>
+                <div
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                >
+                  Préventive / Corrective
+                </div>
+              </div>
+              <div class="mb-2">
+                <div class="block text-gray-700 font-bold">Tâche :</div>
+                <div
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                >
+                  (Sélectionner la tâche réalisée)
+                </div>
+              </div>
+              <div class="mb-2">
+                <div class="block text-gray-700 font-bold">Description :</div>
+                <div
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                >
+                  <p>Nettoyage des bornes</p>
+                  <p>Remplacement des câbles</p>
+                  <p>Vérification des fixations</p>
+                </div>
+              </div>
+            </div>
+            <div class="w-[45%] flex flex-col justify-center items-center">
+              <div class="mb-4 w-full">
+                <div class="block text-gray-700 font-bold mb-2">
+                  Travaux Réalisés :
+                </div>
+                <div
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                >
+                  <p>Nettoyage des bornes</p>
+                  <p>Remplacement des câbles</p>
+                  <p>Vérification des fixations</p>
+                  <p>Autre : .....................</p>
+                </div>
+              </div>
+
+              <div class="mb-4 w-full">
+                <div class="block text-gray-700 font-bold mb-2">Images :</div>
+                <div
+                  class="shadow appearance-none border rounded w-full p-1 text-gray-700 leading-tight flex"
+                >
+                  <div @click="show.showImageMaintenance = !show.showImageMaintenance"
+                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                  ></div>
+                  <div
+                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                  ></div>
+                  <div
+                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                  ></div>
+                  <div
+                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                  ></div>
+                </div>
+              </div>
+
+              <div
+                class="w-[50%] bg-indigo-500 flex justify-center items-center py-2 text-white font-bold rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+              >
+                <h1>Modifier</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <div class="title">
           <h3>Modifier</h3>
           <div
             class="closeForm"
@@ -93,7 +237,7 @@ const addMaintenance = () => {
               Modifier Maintenance
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </Transition>
@@ -146,7 +290,7 @@ span {
 }
 
 .formModal {
-  width: 50%;
+  width: 75%;
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
