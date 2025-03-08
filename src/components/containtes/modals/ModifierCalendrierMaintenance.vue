@@ -34,6 +34,33 @@ const addMaintenance = () => {
     maintenanceData
   );
 };
+
+
+
+const onFileChange = async (event, parcId) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await axios.post(
+      `http://localhost:8000/api/parcs/${parcId}/upload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    
+  } catch (error) {
+    console.error("Erreur lors de l'upload de l'image :", error);
+  }
+};
+
+
 </script>
 
 <template>
@@ -80,13 +107,14 @@ const addMaintenance = () => {
               <h2 class="text-xl font-bold text-gray-700">Modifier cette maintenance</h2>
             </div>
             <div class="block text-gray-700 font-bold mb-2 mr-2 text-sm">
-              Frequence : Hebdomadaire
+              Frequence : {{ maintenanceStore.maintenanceDataModifier.maintenance.frequence}}
             </div>
+            
           </div>
           <div class="flex justify-between w-full px-4 text-sm">
             <div class="w-[45%]">
               <div class="mb-2">
-                <div class="block text-gray-700 font-bold">Date :</div>
+                <div class="block text-gray-700 font-bold">Date : {{ maintenanceStore.maintenanceDataModifier.maintenance.date_execution}}</div>
               </div>
               <div class="mb-2">
                 <div class="block text-gray-700 font-bold">
@@ -95,7 +123,7 @@ const addMaintenance = () => {
                 <div
                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
-                  .....................
+                {{ maintenanceStore.maintenanceDataModifier.maintenance.date_execution}}
                 </div>
               </div>
               <div class="mb-2">
@@ -103,7 +131,7 @@ const addMaintenance = () => {
                 <div
                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
-                  Préventive / Corrective
+                {{ maintenanceStore.maintenanceDataModifier.batterie.nom}}
                 </div>
               </div>
               <div class="mb-2">
@@ -113,7 +141,7 @@ const addMaintenance = () => {
                 <div
                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
-                  Préventive / Corrective
+                {{ maintenanceStore.maintenanceDataModifier.maintenance.date_execution}}
                 </div>
               </div>
               <div class="mb-2">
@@ -121,7 +149,7 @@ const addMaintenance = () => {
                 <div
                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
-                  (Sélectionner la tâche réalisée)
+                {{ maintenanceStore.maintenanceDataModifier.maintenance.tache}}
                 </div>
               </div>
               <div class="mb-2">
@@ -129,9 +157,7 @@ const addMaintenance = () => {
                 <div
                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 >
-                  <p>Nettoyage des bornes</p>
-                  <p>Remplacement des câbles</p>
-                  <p>Vérification des fixations</p>
+                {{ maintenanceStore.maintenanceDataModifier.maintenance.details}}
                 </div>
               </div>
             </div>
@@ -140,33 +166,64 @@ const addMaintenance = () => {
                 <div class="block text-gray-700 font-bold mb-2">
                   Travaux Réalisés :
                 </div>
-                <div
-                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
-                >
-                  <p>Nettoyage des bornes</p>
-                  <p>Remplacement des câbles</p>
-                  <p>Vérification des fixations</p>
-                  <p>Autre : .....................</p>
-                </div>
+                <textarea
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                  placeholder="Décrivez la maintenance"
+                  rows="4"
+                  v-model=" maintenanceStore.maintenanceDataModifier.maintenance.travaux_realiser"
+                ></textarea>
               </div>
+
+            
 
               <div class="mb-4 w-full">
                 <div class="block text-gray-700 font-bold mb-2">Images :</div>
                 <div
                   class="shadow appearance-none border rounded w-full p-1 text-gray-700 leading-tight flex"
                 >
-                  <div @click="show.showImageMaintenance = !show.showImageMaintenance"
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-                  ></div>
+
                   <div
+                    @click="
+                      show.showImageMaintenance = !show.showImageMaintenance
+                    "
                     class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-                  ></div>
-                  <div
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-                  ></div>
-                  <div
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-                  ></div>
+                  >
+                    <div class="cardFile">
+                      <img
+                        v-if="maintenanceStore.maintenanceDataModifier.files == null"
+                        :src="maintenanceStore.maintenanceDataModifier?.files[0]?.file_url"
+                        alt=""
+                        class="card-image object-containe"
+                      />
+
+                      <div class="absolute">
+                        <div class="file-input-container">
+                          <input
+                            type="file"
+                            @change="
+                              (event) => onFileChange(event, maintenanceStore.maintenanceDataModifier.id)
+                            "
+                            id="file-upload"
+                          />
+                          <label for="file-upload" class="file-input-label">
+                            <i class="pi pi-camera"></i>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+                
                 </div>
               </div>
 
@@ -244,6 +301,62 @@ const addMaintenance = () => {
 </template>
 
 <style scoped>
+
+
+.cardFile {
+  width: 100%;
+  height: 100%;
+  background-color: #b2b0b030;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px 5px 0px 0px;
+  box-sizing: border-box;
+  object-fit: cover; /* Cette propriété permet de conserver le ratio de l'image tout en la remplissant */
+}
+
+input[type="file"] {
+  display: block;
+  margin-top: 10px;
+}
+
+.file-input-container {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  /* background-color: #f5572c; */
+}
+
+.file-input-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #e1dada;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.file-input-label i {
+  color: #555;
+}
+
+input[type="file"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
 .btn {
   border: none;
   width: 35%;

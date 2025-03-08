@@ -132,6 +132,9 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
   };
 
   const updateMaintenance = (id, maintenanceData) => {
+
+    console.log('ici id :', id);
+    console.log('ici data :', maintenanceData);
     show.showSpinner = true;
     axios
       .put(`${URL}/api/maintenances/${id}`, maintenanceData, {
@@ -140,6 +143,7 @@ export const useMaintenanceStore = defineStore("maintenance", () => {
       .then((response) => {
         console.log("response", response.data);
         if (response.status === 200) {
+          show.showModifierMaintenanceAFaire = false
           show.showDoingMaintenance = false
           const index = maintenances.value.findIndex((m) => m.id === id);
           if (index !== -1) {

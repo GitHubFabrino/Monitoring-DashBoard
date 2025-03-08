@@ -23,7 +23,6 @@ onMounted(() => {
 
 // Fonction pour ajouter une maintenance
 const modifier = () => {
-  // console.log('tiiiiiiiiii', item);
   const maintenanceData = {
     date_execution: maintenanceStore.maintenanceDataModifier.maintenance.date_execution,
     details: maintenanceStore.maintenanceDataModifier.maintenance.details,
@@ -33,7 +32,7 @@ const modifier = () => {
   };
   console.log("rrrrr", maintenanceData);
   maintenanceStore.updateMaintenance(
-    maintenanceStore.idMataitenanceM,
+    maintenanceStore.maintenanceDataModifier.maintenance.id,
     maintenanceData
   );
 };
@@ -87,7 +86,6 @@ const modifier = () => {
         </div>
         <div class="flex justify-between w-full px-4 text-sm">
           <div class="w-[45%]">
-
           <div class="mb-2">
                 <div class="block text-gray-700 font-bold">Batterie :</div>
                 <div
@@ -114,9 +112,6 @@ const modifier = () => {
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-white leading-tight focus:outline-none"
                 v-model="maintenanceStore.maintenanceDataModifier.maintenance.type_intervention"
               >
-                <option value="" disabled>
-                  Préventive / Corrective
-                </option>
                 <option value="preventive">Préventive</option>
                 <option value="corrective">Corrective</option>
               </select>
