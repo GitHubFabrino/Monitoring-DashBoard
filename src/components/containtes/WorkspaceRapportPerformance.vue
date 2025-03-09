@@ -14,7 +14,7 @@
         <div
           class="w-[85%] h-full flex flex-wrap justify-center p-2 rounded-lg border my-2 cursor-pointer border-gray-200 shadow-lg"
         >
-          <div class="w-[170px] h-[170px] bg-red-400 rounded-full">
+          <div class="w-[170px] h-[170px] rounded-full">
             <img
               alt=""
               :src="personnel.personnelDataSelect?.file?.file_name"

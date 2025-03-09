@@ -93,7 +93,7 @@
           ></i>
         </div>
       </div>
-      <div class="desc" v-if="show.showEditParc">
+      <div class="w-[60%]" v-if="show.showEditParc">
         <div class="title">
           <h2>Modification</h2>
           <div class="containerBtn">

@@ -141,7 +141,7 @@
                     @click="
                       show.showImageMaintenance = !show.showImageMaintenance
                     "
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                    class="w-[100px] h-[100px]   m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
                   >
                     <div class="cardFile">
                       <img
@@ -171,7 +171,7 @@
                     @click="
                       show.showImageMaintenance = !show.showImageMaintenance
                     "
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                    class="w-[100px] h-[100px]   m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
                   >
                     <div class="cardFile">
                       <img
@@ -202,7 +202,7 @@
                     @click="
                       show.showImageMaintenance = !show.showImageMaintenance
                     "
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                    class="w-[100px] h-[100px]   m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
                   >
                     <div class="cardFile">
                       <img
@@ -233,7 +233,7 @@
                     @click="
                       show.showImageMaintenance = !show.showImageMaintenance
                     "
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                    class="w-[100px] h-[100px]   m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
                   >
                     <div class="cardFile">
                       <img

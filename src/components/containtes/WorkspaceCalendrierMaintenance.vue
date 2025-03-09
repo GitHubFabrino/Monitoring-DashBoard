@@ -66,7 +66,7 @@
                       :key="maintenance.id"
                     >
                       <td
-                        class="px-4 py-2 font-medium whitespace-nowrap text-gray-900 w-[22%]"
+                        class="px-4 py-2 font-medium whitespace-nowrap text-gray-900 w-[100px] "
                       >
                         {{
                           maintenance.maintenance.batterie?.nom ||
@@ -74,16 +74,23 @@
                         }}
                       </td>
                       <td
-                        class="px-4 py-2 whitespace-nowrap text-gray-700 w-[22%]"
-                      >
-                        Tache
-                      </td>
-                      <td
-                        class="px-4 py-2 whitespace-nowrap text-gray-700 w-[22%]"
+                        class="px-4 py-2 whitespace-nowrap text-gray-700 w-[200px]"
                       >
                         {{
-                          maintenance.maintenance.details ||
-                          "Détails indisponibles"
+                          truncateText(
+                            maintenance.maintenance.tache ||
+                              "Détails indisponibles"
+                          )
+                        }}
+                      </td>
+                      <td
+                        class="px-4 py-2 whitespace-nowrap text-gray-700 w-[200px] "
+                      >
+                        {{
+                          truncateText(
+                            maintenance.maintenance.details ||
+                              "Détails indisponibles"
+                          )
                         }}
                       </td>
                       <td
@@ -158,7 +165,7 @@
             />
           </div>
 
-          <div v-else class="flex justify-center items-center">
+          <div v-else class="flex justify-center items-center pt-10">
             <CardNoData message="Aucune maintenance trouvée" />
           </div>
         </div>
@@ -186,12 +193,21 @@
                     }}
                   </td>
                   <td class="px-4 py-2 whitespace-nowrap text-gray-700 w-[22%]">
-                    Tache
+                    {{
+                          truncateText(
+                            maintenance.maintenance.tache ||
+                              "Détails indisponibles"
+                          )
+                        }}
                   </td>
                   <td class="px-4 py-2 whitespace-nowrap text-gray-700 w-[22%]">
-                    {{
-                      maintenance.maintenance.details || "Détails indisponibles"
-                    }}
+                
+                     {{
+                          truncateText(
+                            maintenance.maintenance.details ||
+                              "Détails indisponibles"
+                          )
+                        }}
                   </td>
                   <td class="px-4 py-2 whitespace-nowrap text-gray-700 w-[22%]">
                     {{
@@ -253,16 +269,17 @@
                 </tr>
               </tbody>
             </table>
+           
           </div>
-          <Pagination
-            :currentPageRead.sync="currentPageHistory"
-            :totalPagesRead="totalPagesHistory"
-            @update:currentPageRead="currentPageHistory = $event"
-          />
-
-          <div v-if="filteredItemsHistory.length == 0">
-            <CardNoData message="Aucune maintenance trouvée" />
-          </div>
+          <div v-if="filteredItemsHistory.length == 0" class="pt-10">
+              <CardNoData message="Aucune maintenance trouvée" />
+            </div>
+            <Pagination
+              v-else
+              :currentPageRead.sync="currentPageHistory"
+              :totalPagesRead="totalPagesHistory"
+              @update:currentPageRead="currentPageHistory = $event"
+            />
         </div>
       </template>
       <template v-else>
@@ -385,6 +402,10 @@
                   </svg>
                 </a>
               </div>
+              <div class="block text-gray-700 font-bold">
+                  Date d'execution :
+                  {{ voirMaintenanceData.maintenance.date_execution }}
+                </div>
             </div>
             <div class="block text-gray-700 font-bold mb-2 mr-2 text-sm">
               Frequence : {{ voirMaintenanceData.maintenance.frequence }}
@@ -392,12 +413,7 @@
           </div>
           <div class="flex justify-between w-full px-4 text-sm">
             <div class="w-[45%]">
-              <div class="mb-2">
-                <div class="block text-gray-700 font-bold">
-                  Date d'execution :
-                  {{ voirMaintenanceData.maintenance.date_execution }}
-                </div>
-              </div>
+              
               <div class="mb-2">
                 <div class="block text-gray-700 font-bold">
                   Nom du Technicien :
@@ -437,7 +453,7 @@
               <div class="mb-2">
                 <div class="block text-gray-700 font-bold">Description :</div>
                 <div
-                  class="shadow appearance-none border rounded w-full h-16 py-2 px-3 text-gray-700 leading-tight"
+                  class="shadow appearance-none border rounded w-full h-20 py-2 px-3 text-gray-700 leading-tight"
                 >
                   {{ voirMaintenanceData.maintenance.details }}
                 </div>
@@ -459,13 +475,16 @@
                 <div
                   class="shadow appearance-none border rounded w-full p-1 text-gray-700 leading-tight flex overflow-x-auto"
                 >
-                  <div
+                  <div v-if="voirMaintenanceData.files.length"
                     v-for="file in voirMaintenanceData.files"
                     :key="file.id"
                     @click="voirImage(file.file_url)"
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer flex-shrink-0"
+                    class="w-[100px] h-[100px]  m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer flex-shrink-0"
                   >
                     <img :src="file.file_url" class="size-full" />
+                  </div>
+                  <div v-else class="w-[100px] h-[100px]  m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer flex-shrink-0">
+
                   </div>
                 </div>
               </div>
@@ -576,6 +595,13 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener("click", handleClickOutside);
 });
+
+const truncateText = (text, maxLength = 40) => {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + "...";
+  }
+  return text;
+};
 
 function formatDateTime(dateString) {
   const date = new Date(dateString);

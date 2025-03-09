@@ -14,13 +14,13 @@ function logoutFunc() {
 
 <template>
   <Transition>
-    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50" 
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
     v-if="show.showLogout" @click="show.showLogoutFunc()">
       <div class="formModal" @click.stop>
         <div class="profilContainer">
           <div class="containerProfil">
             <div class="descriptionProfil">
-              <h3>Voulez vous vraiment se déconnecté ?</h3>
+              <h3 class="text-gray-400">Voulez vous vraiment se déconnecté ?</h3>
             </div>
           </div>
           <div class="containerBtn">
@@ -69,15 +69,13 @@ function logoutFunc() {
   justify-content: center;
 }
 
-
-.descriptionProfil h3{
+.descriptionProfil h3 {
   display: block;
   font-weight: 600;
   width: 100%;
   font-size: 16px;
   padding: 10px;
 }
-
 
 .containerDesc {
   padding: 10px;
@@ -106,16 +104,26 @@ function logoutFunc() {
 .btn {
   border: none;
   width: 35%;
-  padding: 10px;
+  padding: 5px;
   border-radius: 4px;
   font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
 }
 .fermer {
   color: #2d4051;
   border: 1px solid #2d4051;
 }
+.fermer:hover {
+  background-color: #2d4051;
+  color: #fff;
+}
 .enregistrer {
   background-color: #2d4051;
   color: #fff;
+}
+.enregistrer:hover {
+  background-color: #fff;
+  color: #2d4051;
+  border: 1px solid #2d4051;
 }
 </style>

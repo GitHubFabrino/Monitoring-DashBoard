@@ -75,7 +75,7 @@
 
         </template>
         <div v-else>
-          <div class="w-full flex items-center justify-center h-[50vh]">
+          <div class="w-full flex items-center justify-center pt-10">
             <CardNoData message="Aucun incident répertorié pour le moment" />
           </div>
         </div>
@@ -114,7 +114,7 @@
           <Pagination :currentPageRead.sync="currentPageRead" :totalPagesRead="totalPagesRead" @update:currentPageRead="currentPageRead = $event" />
         </template>
         <div v-else>
-          <div class="w-full flex items-center justify-center h-[50vh]">
+          <div class="w-full flex items-center justify-center pt-10">
             <CardNoData message="Aucun incident répertorié pour le moment" />
           </div>
         </div>

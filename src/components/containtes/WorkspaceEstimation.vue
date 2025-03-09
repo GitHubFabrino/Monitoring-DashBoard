@@ -34,7 +34,7 @@
             @click="toggle(card)"
           />
         </div>
-        <div v-else class="flex justify-center items-center h-full">
+        <div v-else class="flex justify-center items-center h-full pt-10">
           <CardNoData message="Aucune donnée de batterie disponible." />
         </div>
       </div>

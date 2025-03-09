@@ -43,7 +43,7 @@ const onFileChange = async (event, idUser) => {
 
 <template>
   <Transition>
-    <div
+    <div @click="show.personelAddImage= !show.personelAddImage"
       
       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
       v-if="show.personelAddImage"
