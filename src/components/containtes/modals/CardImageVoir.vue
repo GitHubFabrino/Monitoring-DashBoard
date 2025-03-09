@@ -12,7 +12,7 @@ const useParc = parcStore();
 const batterieStore = useBatterie();
 const selectedDate = ref(null);
 
-const first = ref(false)
+const first = ref(false);
 
 const registerBatterie = () => {
   batterieStore.registerBatterie();
@@ -23,29 +23,30 @@ function modifier() {
 }
 
 function next() {
-  first.value = !first.value
+  first.value = !first.value;
 }
 
 function close() {
-  show.showImageMaintenance = false
-
+  show.showImageMaintenance = false;
+  show.urlImageVoir = null
 }
 </script>
 
 <template>
   <Transition>
-    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
-     v-if="show.showImageMaintenance" @click="close()">
-      <div class="formModal" @click.stop >
-        <h1>Image</h1>
-        <h1>fermer</h1>
+    <div
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-[2px] z-50"
+      v-if="show.showImageMaintenance"
+      @click="close()"
+    >
+      <div class="formModal" @click.stop>
+        <img :src="show.urlImageVoir" alt="" class="size-full" />
       </div>
     </div>
   </Transition>
 </template>
 
 <style scoped>
-
 .formModal {
   width: 550px;
   background-color: #fff;
@@ -63,5 +64,4 @@ function close() {
   padding: 10px;
   /* border-bottom: 2px solid rgb(232, 230, 230); */
 }
-
 </style>

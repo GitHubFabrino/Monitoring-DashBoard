@@ -21,6 +21,7 @@ export const useShow = defineStore("Show", () => {
   const showAddPersonnel = ref(false);
   const newpersonnelId = ref();
   const showDoingMaintenanceData = ref();
+  const urlImageVoir = ref();
 
   const showDeleteMaintenanceData = ref();
   const showDeleteMaintenance = ref(false);
@@ -489,6 +490,7 @@ export const useShow = defineStore("Show", () => {
     showAddPersonnel,
     newpersonnelId,
     showDoingMaintenanceData,
+    urlImageVoir,
     showLoginFunc,
     showSingUpFunc,
     showDashBoardFunc,

@@ -1,9 +1,11 @@
-<script setup>
+<!-- <script setup>
 import { useShow } from "@/stores/show";
 import { useMaintenanceStore } from "@/stores/maintenanceStore";
 import { ref, onMounted } from "vue";
 import { parcStore } from "@/stores/parcStore";
 import { useBatterie } from "@/stores/batterieStore";
+import axios from "axios";
+
 
 const show = useShow();
 const maintenanceStore = useMaintenanceStore();
@@ -37,7 +39,7 @@ const addMaintenance = () => {
 
 
 
-const onFileChange = async (event, parcId) => {
+const onFileChange = async (event, IdMaint) => {
   const file = event.target.files[0];
   if (!file) return;
 
@@ -46,7 +48,7 @@ const onFileChange = async (event, parcId) => {
 
   try {
     const response = await axios.post(
-      `http://localhost:8000/api/parcs/${parcId}/upload`,
+      `http://localhost:8000/api/maintenance/${IdMaint}/upload`,
       formData,
       {
         headers: {
@@ -55,13 +57,146 @@ const onFileChange = async (event, parcId) => {
       }
     );
     
+    let data =[{
+      file_url:response.data.url
+    }]
+    maintenanceStore.maintenanceDataModifier.files = data
+    console.log('upload image', maintenanceStore.maintenanceDataModifier.files[0]);
+    getFilesByMaintenanceId(IdMaint);
+    
   } catch (error) {
     console.error("Erreur lors de l'upload de l'image :", error);
   }
 };
 
+const getFilesByMaintenanceId = async (IdMaint) => {
+  try {
+    // Effectuer une requête GET vers votre endpoint
+    const response = await axios.get(`http://localhost:8000/api/maintenanceFiles/${IdMaint}`);
 
+    // Mettre à jour les données dans votre store ou directement dans une variable
+    maintenanceStore.maintenanceDataModifier.files = response.data.files;
+
+    console.log('Fichiers récupérés :', maintenanceStore.maintenanceDataModifier.files);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des fichiers :', error);
+  }
+};
+
+// Appeler cette fonction au moment approprié, par exemple au montage du composant
+onMounted(() => {
+  const IdMaint = maintenanceStore.maintenanceDataModifier.maintenance.id; // Id de la maintenance
+  getFilesByMaintenanceId(IdMaint);
+});
+
+
+
+</script> -->
+
+<script setup>
+import { useShow } from "@/stores/show";
+import { useMaintenanceStore } from "@/stores/maintenanceStore";
+import { ref, onMounted } from "vue";
+import { parcStore } from "@/stores/parcStore";
+import { useBatterie } from "@/stores/batterieStore";
+import axios from "axios";
+
+const show = useShow();
+const maintenanceStore = useMaintenanceStore();
+const useParc = parcStore();
+const batterie = useBatterie();
+
+// Charger les parcs au montage du composant
+onMounted(() => {
+  try {
+    const parcid = useParc.parcSuperviser?.id;
+    if (parcid) {
+      batterie.getBatteriesByParcId(parcid);
+    } else {
+      console.warn("Parc superviseur non défini.");
+    }
+  } catch (error) {
+    console.error("Erreur lors du chargement des parcs :", error);
+  }
+});
+
+// Fonction pour ajouter une maintenance
+const modifier = () => {
+  const maintenanceData = {
+    travaux_realiser: maintenanceStore.maintenanceDataModifier.maintenance.travaux_realiser
+  };
+  console.log("rrrrr", maintenanceData);
+  maintenanceStore.updateMaintenance(
+    maintenanceStore.maintenanceDataModifier.maintenance.id,
+    maintenanceData
+  );
+};
+
+// Fonction appelée lorsqu'un fichier est uploadé
+const onFileChange = async (event, IdMaint) => {
+  const file = event.target.files[0];
+  if (!file) {
+    console.warn("Aucun fichier sélectionné.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await axios.post(
+      `http://localhost:8000/api/maintenance/${IdMaint}/upload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    // Mettre à jour la liste des fichiers après upload
+    await getFilesByMaintenanceId(IdMaint);
+
+    console.log("Upload réussi :", response.data.url);
+  } catch (error) {
+    console.error("Erreur lors de l'upload du fichier :", error.response || error);
+  }
+};
+
+// Fonction pour récupérer les fichiers liés à une maintenance
+const getFilesByMaintenanceId = async (IdMaint) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/api/maintenanceFiles/${IdMaint}`
+    );
+
+    // Mise à jour du store avec les fichiers récupérés
+    maintenanceStore.maintenanceDataModifier.files = response.data.files;
+
+    console.log("Fichiers récupérés :", maintenanceStore.maintenanceDataModifier.files);
+  } catch (error) {
+    console.error(
+      "Erreur lors de la récupération des fichiers :",
+      error.response || error
+    );
+  }
+};
+
+// Charger les fichiers associés à la maintenance au montage
+onMounted(() => {
+  try {
+    const IdMaint = maintenanceStore.maintenanceDataModifier?.maintenance?.id;
+    if (IdMaint) {
+      getFilesByMaintenanceId(IdMaint);
+    } else {
+      console.warn("Aucune maintenance sélectionnée pour récupérer les fichiers.");
+    }
+  } catch (error) {
+    console.error("Erreur lors du montage du composant :", error);
+  }
+});
 </script>
+
 
 <template>
   <Transition>
@@ -177,31 +312,27 @@ const onFileChange = async (event, parcId) => {
             
 
               <div class="mb-4 w-full">
-                <div class="block text-gray-700 font-bold mb-2">Images :</div>
+                <div class="block text-gray-700 font-bold mb-2">Images : </div>
                 <div
                   class="shadow appearance-none border rounded w-full p-1 text-gray-700 leading-tight flex"
                 >
 
                   <div
-                    @click="
-                      show.showImageMaintenance = !show.showImageMaintenance
-                    "
-                    class="w-[100px] h-[100px] bg-red-500 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                    class="w-[100px] h-[100px] bg-blue-200 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
                   >
                     <div class="cardFile">
                       <img
-                        v-if="maintenanceStore.maintenanceDataModifier.files == null"
-                        :src="maintenanceStore.maintenanceDataModifier?.files[0]?.file_url"
-                        alt=""
-                        class="card-image object-containe"
+                          v-if="maintenanceStore.maintenanceDataModifier?.files?.[0]?.file_url"
+                          :src="maintenanceStore.maintenanceDataModifier?.files[0]?.file_url"
+                          alt="Image de la maintenance"
+                          class="card-image object-contain"
                       />
-
                       <div class="absolute">
                         <div class="file-input-container">
                           <input
                             type="file"
                             @change="
-                              (event) => onFileChange(event, maintenanceStore.maintenanceDataModifier.id)
+                              (event) => onFileChange(event, maintenanceStore.maintenanceDataModifier.maintenance.id)
                             "
                             id="file-upload"
                           />
@@ -212,22 +343,88 @@ const onFileChange = async (event, parcId) => {
                       </div>
                     </div>
                   </div>
-
-
-
-
-
-
-
-
-
-
-
-                
+                  <div
+                    class="w-[100px] h-[100px] bg-blue-200 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                  >
+                    <div class="cardFile">
+                      <img
+                          v-if="maintenanceStore.maintenanceDataModifier?.files?.[1]?.file_url"
+                          :src="maintenanceStore.maintenanceDataModifier?.files[1]?.file_url"
+                          alt="Image de la maintenance"
+                          class="card-image object-contain"
+                      />
+                      <div class="absolute">
+                        <div class="file-input-container">
+                          <input
+                            type="file"
+                            @change="
+                              (event) => onFileChange(event, maintenanceStore.maintenanceDataModifier.maintenance.id)
+                            "
+                            id="file-upload"
+                          />
+                          <label for="file-upload" class="file-input-label">
+                            <i class="pi pi-camera"></i>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100px] h-[100px] bg-blue-200 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                  >
+                    <div class="cardFile">
+                      <img
+                          v-if="maintenanceStore.maintenanceDataModifier?.files?.[2]?.file_url"
+                          :src="maintenanceStore.maintenanceDataModifier?.files[2]?.file_url"
+                          alt="Image de la maintenance"
+                          class="card-image object-contain"
+                      />
+                      <div class="absolute">
+                        <div class="file-input-container">
+                          <input
+                            type="file"
+                            @change="
+                              (event) => onFileChange(event, maintenanceStore.maintenanceDataModifier.maintenance.id)
+                            "
+                            id="file-upload"
+                          />
+                          <label for="file-upload" class="file-input-label">
+                            <i class="pi pi-camera"></i>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-[100px] h-[100px] bg-blue-200 m-1 shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                  >
+                    <div class="cardFile">
+                      <img
+                          v-if="maintenanceStore.maintenanceDataModifier?.files?.[3]?.file_url"
+                          :src="maintenanceStore.maintenanceDataModifier?.files[3]?.file_url"
+                          alt="Image de la maintenance"
+                          class="card-image object-contain"
+                      />
+                      <div class="absolute">
+                        <div class="file-input-container">
+                          <input
+                            type="file"
+                            @change="
+                              (event) => onFileChange(event, maintenanceStore.maintenanceDataModifier.maintenance.id)
+                            "
+                            id="file-upload"
+                          />
+                          <label for="file-upload" class="file-input-label">
+                            <i class="pi pi-camera"></i>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>                
                 </div>
               </div>
 
-              <div
+              <div @click="modifier"
                 class="w-[50%] bg-indigo-500 flex justify-center items-center py-2 text-white font-bold rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
               >
                 <h1>Modifier</h1>
@@ -241,60 +438,6 @@ const onFileChange = async (event, parcId) => {
 
 
 
-
-
-
-
-
-
-
-        <!-- <div class="title">
-          <h3>Modifier</h3>
-          <div
-            class="closeForm"
-            @click="
-              maintenanceStore.ismodifierMaintenance =
-                !maintenanceStore.ismodifierMaintenance
-            "
-          >
-            <i class="pi pi-times" style="font-size: 18px; color: #2d4051"></i>
-          </div>
-        </div>
-        <div class="formulaire">
-          <div class="itemContainer">
-            <h5>Détails de la maintenance <span>*</span></h5>
-            <input
-              type="text"
-              placeholder="Détails de la maintenance"
-              v-model="maintenanceStore.detailsM"
-              class="input"
-            />
-          </div>
-
-          <div class="block w-full">
-            <h5>ID de la batterie <span>*</span></h5>
-            <select
-              v-model="maintenanceStore.batterie_idM"
-              id="countries"
-              class="h-12 border border-gray-300 text-gray-600 text-base rounded-lg block w-full py-2.5 px-4 focus:outline-none"
-            >
-              <option disabled value="">Sélectionnez une batterie</option>
-              <option
-                v-for="batterie in batterie.allBatteryData"
-                :key="batterie.id"
-                :value="batterie.id"
-              >
-                {{ batterie.nom }}
-              </option>
-            </select>
-          </div>
-
-          <div class="itemContainer">
-            <button class="btn enregistrer" @click="addMaintenance">
-              Modifier Maintenance
-            </button>
-          </div>
-        </div> -->
       </div>
     </div>
   </Transition>
