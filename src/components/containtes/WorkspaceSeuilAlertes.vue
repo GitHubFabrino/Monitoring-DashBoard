@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full shadow-sm rounded-sm p-10 bg-[#f6f8fa]">
+    <div class="w-full h-full shadow-sm rounded-sm px-4 py-2 bg-[#f6f8fa]">
     <div class="flex justify-between items-center p-[10px] border-b border-gray-300"
     >
       <h3 class="font-semibold w-[60%] text-[var(--primary-color)]">Seuil d'alerte des batteries</h3>
@@ -9,24 +9,13 @@
         <div
           v-for="batterie in batterie.allBatteryData"
           :key="batterie.id"
-          class="item"
+          class="item shadow-xl"
         >
           <div class="name">
             <div class="titreName">
               <h3>{{ batterie.nom }}</h3>
               <h5>{{ useParc.parcSuperviser.nom_parc }}</h5>
             </div>
-            <!-- <i
-              @click="voirModifier(batterie)"
-              class="pi pi-pen-to-square"
-              style="font-size: 16px; color: #2d4051"
-            ></i>
-
-            <i
-              @click="supprimer(batterie)"
-              class="pi pi-trash"
-              style="font-size: 16px; color: #2d4051"
-            ></i> -->
           </div>
           <div class="detail">
             <div class="detailItem">

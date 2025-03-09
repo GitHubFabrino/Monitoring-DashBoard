@@ -470,11 +470,11 @@
                 </div>
               </div>
 
-              <div
+              <!-- <div
                 class="w-[50%] bg-indigo-500 flex justify-center items-center py-2 text-white font-bold rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
               >
                 <h1>Exporter en PDF</h1>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

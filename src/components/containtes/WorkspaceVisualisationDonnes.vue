@@ -1,81 +1,13 @@
 <template>
-   <div class="w-full h-full shadow-sm rounded-sm p-10 bg-[#f6f8fa]">
+   <div class="w-full h-full shadow-sm rounded-sm px-4 py-2 bg-[#f6f8fa]">
     <div class="flex justify-between items-center p-[10px] border-b border-gray-300">
       <h3 class="font-semibold w-[60%] text-[var(--primary-color)]">Visualisation des données</h3>
     </div>
     <div class="contenu">
-   
-
       <div class="recent" v-if="show.showRecents">
-     
-        <VoltageCurrentTemperatureChart
-  
-        />
-
-
+        <VoltageCurrentTemperatureChart/>
       </div>
-      <!-- {{ voltageData }}
-      {{ temperatureData }}
-      {{ currentData }}
-      {{ timeData }}
-
-      {{ lectureStore.allLectureData }} -->
-
-      <!-- <div class="historique" v-if="show.showHistoriqueCale">
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-check" style="font-size: 18px; color: #3af130"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
-            </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action"></div>
-        </div>
-
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-check" style="font-size: 18px; color: #3af130"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
-            </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action"></div>
-        </div>
-
-        <div class="item">
-          <div class="check">
-            <i class="pi pi-times" style="font-size: 18px; color: #f13030"></i>
-          </div>
-
-          <div class="text">
-            <div class="icon">
-              <i
-                class="pi pi-calendar"
-                style="font-size: 12px; color: #2d4051"
-              ></i>
-            </div>
-            <h4>Lorem ipsum dolor sit amet.</h4>
-          </div>
-          <div class="date"><h5>31 Janvier 2023 à 10h 15min 03</h5></div>
-          <div class="action"></div>
-        </div>
-      </div> -->
+  
     </div>
   </div>
 </template>

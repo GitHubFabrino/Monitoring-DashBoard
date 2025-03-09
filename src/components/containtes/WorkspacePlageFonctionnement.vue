@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full shadow-sm rounded-sm p-10 bg-[#f6f8fa]">
+  <div class="w-full h-full shadow-sm rounded-sm px-4 py-2 bg-[#f6f8fa]">
 
     <div class="titre">
       <h3>Plage de fonctionnement des batteries</h3>
@@ -12,7 +12,7 @@
         <div
           v-for="batterie in batterie.allBatteryData"
           :key="batterie.id"
-          class="item"
+          class="item shadow-xl"
         >
           <div class="name">
             <div class="titreName">
@@ -34,7 +34,7 @@
             </div>
            
           </div>
-          <h4  class="label1">{{ batterie.description }}</h4>
+          <h4  class="label1 bg-gray-200">{{ batterie.description }}</h4>
           <div class="detail">
             <div class="detailItem">
               <div class="text">
@@ -334,6 +334,7 @@ function formatDateTime(dateString) {
 .label1{
   font-size: 12px;
   height: 50px;
+
 }
 .value{
   font-size: 12px;
@@ -349,7 +350,7 @@ function formatDateTime(dateString) {
   padding: 10px;
   margin-top: 5px;
   border-radius: 5px;
-  height: 400px;
+  height: 420px;
 }
 .item h4 {
   padding: 5px;

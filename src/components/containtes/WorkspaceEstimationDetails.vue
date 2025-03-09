@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#f6f8fa] w-full h-full shadow-md shadow-gray-400 rounded-md p-5 overflow-hidden"
+    class="bg-[#f6f8fa] w-full h-full shadow-md shadow-gray-400 rounded-md px-4 overflow-hidden"
   >
     <div
       class="flex justify-between items-center p-[10px] border-b border-gray-300"

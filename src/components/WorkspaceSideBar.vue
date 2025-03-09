@@ -172,27 +172,7 @@
               Liste des incidents
             </h5>
           </div>
-          <!-- <div
-          class="menuItem"
-          :class="{ bg: show.activeMenuItem === 'Historique des incidents' }"
-          @click="show.setActiveItem('Historique des incidents')"
-        >
-          <i
-            class="pi pi-clock"
-            style="font-size: 18px; color: #2d4051"
-            :class="{
-              color: show.activeMenuItem === 'Historique des incidents',
-            }"
-          ></i>
 
-          <h5
-            :class="{
-              color: show.activeMenuItem === 'Historique des incidents',
-            }"
-          >
-            Historique des incidents
-          </h5>
-        </div> -->
         </div>
       </div>
 

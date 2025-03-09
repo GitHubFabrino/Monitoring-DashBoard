@@ -234,12 +234,13 @@ function close() {
 .btns{
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .next1{
   width: 5%;
   padding: 5px;
   position: absolute;
-  bottom: 78px;
+  /* bottom: 78px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -252,7 +253,7 @@ function close() {
 .btn1{
   width: 50%;
   background-color: #328ca8;
-  padding: 10px;
+  padding: 5px;
   margin: 0 auto;
   text-align: center;
   border-radius: 5px;
@@ -320,7 +321,7 @@ function close() {
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
-  height: 85vh;
+  /* height: 85vh; */
 }
 
 .formModal h3 {

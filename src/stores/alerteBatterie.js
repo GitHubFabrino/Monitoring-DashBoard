@@ -57,10 +57,6 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
        
         if (response.status === 200) {
           allAllerteDataByBatterie.value = response.data;
-
-          show.showAlert = true;
-          show.showAlertType = "success";
-          show.showAlertMessage = "Alertes chargées avec succès";
         } else {
           show.showAlert = true;
           show.showAlertType = "warning";
@@ -151,16 +147,9 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
               }
             });
           }
-
-         
-
-          
           show.competerAlerteBatterieUnRead = alertes.value.length;
-        
-
           show.showAlert = true;
-          show.showAlertType = "success";
-          show.showAlertMessage = "Alertes chargées avec succès";
+        
         } else {
           show.showAlert = true;
           show.showAlertType = "warning";
@@ -194,8 +183,6 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
       });
   };
 
-  // Route::get('alerte-batteries/batterie/{id}', [AlerteBatterieController::class, 'getAlerteByBatterieId']);
-  // Route::get('alerte-batteries/parc/{id}', [AlerteBatterieController::class, 'getAlerteByParcId']);
 
   const fetchAlerteById = (id) => {
     loading.value = true;
@@ -204,8 +191,7 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
       .then((response) => {
         alerte.value = response.data;
         show.showAlert = true;
-        show.showAlertType = "success";
-        show.showAlertMessage = "Alerte chargée avec succès";
+      
       })
       .catch((err) => {
         error.value = err;
@@ -224,52 +210,6 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
       });
   };
 
-  // const createAlerte = (newAlerte) => {
-  //   loading.value = true;
-  //   axios
-  //     .post(`${URL}/api/alerte-batteries`, newAlerte)
-  //     .then((response) => {
-  //       console.log('response alerte' , response.data);
-
-  //       let batdata = await batterie.getBatteriesById(response.data.batterie_id);
-  //       console.log('batdata', batdata);
-
-  //       let formaAlerte ={
-  //        Valert : response.data.valeur_alerte,
-  //        Vseuil : response.data.valeur_seuil,
-  //        gravite : response.data.graviter,
-  //        idbat : response.data.batterie_id,
-  //        read : response.data.read,
-  //        sms : response.data.message,
-  //        type : response.data.type,
-  //        parc: batdata.parc.nom_parc,
-  //        nomBat: batdata.nom
-  //       }
-
-  //        alertes.value.push(formaAlerte);
-
-  //       console.log('alertes' , alertes.value);
-  //       show.showAlert = true;
-  //       show.showAlertType = "success";
-  //       show.showAlertMessage = "une nouvelle alerte";
-
-  //     })
-  //     .catch((err) => {
-  //       error.value = err;
-  //       show.showAlert = true;
-  //       show.showAlertType = "danger";
-  //       show.showAlertMessage = "Erreur lors de l'ajout de l'alerte";
-  //       console.error("Error creating alerte:", err);
-  //     })
-  //     .finally(() => {
-  //       loading.value = false;
-  //       setTimeout(() => {
-  //         show.showAlert = false;
-  //         show.showAlertType = "";
-  //         show.showAlertMessage = "";
-  //       }, 3000);
-  //     });
-  // };
 
   const createAlerte = async (newAlerte) => {
     loading.value = true;
@@ -332,8 +272,6 @@ export const useAlerteBatterieStore = defineStore("alerteBatterie", () => {
           alertes.value[index] = response.data;
         }
         show.showAlert = true;
-        show.showAlertType = "success";
-        show.showAlertMessage = "Alerte mise à jour avec succès";
         let parcid = useParc.parcSuperviser.id;
         const parcSuperviserLocal = ref(
           JSON.parse(localStorage.getItem("parcSuperviser"))
